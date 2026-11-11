@@ -1,0 +1,69 @@
+name: Atualizar e Publicar SIGTAP
+
+on:
+  schedule:
+    # Roda às 07:00 UTC (04:00 BRT) nos dias 1, 3, 5, 10 e 15 de cada mês
+    - cron: "0 7 1,3,5,10,15 * *"
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  update-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Baixar e processar última Tabela Unificada SIGTAP
+        if: github.event_name != 'push'
+        run: python3 scripts/update_sigtap.py --out docs/data
+
+      - name: Salvar novos dados no repositório (se houver mudança)
+        if: github.event_name != 'push'
+        run: |
+          if git diff --quiet docs/data/procedimentos.json docs/data/descricoes.json docs/data/compatibilidades.json; then
+            echo "Nenhuma alteração nos procedimentos da SIGTAP."
+            git checkout -- docs/data/meta.json || true
+          else
+            COMP=$(python3 -c "import json; print(json.load(open('docs/data/meta.json'))['competencia_formatada'])")
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add docs/data/
+            git commit -m "chore(sigtap): atualiza tabela para competência ${COMP}"
+            git push
+          fi
+
+      - name: Configurar GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload do artefato para o GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+  deploy:
+    needs: update-and-build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy no GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

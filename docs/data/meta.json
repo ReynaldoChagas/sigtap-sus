@@ -1,0 +1,486 @@
+{
+  "competencia": "202611",
+  "competencia_formatada": "11/2026",
+  "arquivo_origem": "TabelaUnificada_202611_v2611051737.zip",
+  "versao": "1.1",
+  "total_procedimentos": 5068,
+  "atualizado_em": "2026-11-11T16:46:27Z",
+  "grupos": [
+    {
+      "codigo": "01",
+      "nome": "Ações de promoção e prevenção em saúde"
+    },
+    {
+      "codigo": "02",
+      "nome": "Procedimentos com finalidade diagnóstica"
+    },
+    {
+      "codigo": "03",
+      "nome": "Procedimentos clínicos"
+    },
+    {
+      "codigo": "04",
+      "nome": "Procedimentos cirúrgicos"
+    },
+    {
+      "codigo": "05",
+      "nome": "Transplantes de orgãos, tecidos e células"
+    },
+    {
+      "codigo": "06",
+      "nome": "Medicamentos"
+    },
+    {
+      "codigo": "07",
+      "nome": "Órteses, próteses e materiais especiais"
+    },
+    {
+      "codigo": "08",
+      "nome": "Ações complementares da atenção à saúde"
+    },
+    {
+      "codigo": "09",
+      "nome": "Procedimentos para Ofertas de Cuidados Integrados"
+    }
+  ],
+  "subgrupos": [
+    {
+      "grupo_cod": "01",
+      "codigo": "0101",
+      "sub_codigo": "01",
+      "nome": "Ações coletivas/individuais em saúde"
+    },
+    {
+      "grupo_cod": "01",
+      "codigo": "0102",
+      "sub_codigo": "02",
+      "nome": "Vigilância em saúde"
+    },
+    {
+      "grupo_cod": "02",
+      "codigo": "0201",
+      "sub_codigo": "01",
+      "nome": "Coleta de material"
+    },
+    {
+      "grupo_cod": "02",
+      "codigo": "0202",
+      "sub_codigo": "02",
+      "nome": "Diagnóstico em laboratório clínico"
+    },
+    {
+      "grupo_cod": "02",
+      "codigo": "0203",
+      "sub_codigo": "03",
+      "nome": "Diagnóstico por anatomia patológica e citopatologia"
+    },
+    {
+      "grupo_cod": "02",
+      "codigo": "0204",
+      "sub_codigo": "04",
+      "nome": "Diagnóstico por radiologia"
+    },
+    {
+      "grupo_cod": "02",
+      "codigo": "0205",
+      "sub_codigo": "05",
+      "nome": "Diagnóstico por ultrasonografia"
+    },
+    {
+      "grupo_cod": "02",
+      "codigo": "0206",
+      "sub_codigo": "06",
+      "nome": "Diagnóstico por tomografia"
+    },
+    {
+      "grupo_cod": "02",
+      "codigo": "0207",
+      "sub_codigo": "07",
+      "nome": "Diagnóstico por ressonância magnética"
+    },
+    {
+      "grupo_cod": "02",
+      "codigo": "0208",
+      "sub_codigo": "08",
+      "nome": "Diagnóstico por medicina nuclear in vivo"
+    },
+    {
+      "grupo_cod": "02",
+      "codigo": "0209",
+      "sub_codigo": "09",
+      "nome": "Diagnóstico por endoscopia"
+    },
+    {
+      "grupo_cod": "02",
+      "codigo": "0210",
+      "sub_codigo": "10",
+      "nome": "Diagnóstico por radiologia intervencionista"
+    },
+    {
+      "grupo_cod": "02",
+      "codigo": "0211",
+      "sub_codigo": "11",
+      "nome": "Métodos diagnósticos em especialidades"
+    },
+    {
+      "grupo_cod": "02",
+      "codigo": "0212",
+      "sub_codigo": "12",
+      "nome": "Diagnóstico e procedimentos especiais em hemoterapia"
+    },
+    {
+      "grupo_cod": "02",
+      "codigo": "0213",
+      "sub_codigo": "13",
+      "nome": "Diagnóstico em vigilância epidemiológica e ambiental"
+    },
+    {
+      "grupo_cod": "02",
+      "codigo": "0214",
+      "sub_codigo": "14",
+      "nome": "Diagnóstico por teste rápido"
+    },
+    {
+      "grupo_cod": "03",
+      "codigo": "0301",
+      "sub_codigo": "01",
+      "nome": "Consultas / Atendimentos / Acompanhamentos"
+    },
+    {
+      "grupo_cod": "03",
+      "codigo": "0302",
+      "sub_codigo": "02",
+      "nome": "Fisioterapia"
+    },
+    {
+      "grupo_cod": "03",
+      "codigo": "0303",
+      "sub_codigo": "03",
+      "nome": "Tratamentos clínicos (outras especialidades)"
+    },
+    {
+      "grupo_cod": "03",
+      "codigo": "0304",
+      "sub_codigo": "04",
+      "nome": "Tratamento em oncologia"
+    },
+    {
+      "grupo_cod": "03",
+      "codigo": "0305",
+      "sub_codigo": "05",
+      "nome": "Tratamento em nefrologia"
+    },
+    {
+      "grupo_cod": "03",
+      "codigo": "0306",
+      "sub_codigo": "06",
+      "nome": "Hemoterapia"
+    },
+    {
+      "grupo_cod": "03",
+      "codigo": "0307",
+      "sub_codigo": "07",
+      "nome": "Tratamentos odontológicos"
+    },
+    {
+      "grupo_cod": "03",
+      "codigo": "0308",
+      "sub_codigo": "08",
+      "nome": "Tratamento de lesões, envenenamentos e outros, decorrentes de causas externas"
+    },
+    {
+      "grupo_cod": "03",
+      "codigo": "0309",
+      "sub_codigo": "09",
+      "nome": "Terapias especializadas"
+    },
+    {
+      "grupo_cod": "03",
+      "codigo": "0310",
+      "sub_codigo": "10",
+      "nome": "Parto e nascimento"
+    },
+    {
+      "grupo_cod": "03",
+      "codigo": "0311",
+      "sub_codigo": "11",
+      "nome": "Cuidados Paliativos"
+    },
+    {
+      "grupo_cod": "04",
+      "codigo": "0401",
+      "sub_codigo": "01",
+      "nome": "Pequenas cirurgias e cirurgias de pele, tecido subcutâneo e mucosa"
+    },
+    {
+      "grupo_cod": "04",
+      "codigo": "0402",
+      "sub_codigo": "02",
+      "nome": "Cirurgia de glândulas endócrinas"
+    },
+    {
+      "grupo_cod": "04",
+      "codigo": "0403",
+      "sub_codigo": "03",
+      "nome": "Cirurgia do sistema nervoso central e periférico"
+    },
+    {
+      "grupo_cod": "04",
+      "codigo": "0404",
+      "sub_codigo": "04",
+      "nome": "Cirurgia das vias aéreas superiores, da face, da cabeça e do pescoço"
+    },
+    {
+      "grupo_cod": "04",
+      "codigo": "0405",
+      "sub_codigo": "05",
+      "nome": "Cirurgia do aparelho da visão"
+    },
+    {
+      "grupo_cod": "04",
+      "codigo": "0406",
+      "sub_codigo": "06",
+      "nome": "Cirurgia do aparelho circulatório"
+    },
+    {
+      "grupo_cod": "04",
+      "codigo": "0407",
+      "sub_codigo": "07",
+      "nome": "Cirurgia do aparelho digestivo, orgãos anexos e parede abdominal"
+    },
+    {
+      "grupo_cod": "04",
+      "codigo": "0408",
+      "sub_codigo": "08",
+      "nome": "Cirurgia do sistema osteomuscular"
+    },
+    {
+      "grupo_cod": "04",
+      "codigo": "0409",
+      "sub_codigo": "09",
+      "nome": "Cirurgia do aparelho geniturinário"
+    },
+    {
+      "grupo_cod": "04",
+      "codigo": "0410",
+      "sub_codigo": "10",
+      "nome": "Cirurgia de mama"
+    },
+    {
+      "grupo_cod": "04",
+      "codigo": "0411",
+      "sub_codigo": "11",
+      "nome": "Cirurgia obstétrica"
+    },
+    {
+      "grupo_cod": "04",
+      "codigo": "0412",
+      "sub_codigo": "12",
+      "nome": "Cirurgia torácica"
+    },
+    {
+      "grupo_cod": "04",
+      "codigo": "0413",
+      "sub_codigo": "13",
+      "nome": "Cirurgia reparadora"
+    },
+    {
+      "grupo_cod": "04",
+      "codigo": "0414",
+      "sub_codigo": "14",
+      "nome": "Bucomaxilofacial"
+    },
+    {
+      "grupo_cod": "04",
+      "codigo": "0415",
+      "sub_codigo": "15",
+      "nome": "Outras cirurgias"
+    },
+    {
+      "grupo_cod": "04",
+      "codigo": "0416",
+      "sub_codigo": "16",
+      "nome": "Cirurgia em oncologia"
+    },
+    {
+      "grupo_cod": "04",
+      "codigo": "0417",
+      "sub_codigo": "17",
+      "nome": "Anestesiologia"
+    },
+    {
+      "grupo_cod": "04",
+      "codigo": "0418",
+      "sub_codigo": "18",
+      "nome": "Cirurgia em nefrologia"
+    },
+    {
+      "grupo_cod": "05",
+      "codigo": "0501",
+      "sub_codigo": "01",
+      "nome": "Coleta e exames para fins de doação de orgãos, tecidos e células e de transplante"
+    },
+    {
+      "grupo_cod": "05",
+      "codigo": "0502",
+      "sub_codigo": "02",
+      "nome": "Avaliação de morte encefálica"
+    },
+    {
+      "grupo_cod": "05",
+      "codigo": "0503",
+      "sub_codigo": "03",
+      "nome": "Ações relacionadas à doação de orgãos e tecidos para transplante"
+    },
+    {
+      "grupo_cod": "05",
+      "codigo": "0504",
+      "sub_codigo": "04",
+      "nome": "Processamento de tecidos para transplante"
+    },
+    {
+      "grupo_cod": "05",
+      "codigo": "0505",
+      "sub_codigo": "05",
+      "nome": "Transplante de orgãos, tecidos e células"
+    },
+    {
+      "grupo_cod": "05",
+      "codigo": "0506",
+      "sub_codigo": "06",
+      "nome": "Acompanhamento e intercorrências no pré e pós-transplante"
+    },
+    {
+      "grupo_cod": "06",
+      "codigo": "0601",
+      "sub_codigo": "01",
+      "nome": "Medicamentos de dispensação excepcional"
+    },
+    {
+      "grupo_cod": "06",
+      "codigo": "0602",
+      "sub_codigo": "02",
+      "nome": "Medicamentos estratégicos"
+    },
+    {
+      "grupo_cod": "06",
+      "codigo": "0603",
+      "sub_codigo": "03",
+      "nome": "Medicamentos de âmbito hospitalar e urgência"
+    },
+    {
+      "grupo_cod": "06",
+      "codigo": "0604",
+      "sub_codigo": "04",
+      "nome": "Componente especializado da assistência farmacêutica"
+    },
+    {
+      "grupo_cod": "06",
+      "codigo": "0605",
+      "sub_codigo": "05",
+      "nome": "Assistência Farmacêutica em Oncologia"
+    },
+    {
+      "grupo_cod": "07",
+      "codigo": "0701",
+      "sub_codigo": "01",
+      "nome": "Órteses, próteses e materiais especiais não relacionados ao ato cirúrgico"
+    },
+    {
+      "grupo_cod": "07",
+      "codigo": "0702",
+      "sub_codigo": "02",
+      "nome": "Órteses, próteses e materiais especiais relacionados ao ato cirúrgico"
+    },
+    {
+      "grupo_cod": "08",
+      "codigo": "0801",
+      "sub_codigo": "01",
+      "nome": "Ações relacionadas ao estabelecimento"
+    },
+    {
+      "grupo_cod": "08",
+      "codigo": "0802",
+      "sub_codigo": "02",
+      "nome": "Ações relacionadas ao atendimento"
+    },
+    {
+      "grupo_cod": "08",
+      "codigo": "0803",
+      "sub_codigo": "03",
+      "nome": "Autorização / regulação"
+    },
+    {
+      "grupo_cod": "08",
+      "codigo": "0804",
+      "sub_codigo": "04",
+      "nome": "Telessaúde"
+    },
+    {
+      "grupo_cod": "09",
+      "codigo": "0901",
+      "sub_codigo": "01",
+      "nome": "Atenção em Oncologia"
+    },
+    {
+      "grupo_cod": "09",
+      "codigo": "0902",
+      "sub_codigo": "02",
+      "nome": "Atenção em Cardiologia"
+    },
+    {
+      "grupo_cod": "09",
+      "codigo": "0903",
+      "sub_codigo": "03",
+      "nome": "Atenção em Ortopedia"
+    },
+    {
+      "grupo_cod": "09",
+      "codigo": "0904",
+      "sub_codigo": "04",
+      "nome": "Atenção em Otorrinolaringologia"
+    },
+    {
+      "grupo_cod": "09",
+      "codigo": "0905",
+      "sub_codigo": "05",
+      "nome": "Atenção em Oftalmologia"
+    },
+    {
+      "grupo_cod": "09",
+      "codigo": "0906",
+      "sub_codigo": "06",
+      "nome": "Atenção em Saúde Mulher"
+    },
+    {
+      "grupo_cod": "09",
+      "codigo": "0907",
+      "sub_codigo": "07",
+      "nome": "Atenção à Saúde Bucal"
+    },
+    {
+      "grupo_cod": "09",
+      "codigo": "0908",
+      "sub_codigo": "08",
+      "nome": "Atenção em Infectologia"
+    },
+    {
+      "grupo_cod": "09",
+      "codigo": "0909",
+      "sub_codigo": "09",
+      "nome": "Atenção em Nefrologia"
+    }
+  ],
+  "registros": [
+    "AIH (Proc. Especial)",
+    "AIH (Proc. Principal)",
+    "AIH (Proc. Secundário)",
+    "APAC (Proc. Principal)",
+    "APAC (Proc. Secundário)",
+    "BPA (Consolidado)",
+    "BPA (Individualizado)",
+    "RAAS (Atenção Domiciliar)",
+    "RAAS (Atenção Psicossocial)",
+    "e-SUS APS (Atenção Primária à Saúde)"
+  ]
+}

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consulta SIGTAP — Tabela Unificada SUS</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div>
+        <h1>Consulta SIGTAP — Tabela Unificada SUS</h1>
+        <p>Procedimentos, valores (SA/SH/SP), faixa etária, exigência de CPF/CNS e instrumentos de registro.</p>
+      </div>
+      <div class="meta-badges">
+        <span id="competencia-pill" class="meta-pill">Competência: —</span>
+        <span id="total-pill" class="meta-pill">Carregando...</span>
+        <span id="updated-pill" class="meta-pill">Atualizado: —</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="filters-card" aria-label="Filtros de busca">
+      <div class="search-row">
+        <input
+          id="search-input"
+          class="search-input"
+          type="search"
+          placeholder="Buscar por código (ex: 0101010028 ou 01.01.01.002-8) ou nome do procedimento..."
+          autocomplete="off"
+        >
+        <button id="clear-btn" class="btn" type="button">Limpar filtros</button>
+      </div>
+
+      <div class="filters-grid">
+        <div class="field">
+          <label for="group-filter">Grupo</label>
+          <select id="group-filter">
+            <option value="">Todos os grupos</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="subgroup-filter">Subgrupo</label>
+          <select id="subgroup-filter">
+            <option value="">Todos os subgrupos</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="cpf-filter">Exigência de CPF / CNS</label>
+          <select id="cpf-filter">
+            <option value="">Todos</option>
+            <option value="obrigatorio_cpf">Obrigatório CPF</option>
+            <option value="exige_cpf_cns">Exige CPF/CNS</option>
+            <option value="nao_exige">Não exige CPF/CNS</option>
+            <option value="nao_especificado">Sem regra específica</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="complexity-filter">Complexidade</label>
+          <select id="complexity-filter">
+            <option value="">Todas</option>
+            <option value="1">Atenção Básica</option>
+            <option value="2">Média Complexidade</option>
+            <option value="3">Alta Complexidade</option>
+            <option value="0">Não se aplica</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="sex-filter">Sexo</label>
+          <select id="sex-filter">
+            <option value="">Todos</option>
+            <option value="I">Indiferente/Ambos</option>
+            <option value="F">Feminino</option>
+            <option value="M">Masculino</option>
+            <option value="N">Não se aplica</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="registro-filter">Instrumento de Registro</label>
+          <select id="registro-filter">
+            <option value="">Todos</option>
+          </select>
+        </div>
+
+        <label class="checkbox-field" for="paid-only">
+          <input id="paid-only" type="checkbox">
+          <span>Apenas com valor &gt; R$ 0,00</span>
+        </label>
+
+        <label class="checkbox-field" for="obrig-only">
+          <input id="obrig-only" type="checkbox">
+          <span>Com secundário obrigatório</span>
+        </label>
+      </div>
+    </section>
+
+    <div class="toolbar">
+      <div id="results-count">Carregando procedimentos...</div>
+      <div class="toolbar-actions">
+        <button id="export-csv-btn" class="btn btn-primary" type="button">
+          Exportar CSV (filtrados)
+        </button>
+      </div>
+    </div>
+
+    <section class="table-card">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Procedimento / Classificação</th>
+              <th>Idade / Sexo</th>
+              <th>CPF / CNS</th>
+              <th>Valores SUS</th>
+            </tr>
+          </thead>
+          <tbody id="procedures-tbody">
+            <tr>
+              <td colspan="5" class="empty-state">Carregando dados da SIGTAP...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pagination">
+        <span id="page-info">Página 1 de 1</span>
+        <div>
+          <button id="prev-page" class="btn" type="button" disabled>Anterior</button>
+          <button id="next-page" class="btn" type="button" disabled>Próxima</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="modal-backdrop" class="modal-backdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-header">
+        <div>
+          <div id="modal-code" class="modal-code"></div>
+          <h2 id="modal-title"></h2>
+        </div>
+        <button id="modal-close" class="btn" type="button">Fechar</button>
+      </div>
+      <div id="modal-body" class="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
