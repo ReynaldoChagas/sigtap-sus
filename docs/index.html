@@ -89,6 +89,18 @@
           </select>
         </div>
 
+        <div class="field">
+          <label for="cbo-filter">CBO Executante</label>
+          <input
+            id="cbo-filter"
+            list="cbo-options"
+            type="search"
+            placeholder="Código ou nome do CBO..."
+            autocomplete="off"
+          >
+          <datalist id="cbo-options"></datalist>
+        </div>
+
         <label class="checkbox-field" for="paid-only">
           <input id="paid-only" type="checkbox">
           <span>Apenas com valor &gt; R$ 0,00</span>
@@ -97,6 +109,16 @@
         <label class="checkbox-field" for="obrig-only">
           <input id="obrig-only" type="checkbox">
           <span>Com secundário obrigatório</span>
+        </label>
+
+        <label class="checkbox-field" for="serv-only">
+          <input id="serv-only" type="checkbox">
+          <span>Exige Serviço/Class.</span>
+        </label>
+
+        <label class="checkbox-field" for="hab-only">
+          <input id="hab-only" type="checkbox">
+          <span>Exige Habilitação</span>
         </label>
       </div>
     </section>

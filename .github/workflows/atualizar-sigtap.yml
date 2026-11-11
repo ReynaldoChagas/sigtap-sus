@@ -37,7 +37,7 @@ jobs:
       - name: Salvar novos dados no repositório (se houver mudança)
         if: github.event_name != 'push'
         run: |
-          if git diff --quiet docs/data/procedimentos.json docs/data/descricoes.json docs/data/compatibilidades.json; then
+          if git diff --quiet docs/data/procedimentos.json docs/data/descricoes.json docs/data/compatibilidades.json docs/data/cbos.json docs/data/requisitos.json; then
             echo "Nenhuma alteração nos procedimentos da SIGTAP."
             git checkout -- docs/data/meta.json || true
           else

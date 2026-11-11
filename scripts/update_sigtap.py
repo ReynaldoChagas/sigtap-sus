@@ -250,6 +250,66 @@ def build_datasets(zip_path: Path, out_dir: Path) -> dict[str, object]:
                 }
             )
 
+        ocupacao_map = {
+            r["CO_OCUPACAO"]: r["NO_OCUPACAO"]
+            for r in read_fixed_table(zf, "tb_ocupacao.txt")
+        }
+        proc_cbos: dict[str, list[str]] = {}
+        used_cbos: dict[str, str] = {}
+        for r in read_fixed_table(zf, "rl_procedimento_ocupacao.txt"):
+            co_proc = r["CO_PROCEDIMENTO"]
+            co_cbo = r["CO_OCUPACAO"]
+            proc_cbos.setdefault(co_proc, []).append(co_cbo)
+            if co_cbo not in used_cbos:
+                used_cbos[co_cbo] = ocupacao_map.get(co_cbo, co_cbo)
+        for co_proc, lst in proc_cbos.items():
+            proc_cbos[co_proc] = sorted(set(lst))
+
+        servico_map = {
+            r["CO_SERVICO"]: r["NO_SERVICO"]
+            for r in read_fixed_table(zf, "tb_servico.txt")
+        }
+        serv_class_map = {
+            f"{r['CO_SERVICO']}|{r['CO_CLASSIFICACAO']}": r["NO_CLASSIFICACAO"]
+            for r in read_fixed_table(zf, "tb_servico_classificacao.txt")
+        }
+        habilitacao_map = {
+            r["CO_HABILITACAO"]: r["NO_HABILITACAO"]
+            for r in read_fixed_table(zf, "tb_habilitacao.txt")
+        }
+        grupo_hab_map = {
+            r["NU_GRUPO_HABILITACAO"]: {
+                "nome": r["NO_GRUPO_HABILITACAO"],
+                "desc": r["DS_GRUPO_HABILITACAO"],
+            }
+            for r in read_fixed_table(zf, "tb_grupo_habilitacao.txt")
+        }
+
+        proc_servicos: dict[str, list[list[str]]] = {}
+        for r in read_fixed_table(zf, "rl_procedimento_servico.txt"):
+            co_proc = r["CO_PROCEDIMENTO"]
+            pair = [r["CO_SERVICO"], r["CO_CLASSIFICACAO"]]
+            lst = proc_servicos.setdefault(co_proc, [])
+            if pair not in lst:
+                lst.append(pair)
+
+        proc_habilitacoes: dict[str, list[list[str]]] = {}
+        for r in read_fixed_table(zf, "rl_procedimento_habilitacao.txt"):
+            co_proc = r["CO_PROCEDIMENTO"]
+            pair = [r["CO_HABILITACAO"], r["NU_GRUPO_HABILITACAO"]]
+            lst = proc_habilitacoes.setdefault(co_proc, [])
+            if pair not in lst:
+                lst.append(pair)
+
+        requisitos_por_proc: dict[str, dict[str, object]] = {}
+        for co_proc in set(proc_servicos) | set(proc_habilitacoes):
+            entry: dict[str, object] = {}
+            if co_proc in proc_servicos:
+                entry["s"] = proc_servicos[co_proc]
+            if co_proc in proc_habilitacoes:
+                entry["h"] = proc_habilitacoes[co_proc]
+            requisitos_por_proc[co_proc] = entry
+
         versao_txt = ""
         if "versao" in zf.namelist():
             versao_txt = zf.read("versao").decode("latin1").strip()
@@ -269,6 +329,10 @@ def build_datasets(zip_path: Path, out_dir: Path) -> dict[str, object]:
         proc_compat = compatibilidades.get(co, [])
         qt_obrig = sum(1 for item in proc_compat if item["tipo"] == "5")
         qt_compat = sum(1 for item in proc_compat if item["tipo"] == "1")
+        qt_cbos = len(proc_cbos.get(co, []))
+        nao_exige_cbo = "021" in det_codes
+        qt_servicos = len(proc_servicos.get(co, []))
+        qt_habilitacoes = len(proc_habilitacoes.get(co, []))
 
         vl_sh = to_reais(r["VL_SH"])
         vl_sa = to_reais(r["VL_SA"])
@@ -311,6 +375,10 @@ def build_datasets(zip_path: Path, out_dir: Path) -> dict[str, object]:
                 "detalhes": det_labels,
                 "qt_obrig": qt_obrig,
                 "qt_compat": qt_compat,
+                "qt_cbos": qt_cbos,
+                "nao_exige_cbo": nao_exige_cbo,
+                "qt_servicos": qt_servicos,
+                "qt_habilitacoes": qt_habilitacoes,
             }
         )
 
@@ -350,6 +418,31 @@ def build_datasets(zip_path: Path, out_dir: Path) -> dict[str, object]:
     )
     (out_dir / "compatibilidades.json").write_text(
         json.dumps(compatibilidades, ensure_ascii=False, separators=(",", ":")),
+        encoding="utf-8",
+    )
+    (out_dir / "cbos.json").write_text(
+        json.dumps(
+            {
+                "catalogo": dict(sorted(used_cbos.items())),
+                "por_procedimento": proc_cbos,
+            },
+            ensure_ascii=False,
+            separators=(",", ":"),
+        ),
+        encoding="utf-8",
+    )
+    (out_dir / "requisitos.json").write_text(
+        json.dumps(
+            {
+                "servicos": servico_map,
+                "classificacoes": serv_class_map,
+                "habilitacoes": habilitacao_map,
+                "grupos_hab": grupo_hab_map,
+                "por_procedimento": requisitos_por_proc,
+            },
+            ensure_ascii=False,
+            separators=(",", ":"),
+        ),
         encoding="utf-8",
     )
     (out_dir / "meta.json").write_text(

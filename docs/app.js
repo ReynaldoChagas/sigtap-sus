@@ -7,6 +7,10 @@ let filteredProcedures = [];
 let currentPage = 1;
 let descriptionsCache = null;
 let compatCache = null;
+let cbosCache = null;
+let cbosPromise = null;
+let cboIndexList = null;
+let requisitosCache = null;
 
 const els = {
   competenciaPill: document.getElementById("competencia-pill"),
@@ -20,8 +24,12 @@ const els = {
   complexityFilter: document.getElementById("complexity-filter"),
   sexFilter: document.getElementById("sex-filter"),
   registroFilter: document.getElementById("registro-filter"),
+  cboFilter: document.getElementById("cbo-filter"),
+  cboOptions: document.getElementById("cbo-options"),
   paidOnly: document.getElementById("paid-only"),
   obrigOnly: document.getElementById("obrig-only"),
+  servOnly: document.getElementById("serv-only"),
+  habOnly: document.getElementById("hab-only"),
   resultsCount: document.getElementById("results-count"),
   exportCsvBtn: document.getElementById("export-csv-btn"),
   tbody: document.getElementById("procedures-tbody"),
@@ -123,8 +131,31 @@ function applyFilters() {
   const complexidade = els.complexityFilter.value;
   const sexo = els.sexFilter.value;
   const registro = els.registroFilter.value;
+  const rawCbo = els.cboFilter.value.trim();
   const onlyPaid = els.paidOnly.checked;
   const onlyObrig = els.obrigOnly.checked;
+  const onlyServ = els.servOnly.checked;
+  const onlyHab = els.habOnly.checked;
+
+  let matchingCboSet = null;
+  if (rawCbo && cbosCache) {
+    const cboNorm = normalizeText(rawCbo);
+    const codePrefixMatch = rawCbo.match(/^\d{1,6}/);
+    const matchedCodes = [];
+    if (codePrefixMatch && rawCbo.includes(" - ")) {
+      matchedCodes.push(codePrefixMatch[0]);
+    } else {
+      for (const item of cboIndexList) {
+        if (
+          (codePrefixMatch && item.code.startsWith(codePrefixMatch[0])) ||
+          item.normName.includes(cboNorm)
+        ) {
+          matchedCodes.push(item.code);
+        }
+      }
+    }
+    matchingCboSet = new Set(matchedCodes);
+  }
 
   filteredProcedures = allProcedures.filter((p) => {
     if (grupo && p.grupo_cod !== grupo) return false;
@@ -135,6 +166,14 @@ function applyFilters() {
     if (registro && !p.registros.includes(registro)) return false;
     if (onlyPaid && p.vl_sa <= 0 && p.vl_sh <= 0 && p.vl_sp <= 0) return false;
     if (onlyObrig && !(p.qt_obrig > 0)) return false;
+    if (onlyServ && !(p.qt_servicos > 0)) return false;
+    if (onlyHab && !(p.qt_habilitacoes > 0)) return false;
+    if (matchingCboSet) {
+      const procCbos = cbosCache.por_procedimento[p.codigo];
+      if (!procCbos || !procCbos.some((c) => matchingCboSet.has(c))) {
+        return false;
+      }
+    }
 
     if (normSearch) {
       const matchName = p._searchName.includes(normSearch);
@@ -194,6 +233,19 @@ function renderTable() {
         p.qt_compat > 0
           ? `<span class="badge badge-neutral">${p.qt_compat} opcional(is)</span>`
           : "";
+      const cboBadge = p.nao_exige_cbo
+        ? `<span class="badge badge-ok">Não exige CBO</span>`
+        : p.qt_cbos > 0
+        ? `<span class="badge badge-neutral">${p.qt_cbos} CBO(s)</span>`
+        : "";
+      const servBadge =
+        p.qt_servicos > 0
+          ? `<span class="badge badge-warn">Serviço/Class. (${p.qt_servicos})</span>`
+          : "";
+      const habBadge =
+        p.qt_habilitacoes > 0
+          ? `<span class="badge badge-warn">Habilitação (${p.qt_habilitacoes})</span>`
+          : "";
 
       return `
         <tr data-codigo="${escapeHtml(p.codigo)}">
@@ -206,7 +258,7 @@ function renderTable() {
             <div class="proc-sub">${escapeHtml(p.grupo)} · ${escapeHtml(p.subgrupo)}</div>
             <div class="badges-row">
               <span class="badge badge-neutral">${escapeHtml(p.complexidade)}</span>
-              ${regBadges}${extraReg}${obrigBadge}${compatBadge}
+              ${regBadges}${extraReg}${obrigBadge}${compatBadge}${cboBadge}${servBadge}${habBadge}
             </div>
           </td>
           <td>
@@ -246,6 +298,144 @@ async function loadCompatibilidades() {
   if (!resp.ok) throw new Error("Não foi possível carregar as compatibilidades.");
   compatCache = await resp.json();
   return compatCache;
+}
+
+async function loadRequisitos() {
+  if (requisitosCache) return requisitosCache;
+  const resp = await fetch("data/requisitos.json");
+  if (!resp.ok) throw new Error("Não foi possível carregar serviços e habilitações.");
+  requisitosCache = await resp.json();
+  return requisitosCache;
+}
+
+async function loadCbos() {
+  if (cbosCache) return cbosCache;
+  if (!cbosPromise) {
+    cbosPromise = fetch("data/cbos.json")
+      .then((resp) => {
+        if (!resp.ok) throw new Error("Não foi possível carregar os CBOs.");
+        return resp.json();
+      })
+      .then((data) => {
+        cbosCache = data;
+        cboIndexList = Object.entries(data.catalogo).map(([code, name]) => ({
+          code,
+          name,
+          normName: normalizeText(name),
+        }));
+        const frag = document.createDocumentFragment();
+        for (const item of cboIndexList) {
+          const opt = document.createElement("option");
+          opt.value = `${item.code} - ${item.name}`;
+          frag.appendChild(opt);
+        }
+        els.cboOptions.appendChild(frag);
+        return cbosCache;
+      })
+      .catch((err) => {
+        cbosPromise = null;
+        throw err;
+      });
+  }
+  return cbosPromise;
+}
+
+function renderServicosSection(reqData, codigo) {
+  const pairs = reqData.por_procedimento[codigo]?.s || [];
+  if (pairs.length === 0) {
+    return '<span class="proc-sub">Nenhum Serviço/Classificação exigido.</span>';
+  }
+  const itemsHtml = pairs
+    .map(([coServ, coClass]) => {
+      const servNome = reqData.servicos[coServ] || coServ;
+      const classNome = reqData.classificacoes[`${coServ}|${coClass}`] || coClass;
+      return `
+        <li class="compat-item">
+          <div>
+            <strong>${escapeHtml(coServ)}/${escapeHtml(coClass)}</strong> — ${escapeHtml(servNome)}
+            <div class="compat-meta">Classificação: ${escapeHtml(classNome)}</div>
+          </div>
+        </li>
+      `;
+    })
+    .join("");
+  return `<ul class="compat-list">${itemsHtml}</ul>`;
+}
+
+function renderHabilitacoesSection(reqData, codigo) {
+  const pairs = reqData.por_procedimento[codigo]?.h || [];
+  if (pairs.length === 0) {
+    return '<span class="proc-sub">Nenhuma Habilitação exigida.</span>';
+  }
+  const byGroup = new Map();
+  for (const [coHab, nuGrupo] of pairs) {
+    const key = nuGrupo || "";
+    if (!byGroup.has(key)) byGroup.set(key, []);
+    byGroup.get(key).push(coHab);
+  }
+  return Array.from(byGroup.entries())
+    .map(([nuGrupo, habCodes]) => {
+      const grpInfo = nuGrupo ? reqData.grupos_hab[nuGrupo] : null;
+      const titleText = grpInfo
+        ? `Grupo ${nuGrupo}${grpInfo.nome ? ` (${grpInfo.nome})` : ""}`
+        : "Habilitações exigidas";
+      const descHint = grpInfo?.desc
+        ? `<div class="compat-meta" style="margin-bottom:0.35rem;">${escapeHtml(grpInfo.desc)}</div>`
+        : "";
+      const listHtml = habCodes
+        .map((coHab) => {
+          const nome = reqData.habilitacoes[coHab] || coHab;
+          return `
+            <li class="compat-item">
+              <div><span class="cbo-code">${escapeHtml(coHab)}</span>${escapeHtml(nome)}</div>
+            </li>
+          `;
+        })
+        .join("");
+      return `
+        <div class="compat-group">
+          <div class="compat-group-title">
+            <span class="badge badge-warn">${escapeHtml(titleText)}</span>
+            <span class="compat-meta">(${habCodes.length})</span>
+          </div>
+          ${descHint}
+          <ul class="compat-list">${listHtml}</ul>
+        </div>
+      `;
+    })
+    .join("");
+}
+
+function renderCbosSection(cboData, proc) {
+  if (proc.nao_exige_cbo) {
+    return '<span class="badge badge-ok">Não Exige CBO (qualquer ocupação permitida)</span>';
+  }
+  const codes = cboData.por_procedimento[proc.codigo] || [];
+  if (codes.length === 0) {
+    return '<span class="proc-sub">Nenhum CBO específico vinculado a este procedimento.</span>';
+  }
+  const items = codes.map((code) => ({
+    code,
+    name: cboData.catalogo[code] || code,
+  }));
+  const listHtml = items
+    .map(
+      (i) =>
+        `<li data-cbo-text="${escapeHtml(normalizeText(`${i.code} ${i.name}`))}"><span class="cbo-code">${escapeHtml(i.code)}</span>${escapeHtml(i.name)}</li>`
+    )
+    .join("");
+
+  return `
+    <div class="compat-meta" style="margin-bottom:0.35rem;">${items.length} CBO(s) permitido(s)</div>
+    ${
+      items.length > 8
+        ? '<input id="modal-cbo-search" class="cbo-filter-input" type="search" placeholder="Filtrar CBOs deste procedimento (código ou nome)...">'
+        : ""
+    }
+    <div class="cbo-scroll">
+      <ul id="modal-cbo-list" class="cbo-list">${listHtml}</ul>
+    </div>
+  `;
 }
 
 const COMPAT_GROUPS = [
@@ -354,6 +544,15 @@ async function openModal(codigo) {
     <div class="section-title">Atributos / Detalhes SIGTAP</div>
     <div class="badges-row">${detalhesHtml}</div>
 
+    <div class="section-title">Serviço / Classificação</div>
+    <div id="modal-servicos" class="proc-sub">Carregando serviços/classificações...</div>
+
+    <div class="section-title">Habilitações</div>
+    <div id="modal-habilitacoes" class="proc-sub">Carregando habilitações...</div>
+
+    <div class="section-title">CBOs Permitidos</div>
+    <div id="modal-cbos" class="proc-sub">Carregando CBOs...</div>
+
     <div class="section-title">Compatibilidades / Secundários (Obrigatórios e Opcionais)</div>
     <div id="modal-compat" class="proc-sub">Carregando compatibilidades...</div>
 
@@ -362,10 +561,35 @@ async function openModal(codigo) {
   `;
 
   try {
-    const [descs, compats] = await Promise.all([
+    const [descs, compats, reqData, cboData] = await Promise.all([
       loadDescriptions(),
       loadCompatibilidades(),
+      loadRequisitos(),
+      loadCbos(),
     ]);
+    const servEl = document.getElementById("modal-servicos");
+    if (servEl) {
+      servEl.innerHTML = renderServicosSection(reqData, codigo);
+    }
+    const habEl = document.getElementById("modal-habilitacoes");
+    if (habEl) {
+      habEl.innerHTML = renderHabilitacoesSection(reqData, codigo);
+    }
+    const cboEl = document.getElementById("modal-cbos");
+    if (cboEl) {
+      cboEl.innerHTML = renderCbosSection(cboData, proc);
+      const modalCboSearch = document.getElementById("modal-cbo-search");
+      const modalCboList = document.getElementById("modal-cbo-list");
+      if (modalCboSearch && modalCboList) {
+        modalCboSearch.addEventListener("input", () => {
+          const term = normalizeText(modalCboSearch.value.trim());
+          for (const li of modalCboList.children) {
+            const txt = li.getAttribute("data-cbo-text") || "";
+            li.style.display = !term || txt.includes(term) ? "" : "none";
+          }
+        });
+      }
+    }
     const compatEl = document.getElementById("modal-compat");
     if (compatEl) {
       compatEl.innerHTML = renderCompatSection(compats[codigo] || []);
@@ -375,8 +599,10 @@ async function openModal(codigo) {
       descEl.textContent = descs[codigo] || "Sem descrição cadastrada no SIGTAP.";
     }
   } catch {
-    const compatEl = document.getElementById("modal-compat");
-    if (compatEl) compatEl.textContent = "Não foi possível carregar as compatibilidades.";
+    for (const id of ["modal-servicos", "modal-habilitacoes", "modal-cbos", "modal-compat"]) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = "Não foi possível carregar estes dados.";
+    }
     const descEl = document.getElementById("modal-desc");
     if (descEl) descEl.textContent = "Não foi possível carregar a descrição.";
   }
@@ -461,9 +687,25 @@ function setupEvents() {
     els.registroFilter,
     els.paidOnly,
     els.obrigOnly,
+    els.servOnly,
+    els.habOnly,
   ]) {
     el.addEventListener("change", applyFilters);
   }
+
+  let cboDebounce;
+  els.cboFilter.addEventListener("focus", () => {
+    loadCbos().catch(() => {});
+  });
+  els.cboFilter.addEventListener("input", () => {
+    clearTimeout(cboDebounce);
+    cboDebounce = setTimeout(async () => {
+      if (els.cboFilter.value.trim()) {
+        await loadCbos();
+      }
+      applyFilters();
+    }, 200);
+  });
 
   els.clearBtn.addEventListener("click", () => {
     els.searchInput.value = "";
@@ -474,8 +716,11 @@ function setupEvents() {
     els.complexityFilter.value = "";
     els.sexFilter.value = "";
     els.registroFilter.value = "";
+    els.cboFilter.value = "";
     els.paidOnly.checked = false;
     els.obrigOnly.checked = false;
+    els.servOnly.checked = false;
+    els.habOnly.checked = false;
     applyFilters();
   });
 

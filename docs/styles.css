@@ -128,7 +128,8 @@ body {
   letter-spacing: 0.03em;
 }
 
-.field select {
+.field select,
+.field input {
   width: 100%;
   padding: 0.5rem 0.6rem;
   font-size: 0.88rem;
@@ -508,6 +509,46 @@ tbody td {
 .compat-meta {
   font-size: 0.77rem;
   color: var(--muted);
+}
+
+.cbo-filter-input {
+  width: 100%;
+  padding: 0.45rem 0.65rem;
+  font-size: 0.84rem;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  margin-bottom: 0.45rem;
+}
+
+.cbo-scroll {
+  max-height: 220px;
+  overflow-y: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.cbo-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cbo-list li {
+  padding: 0.4rem 0.7rem;
+  border-bottom: 1px solid #eef2f6;
+  font-size: 0.82rem;
+}
+
+.cbo-list li:last-child {
+  border-bottom: none;
+}
+
+.cbo-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 600;
+  color: var(--primary);
+  margin-right: 0.45rem;
 }
 
 @media (max-width: 720px) {
