@@ -310,6 +310,22 @@ def build_datasets(zip_path: Path, out_dir: Path) -> dict[str, object]:
                 entry["h"] = proc_habilitacoes[co_proc]
             requisitos_por_proc[co_proc] = entry
 
+        cid_map = {
+            r["CO_CID"]: r["NO_CID"]
+            for r in read_fixed_table(zf, "tb_cid.txt")
+        }
+        proc_cids: dict[str, list[list[str]]] = {}
+        used_cids: dict[str, str] = {}
+        for r in read_fixed_table(zf, "rl_procedimento_cid.txt"):
+            co_proc = r["CO_PROCEDIMENTO"]
+            co_cid = r["CO_CID"]
+            st_princ = r["ST_PRINCIPAL"]
+            proc_cids.setdefault(co_proc, []).append([co_cid, st_princ])
+            if co_cid not in used_cids:
+                used_cids[co_cid] = cid_map.get(co_cid, co_cid)
+        for co_proc, lst in proc_cids.items():
+            lst.sort(key=lambda item: (0 if item[1] == "S" else 1, item[0]))
+
         versao_txt = ""
         if "versao" in zf.namelist():
             versao_txt = zf.read("versao").decode("latin1").strip()
@@ -333,6 +349,7 @@ def build_datasets(zip_path: Path, out_dir: Path) -> dict[str, object]:
         nao_exige_cbo = "021" in det_codes
         qt_servicos = len(proc_servicos.get(co, []))
         qt_habilitacoes = len(proc_habilitacoes.get(co, []))
+        qt_cids = len(proc_cids.get(co, []))
 
         vl_sh = to_reais(r["VL_SH"])
         vl_sa = to_reais(r["VL_SA"])
@@ -379,6 +396,7 @@ def build_datasets(zip_path: Path, out_dir: Path) -> dict[str, object]:
                 "nao_exige_cbo": nao_exige_cbo,
                 "qt_servicos": qt_servicos,
                 "qt_habilitacoes": qt_habilitacoes,
+                "qt_cids": qt_cids,
             }
         )
 
@@ -439,6 +457,17 @@ def build_datasets(zip_path: Path, out_dir: Path) -> dict[str, object]:
                 "habilitacoes": habilitacao_map,
                 "grupos_hab": grupo_hab_map,
                 "por_procedimento": requisitos_por_proc,
+            },
+            ensure_ascii=False,
+            separators=(",", ":"),
+        ),
+        encoding="utf-8",
+    )
+    (out_dir / "cids.json").write_text(
+        json.dumps(
+            {
+                "catalogo": dict(sorted(used_cids.items())),
+                "por_procedimento": proc_cids,
             },
             ensure_ascii=False,
             separators=(",", ":"),

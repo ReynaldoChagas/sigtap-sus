@@ -10,6 +10,9 @@ let compatCache = null;
 let cbosCache = null;
 let cbosPromise = null;
 let cboIndexList = null;
+let cidsCache = null;
+let cidsPromise = null;
+let cidIndexList = null;
 let requisitosCache = null;
 
 const els = {
@@ -26,6 +29,8 @@ const els = {
   registroFilter: document.getElementById("registro-filter"),
   cboFilter: document.getElementById("cbo-filter"),
   cboOptions: document.getElementById("cbo-options"),
+  cidFilter: document.getElementById("cid-filter"),
+  cidOptions: document.getElementById("cid-options"),
   paidOnly: document.getElementById("paid-only"),
   obrigOnly: document.getElementById("obrig-only"),
   servOnly: document.getElementById("serv-only"),
@@ -132,6 +137,7 @@ function applyFilters() {
   const sexo = els.sexFilter.value;
   const registro = els.registroFilter.value;
   const rawCbo = els.cboFilter.value.trim();
+  const rawCid = els.cidFilter.value.trim();
   const onlyPaid = els.paidOnly.checked;
   const onlyObrig = els.obrigOnly.checked;
   const onlyServ = els.servOnly.checked;
@@ -157,6 +163,27 @@ function applyFilters() {
     matchingCboSet = new Set(matchedCodes);
   }
 
+  let matchingCidSet = null;
+  if (rawCid && cidsCache) {
+    const cidNorm = normalizeText(rawCid);
+    const cidCodeInput = rawCid.split(" - ")[0].replace(/\./g, "").toUpperCase();
+    const matchedCids = [];
+    if (rawCid.includes(" - ") && cidsCache.catalogo[cidCodeInput]) {
+      matchedCids.push(cidCodeInput);
+    } else {
+      const looksLikeCode = /^[A-Z]\d/i.test(cidCodeInput);
+      for (const item of cidIndexList) {
+        if (
+          (looksLikeCode && item.code.startsWith(cidCodeInput)) ||
+          item.normName.includes(cidNorm)
+        ) {
+          matchedCids.push(item.code);
+        }
+      }
+    }
+    matchingCidSet = new Set(matchedCids);
+  }
+
   filteredProcedures = allProcedures.filter((p) => {
     if (grupo && p.grupo_cod !== grupo) return false;
     if (subgrupo && p.subgrupo_cod !== subgrupo) return false;
@@ -171,6 +198,12 @@ function applyFilters() {
     if (matchingCboSet) {
       const procCbos = cbosCache.por_procedimento[p.codigo];
       if (!procCbos || !procCbos.some((c) => matchingCboSet.has(c))) {
+        return false;
+      }
+    }
+    if (matchingCidSet) {
+      const procCids = cidsCache.por_procedimento[p.codigo];
+      if (!procCids || !procCids.some(([c]) => matchingCidSet.has(c))) {
         return false;
       }
     }
@@ -246,6 +279,10 @@ function renderTable() {
         p.qt_habilitacoes > 0
           ? `<span class="badge badge-warn">Habilitação (${p.qt_habilitacoes})</span>`
           : "";
+      const cidBadge =
+        p.qt_cids > 0
+          ? `<span class="badge badge-neutral">${p.qt_cids} CID(s)</span>`
+          : "";
 
       return `
         <tr data-codigo="${escapeHtml(p.codigo)}">
@@ -258,7 +295,7 @@ function renderTable() {
             <div class="proc-sub">${escapeHtml(p.grupo)} · ${escapeHtml(p.subgrupo)}</div>
             <div class="badges-row">
               <span class="badge badge-neutral">${escapeHtml(p.complexidade)}</span>
-              ${regBadges}${extraReg}${obrigBadge}${compatBadge}${cboBadge}${servBadge}${habBadge}
+              ${regBadges}${extraReg}${obrigBadge}${compatBadge}${cboBadge}${servBadge}${habBadge}${cidBadge}
             </div>
           </td>
           <td>
@@ -340,6 +377,44 @@ async function loadCbos() {
   return cbosPromise;
 }
 
+function formatCid(code) {
+  if (!code) return "";
+  return code.length === 4 ? `${code.slice(0, 3)}.${code.slice(3)}` : code;
+}
+
+async function loadCids() {
+  if (cidsCache) return cidsCache;
+  if (!cidsPromise) {
+    cidsPromise = fetch("data/cids.json")
+      .then((resp) => {
+        if (!resp.ok) throw new Error("Não foi possível carregar os CIDs.");
+        return resp.json();
+      })
+      .then((data) => {
+        cidsCache = data;
+        cidIndexList = Object.entries(data.catalogo).map(([code, name]) => ({
+          code,
+          formatted: formatCid(code),
+          name,
+          normName: normalizeText(name),
+        }));
+        const frag = document.createDocumentFragment();
+        for (const item of cidIndexList) {
+          const opt = document.createElement("option");
+          opt.value = `${item.formatted} - ${item.name}`;
+          frag.appendChild(opt);
+        }
+        els.cidOptions.appendChild(frag);
+        return cidsCache;
+      })
+      .catch((err) => {
+        cidsPromise = null;
+        throw err;
+      });
+  }
+  return cidsPromise;
+}
+
 function renderServicosSection(reqData, codigo) {
   const pairs = reqData.por_procedimento[codigo]?.s || [];
   if (pairs.length === 0) {
@@ -406,36 +481,106 @@ function renderHabilitacoesSection(reqData, codigo) {
     .join("");
 }
 
-function renderCbosSection(cboData, proc) {
-  if (proc.nao_exige_cbo) {
-    return '<span class="badge badge-ok">Não Exige CBO (qualquer ocupação permitida)</span>';
-  }
-  const codes = cboData.por_procedimento[proc.codigo] || [];
-  if (codes.length === 0) {
-    return '<span class="proc-sub">Nenhum CBO específico vinculado a este procedimento.</span>';
-  }
-  const items = codes.map((code) => ({
-    code,
-    name: cboData.catalogo[code] || code,
-  }));
-  const listHtml = items
-    .map(
-      (i) =>
-        `<li data-cbo-text="${escapeHtml(normalizeText(`${i.code} ${i.name}`))}"><span class="cbo-code">${escapeHtml(i.code)}</span>${escapeHtml(i.name)}</li>`
-    )
-    .join("");
-
-  return `
-    <div class="compat-meta" style="margin-bottom:0.35rem;">${items.length} CBO(s) permitido(s)</div>
+function mountFilterableList(containerEl, { items, countLabel, searchPlaceholder, renderItem }) {
+  const MAX_RENDER = 250;
+  containerEl.innerHTML = `
+    <div class="compat-meta" style="margin-bottom:0.35rem;">${escapeHtml(countLabel)}</div>
     ${
       items.length > 8
-        ? '<input id="modal-cbo-search" class="cbo-filter-input" type="search" placeholder="Filtrar CBOs deste procedimento (código ou nome)...">'
+        ? `<input class="cbo-filter-input" type="search" placeholder="${escapeHtml(searchPlaceholder)}">`
         : ""
     }
     <div class="cbo-scroll">
-      <ul id="modal-cbo-list" class="cbo-list">${listHtml}</ul>
+      <ul class="cbo-list"></ul>
     </div>
+    <div class="compat-meta list-cap-note" style="margin-top:0.35rem;"></div>
   `;
+
+  const inputEl = containerEl.querySelector(".cbo-filter-input");
+  const listEl = containerEl.querySelector(".cbo-list");
+  const noteEl = containerEl.querySelector(".list-cap-note");
+
+  function renderSlice(term) {
+    const matches = term ? items.filter((i) => i.searchKey.includes(term)) : items;
+    const shown = matches.slice(0, MAX_RENDER);
+    listEl.innerHTML = shown.length
+      ? shown.map(renderItem).join("")
+      : '<li class="proc-sub">Nenhum item encontrado para essa busca.</li>';
+    noteEl.textContent =
+      matches.length > MAX_RENDER
+        ? `Mostrando os primeiros ${MAX_RENDER} de ${matches.length} itens — refine a busca acima para ver outros.`
+        : "";
+  }
+
+  renderSlice("");
+  if (inputEl) {
+    inputEl.addEventListener("input", () => {
+      const term = normalizeText(inputEl.value.trim()).replace(/\./g, "");
+      renderSlice(term);
+    });
+  }
+}
+
+function renderCbosInto(containerEl, cboData, proc) {
+  if (proc.nao_exige_cbo) {
+    containerEl.innerHTML =
+      '<span class="badge badge-ok">Não Exige CBO (qualquer ocupação permitida)</span>';
+    return;
+  }
+  const codes = cboData.por_procedimento[proc.codigo] || [];
+  if (codes.length === 0) {
+    containerEl.innerHTML =
+      '<span class="proc-sub">Nenhum CBO específico vinculado a este procedimento.</span>';
+    return;
+  }
+  const items = codes.map((code) => {
+    const name = cboData.catalogo[code] || code;
+    return {
+      code,
+      name,
+      searchKey: normalizeText(`${code} ${name}`),
+    };
+  });
+  mountFilterableList(containerEl, {
+    items,
+    countLabel: `${items.length} CBO(s) permitido(s)`,
+    searchPlaceholder: "Filtrar CBOs deste procedimento (código ou nome)...",
+    renderItem: (i) =>
+      `<li><span class="cbo-code">${escapeHtml(i.code)}</span>${escapeHtml(i.name)}</li>`,
+  });
+}
+
+function renderCidsInto(containerEl, cidData, codigo) {
+  const pairs = cidData.por_procedimento[codigo] || [];
+  if (pairs.length === 0) {
+    containerEl.innerHTML =
+      '<span class="proc-sub">Nenhuma lista fechada de CIDs vinculada a este procedimento.</span>';
+    return;
+  }
+  const items = pairs.map(([code, st]) => {
+    const name = cidData.catalogo[code] || code;
+    const formatted = formatCid(code);
+    return {
+      code,
+      formatted,
+      name,
+      principal: st === "S",
+      searchKey: normalizeText(`${code} ${formatted} ${name}`).replace(/\./g, ""),
+    };
+  });
+  mountFilterableList(containerEl, {
+    items,
+    countLabel: `${items.length} CID(s) permitido(s)`,
+    searchPlaceholder: "Filtrar CIDs deste procedimento (código ou descrição)...",
+    renderItem: (i) => `
+      <li class="cid-item">
+        <div><span class="cbo-code">${escapeHtml(i.formatted)}</span>${escapeHtml(i.name)}</div>
+        <span class="badge ${i.principal ? "badge-info" : "badge-neutral"}">${
+      i.principal ? "Principal" : "Secundário"
+    }</span>
+      </li>
+    `,
+  });
 }
 
 const COMPAT_GROUPS = [
@@ -513,59 +658,83 @@ async function openModal(codigo) {
     : '<span class="proc-sub">Não informado</span>';
 
   els.modalBody.innerHTML = `
-    <div class="detail-grid">
-      <div class="detail-box"><div class="lbl">Valor Ambulatorial (SA)</div><div class="val">${formatCurrency(proc.vl_sa)}</div></div>
-      <div class="detail-box"><div class="lbl">Valor Hospitalar (SH)</div><div class="val">${formatCurrency(proc.vl_sh)}</div></div>
-      <div class="detail-box"><div class="lbl">Valor Profissional (SP)</div><div class="val">${formatCurrency(proc.vl_sp)}</div></div>
-      <div class="detail-box"><div class="lbl">Total Hospitalar (SH+SP)</div><div class="val">${formatCurrency(proc.vl_hosp_total)}</div></div>
-      <div class="detail-box"><div class="lbl">Faixa Etária</div><div class="val">${escapeHtml(formatAgeRange(proc.idade_min, proc.idade_max))}</div></div>
-      <div class="detail-box"><div class="lbl">Sexo Permitido</div><div class="val">${escapeHtml(proc.sexo)}</div></div>
-      <div class="detail-box"><div class="lbl">CPF / CNS</div><div class="val">${getCpfBadge(proc)}</div></div>
-      <div class="detail-box"><div class="lbl">Complexidade</div><div class="val">${escapeHtml(proc.complexidade)}</div></div>
-      <div class="detail-box"><div class="lbl">Financiamento</div><div class="val">${escapeHtml(proc.financiamento || "—")}</div></div>
-      <div class="detail-box"><div class="lbl">Qtd. Máxima</div><div class="val">${proc.qt_max ?? "Não se aplica"}</div></div>
-      <div class="detail-box"><div class="lbl">Dias Permanência</div><div class="val">${proc.qt_dias_perm ?? "Não se aplica"}</div></div>
-      <div class="detail-box"><div class="lbl">Pontos</div><div class="val">${proc.qt_pontos ?? 0}</div></div>
-    </div>
+    <section class="modal-section">
+      <h3 class="modal-section-title">Valores e Regras Gerais</h3>
+      <div class="detail-grid">
+        <div class="detail-box"><div class="lbl">Valor Ambulatorial (SA)</div><div class="val">${formatCurrency(proc.vl_sa)}</div></div>
+        <div class="detail-box"><div class="lbl">Valor Hospitalar (SH)</div><div class="val">${formatCurrency(proc.vl_sh)}</div></div>
+        <div class="detail-box"><div class="lbl">Valor Profissional (SP)</div><div class="val">${formatCurrency(proc.vl_sp)}</div></div>
+        <div class="detail-box"><div class="lbl">Total Hospitalar (SH+SP)</div><div class="val">${formatCurrency(proc.vl_hosp_total)}</div></div>
+        <div class="detail-box"><div class="lbl">Faixa Etária</div><div class="val">${escapeHtml(formatAgeRange(proc.idade_min, proc.idade_max))}</div></div>
+        <div class="detail-box"><div class="lbl">Sexo Permitido</div><div class="val">${escapeHtml(proc.sexo)}</div></div>
+        <div class="detail-box"><div class="lbl">CPF / CNS</div><div class="val">${getCpfBadge(proc)}</div></div>
+        <div class="detail-box"><div class="lbl">Complexidade</div><div class="val">${escapeHtml(proc.complexidade)}</div></div>
+        <div class="detail-box"><div class="lbl">Financiamento</div><div class="val">${escapeHtml(proc.financiamento || "—")}</div></div>
+        <div class="detail-box"><div class="lbl">Qtd. Máxima</div><div class="val">${proc.qt_max ?? "Não se aplica"}</div></div>
+        <div class="detail-box"><div class="lbl">Dias Permanência</div><div class="val">${proc.qt_dias_perm ?? "Não se aplica"}</div></div>
+        <div class="detail-box"><div class="lbl">Pontos</div><div class="val">${proc.qt_pontos ?? 0}</div></div>
+      </div>
+    </section>
 
-    <div class="section-title">Classificação</div>
-    <p style="margin:0.2rem 0 0.6rem;font-size:0.88rem;">
-      <strong>Grupo:</strong> ${escapeHtml(proc.grupo)}<br>
-      <strong>Subgrupo:</strong> ${escapeHtml(proc.subgrupo)}<br>
-      <strong>Forma de Organização:</strong> ${escapeHtml(proc.forma || "—")}
-    </p>
+    <section class="modal-section">
+      <h3 class="modal-section-title">Classificação e Registro</h3>
+      <p style="margin:0 0 0.7rem;font-size:0.88rem;">
+        <strong>Grupo:</strong> ${escapeHtml(proc.grupo)}<br>
+        <strong>Subgrupo:</strong> ${escapeHtml(proc.subgrupo)}<br>
+        <strong>Forma de Organização:</strong> ${escapeHtml(proc.forma || "—")}
+      </p>
+      <div style="margin-bottom:0.55rem;">
+        <div class="compat-meta" style="margin-bottom:0.25rem;font-weight:600;">Instrumentos de Registro</div>
+        <div class="badges-row">${registrosHtml}</div>
+      </div>
+      <div style="margin-bottom:0.55rem;">
+        <div class="compat-meta" style="margin-bottom:0.25rem;font-weight:600;">Modalidades de Atendimento</div>
+        <div class="badges-row">${modalidadesHtml}</div>
+      </div>
+      <div>
+        <div class="compat-meta" style="margin-bottom:0.25rem;font-weight:600;">Atributos / Detalhes SIGTAP</div>
+        <div class="badges-row">${detalhesHtml}</div>
+      </div>
+    </section>
 
-    <div class="section-title">Instrumentos de Registro</div>
-    <div class="badges-row">${registrosHtml}</div>
+    <section class="modal-section">
+      <h3 class="modal-section-title">Serviço / Classificação</h3>
+      <div id="modal-servicos" class="proc-sub">Carregando serviços/classificações...</div>
+    </section>
 
-    <div class="section-title">Modalidades de Atendimento</div>
-    <div class="badges-row">${modalidadesHtml}</div>
+    <section class="modal-section">
+      <h3 class="modal-section-title">Habilitações</h3>
+      <div id="modal-habilitacoes" class="proc-sub">Carregando habilitações...</div>
+    </section>
 
-    <div class="section-title">Atributos / Detalhes SIGTAP</div>
-    <div class="badges-row">${detalhesHtml}</div>
+    <section class="modal-section">
+      <h3 class="modal-section-title">CBOs Permitidos</h3>
+      <div id="modal-cbos" class="proc-sub">Carregando CBOs...</div>
+    </section>
 
-    <div class="section-title">Serviço / Classificação</div>
-    <div id="modal-servicos" class="proc-sub">Carregando serviços/classificações...</div>
+    <section class="modal-section">
+      <h3 class="modal-section-title">CIDs Permitidos (CID-10)</h3>
+      <div id="modal-cids" class="proc-sub">Carregando CIDs...</div>
+    </section>
 
-    <div class="section-title">Habilitações</div>
-    <div id="modal-habilitacoes" class="proc-sub">Carregando habilitações...</div>
+    <section class="modal-section">
+      <h3 class="modal-section-title">Compatibilidades / Secundários (Obrigatórios e Opcionais)</h3>
+      <div id="modal-compat" class="proc-sub">Carregando compatibilidades...</div>
+    </section>
 
-    <div class="section-title">CBOs Permitidos</div>
-    <div id="modal-cbos" class="proc-sub">Carregando CBOs...</div>
-
-    <div class="section-title">Compatibilidades / Secundários (Obrigatórios e Opcionais)</div>
-    <div id="modal-compat" class="proc-sub">Carregando compatibilidades...</div>
-
-    <div class="section-title">Descrição Oficial</div>
-    <div id="modal-desc" class="desc-text">Carregando descrição...</div>
+    <section class="modal-section">
+      <h3 class="modal-section-title">Descrição Oficial</h3>
+      <div id="modal-desc" class="desc-text">Carregando descrição...</div>
+    </section>
   `;
 
   try {
-    const [descs, compats, reqData, cboData] = await Promise.all([
+    const [descs, compats, reqData, cboData, cidData] = await Promise.all([
       loadDescriptions(),
       loadCompatibilidades(),
       loadRequisitos(),
       loadCbos(),
+      loadCids(),
     ]);
     const servEl = document.getElementById("modal-servicos");
     if (servEl) {
@@ -577,18 +746,11 @@ async function openModal(codigo) {
     }
     const cboEl = document.getElementById("modal-cbos");
     if (cboEl) {
-      cboEl.innerHTML = renderCbosSection(cboData, proc);
-      const modalCboSearch = document.getElementById("modal-cbo-search");
-      const modalCboList = document.getElementById("modal-cbo-list");
-      if (modalCboSearch && modalCboList) {
-        modalCboSearch.addEventListener("input", () => {
-          const term = normalizeText(modalCboSearch.value.trim());
-          for (const li of modalCboList.children) {
-            const txt = li.getAttribute("data-cbo-text") || "";
-            li.style.display = !term || txt.includes(term) ? "" : "none";
-          }
-        });
-      }
+      renderCbosInto(cboEl, cboData, proc);
+    }
+    const cidEl = document.getElementById("modal-cids");
+    if (cidEl) {
+      renderCidsInto(cidEl, cidData, codigo);
     }
     const compatEl = document.getElementById("modal-compat");
     if (compatEl) {
@@ -599,7 +761,7 @@ async function openModal(codigo) {
       descEl.textContent = descs[codigo] || "Sem descrição cadastrada no SIGTAP.";
     }
   } catch {
-    for (const id of ["modal-servicos", "modal-habilitacoes", "modal-cbos", "modal-compat"]) {
+    for (const id of ["modal-servicos", "modal-habilitacoes", "modal-cbos", "modal-cids", "modal-compat"]) {
       const el = document.getElementById(id);
       if (el) el.textContent = "Não foi possível carregar estes dados.";
     }
@@ -707,6 +869,20 @@ function setupEvents() {
     }, 200);
   });
 
+  let cidDebounce;
+  els.cidFilter.addEventListener("focus", () => {
+    loadCids().catch(() => {});
+  });
+  els.cidFilter.addEventListener("input", () => {
+    clearTimeout(cidDebounce);
+    cidDebounce = setTimeout(async () => {
+      if (els.cidFilter.value.trim()) {
+        await loadCids();
+      }
+      applyFilters();
+    }, 200);
+  });
+
   els.clearBtn.addEventListener("click", () => {
     els.searchInput.value = "";
     els.groupFilter.value = "";
@@ -717,6 +893,7 @@ function setupEvents() {
     els.sexFilter.value = "";
     els.registroFilter.value = "";
     els.cboFilter.value = "";
+    els.cidFilter.value = "";
     els.paidOnly.checked = false;
     els.obrigOnly.checked = false;
     els.servOnly.checked = false;
