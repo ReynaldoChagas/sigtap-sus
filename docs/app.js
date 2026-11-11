@@ -3,6 +3,7 @@ const PAGE_SIZE = 50;
 let allProcedures = [];
 let procByCode = new Map();
 let allSubgrupos = [];
+let allFormas = [];
 let filteredProcedures = [];
 let currentPage = 1;
 let descriptionsCache = null;
@@ -23,6 +24,7 @@ const els = {
   clearBtn: document.getElementById("clear-btn"),
   groupFilter: document.getElementById("group-filter"),
   subgroupFilter: document.getElementById("subgroup-filter"),
+  formaFilter: document.getElementById("forma-filter"),
   cpfFilter: document.getElementById("cpf-filter"),
   complexityFilter: document.getElementById("complexity-filter"),
   sexFilter: document.getElementById("sex-filter"),
@@ -106,23 +108,49 @@ function getCpfBadge(proc) {
   return `<span class="badge ${info.cls}">${info.text}</span>`;
 }
 
-function populateSubgroupFilter(selectedGroup) {
-  const prevValue = els.subgroupFilter.value;
-  els.subgroupFilter.innerHTML = '<option value="">Todos os subgrupos</option>';
+function populateCascadeSelect(selectEl, defaultLabel, items, formatLabel) {
+  const prevValue = selectEl.value;
+  selectEl.innerHTML = `<option value="">${escapeHtml(defaultLabel)}</option>`;
 
+  let keepPrev = false;
+  for (const item of items) {
+    const opt = document.createElement("option");
+    opt.value = item.codigo;
+    opt.textContent = formatLabel(item);
+    if (item.codigo === prevValue) keepPrev = true;
+    selectEl.appendChild(opt);
+  }
+  selectEl.value = keepPrev ? prevValue : "";
+}
+
+function populateSubgroupFilter(selectedGroup) {
   const items = selectedGroup
     ? allSubgrupos.filter((s) => s.grupo_cod === selectedGroup)
     : allSubgrupos;
+  populateCascadeSelect(
+    els.subgroupFilter,
+    "Todos os subgrupos",
+    items,
+    (s) => `${s.sub_codigo} - ${s.nome}${selectedGroup ? "" : ` (${s.grupo_cod})`}`
+  );
+}
 
-  let keepPrev = false;
-  for (const s of items) {
-    const opt = document.createElement("option");
-    opt.value = s.codigo;
-    opt.textContent = `${s.grupo_cod}.${s.sub_codigo} - ${s.nome}`;
-    if (s.codigo === prevValue) keepPrev = true;
-    els.subgroupFilter.appendChild(opt);
+function populateFormaFilter(selectedGroup, selectedSubgroup) {
+  let items = allFormas;
+  if (selectedSubgroup) {
+    items = allFormas.filter((f) => f.subgrupo_cod === selectedSubgroup);
+  } else if (selectedGroup) {
+    items = allFormas.filter((f) => f.grupo_cod === selectedGroup);
   }
-  els.subgroupFilter.value = keepPrev ? prevValue : "";
+  populateCascadeSelect(
+    els.formaFilter,
+    "Todas as formas de organização",
+    items,
+    (f) =>
+      selectedSubgroup
+        ? `${f.forma_codigo} - ${f.nome}`
+        : `${f.grupo_cod}.${f.subgrupo_cod.slice(2)}.${f.forma_codigo} - ${f.nome}`
+  );
 }
 
 function applyFilters() {
@@ -132,6 +160,7 @@ function applyFilters() {
 
   const grupo = els.groupFilter.value;
   const subgrupo = els.subgroupFilter.value;
+  const forma = els.formaFilter.value;
   const cpf = els.cpfFilter.value;
   const complexidade = els.complexityFilter.value;
   const sexo = els.sexFilter.value;
@@ -187,6 +216,7 @@ function applyFilters() {
   filteredProcedures = allProcedures.filter((p) => {
     if (grupo && p.grupo_cod !== grupo) return false;
     if (subgrupo && p.subgrupo_cod !== subgrupo) return false;
+    if (forma && p.forma_cod !== forma) return false;
     if (cpf && p.cpf_status !== cpf) return false;
     if (complexidade && p.complexidade_cod !== complexidade) return false;
     if (sexo && p.sexo_cod !== sexo) return false;
@@ -777,6 +807,7 @@ function exportCsv() {
     "Nome",
     "Grupo",
     "Subgrupo",
+    "Forma_Organizacao",
     "Complexidade",
     "Sexo",
     "Idade_Min_Meses",
@@ -800,6 +831,7 @@ function exportCsv() {
         p.nome,
         p.grupo,
         p.subgrupo,
+        p.forma,
         p.complexidade,
         p.sexo,
         p.idade_min ?? "",
@@ -838,11 +870,17 @@ function setupEvents() {
 
   els.groupFilter.addEventListener("change", () => {
     populateSubgroupFilter(els.groupFilter.value);
+    populateFormaFilter(els.groupFilter.value, els.subgroupFilter.value);
+    applyFilters();
+  });
+
+  els.subgroupFilter.addEventListener("change", () => {
+    populateFormaFilter(els.groupFilter.value, els.subgroupFilter.value);
     applyFilters();
   });
 
   for (const el of [
-    els.subgroupFilter,
+    els.formaFilter,
     els.cpfFilter,
     els.complexityFilter,
     els.sexFilter,
@@ -888,6 +926,8 @@ function setupEvents() {
     els.groupFilter.value = "";
     populateSubgroupFilter("");
     els.subgroupFilter.value = "";
+    populateFormaFilter("", "");
+    els.formaFilter.value = "";
     els.cpfFilter.value = "";
     els.complexityFilter.value = "";
     els.sexFilter.value = "";
@@ -991,6 +1031,9 @@ async function init() {
 
     allSubgrupos = meta.subgrupos || [];
     populateSubgroupFilter("");
+
+    allFormas = meta.formas_organizacao || [];
+    populateFormaFilter("", "");
 
     for (const r of meta.registros || []) {
       const opt = document.createElement("option");

@@ -4,7 +4,7 @@
   "arquivo_origem": "TabelaUnificada_202611_v2611051737.zip",
   "versao": "1.1",
   "total_procedimentos": 5068,
-  "atualizado_em": "2026-11-11T17:18:32Z",
+  "atualizado_em": "2026-11-11T19:30:08Z",
   "grupos": [
     {
       "codigo": "01",
@@ -469,6 +469,2976 @@
       "codigo": "0909",
       "sub_codigo": "09",
       "nome": "Atenção em Nefrologia"
+    }
+  ],
+  "formas_organizacao": [
+    {
+      "grupo_cod": "01",
+      "subgrupo_cod": "0101",
+      "codigo": "010101",
+      "forma_codigo": "01",
+      "nome": "Educação em saúde"
+    },
+    {
+      "grupo_cod": "01",
+      "subgrupo_cod": "0101",
+      "codigo": "010102",
+      "forma_codigo": "02",
+      "nome": "Saúde bucal"
+    },
+    {
+      "grupo_cod": "01",
+      "subgrupo_cod": "0101",
+      "codigo": "010103",
+      "forma_codigo": "03",
+      "nome": "Visita domiciliar"
+    },
+    {
+      "grupo_cod": "01",
+      "subgrupo_cod": "0101",
+      "codigo": "010104",
+      "forma_codigo": "04",
+      "nome": "Alimentação e nutrição"
+    },
+    {
+      "grupo_cod": "01",
+      "subgrupo_cod": "0101",
+      "codigo": "010105",
+      "forma_codigo": "05",
+      "nome": "Praticas integrativas/complementares"
+    },
+    {
+      "grupo_cod": "01",
+      "subgrupo_cod": "0102",
+      "codigo": "010201",
+      "forma_codigo": "01",
+      "nome": "Vigilancia sanitária"
+    },
+    {
+      "grupo_cod": "01",
+      "subgrupo_cod": "0102",
+      "codigo": "010202",
+      "forma_codigo": "02",
+      "nome": "Vigilância em saúde do trabalhador"
+    },
+    {
+      "grupo_cod": "01",
+      "subgrupo_cod": "0102",
+      "codigo": "010203",
+      "forma_codigo": "03",
+      "nome": "Vigilância epidemiológica - vacinas"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0201",
+      "codigo": "020101",
+      "forma_codigo": "01",
+      "nome": "Coleta de material por meio de punção/biópsia"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0201",
+      "codigo": "020102",
+      "forma_codigo": "02",
+      "nome": "Outras formas de coleta de material"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0202",
+      "codigo": "020201",
+      "forma_codigo": "01",
+      "nome": "Exames bioquimicos"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0202",
+      "codigo": "020202",
+      "forma_codigo": "02",
+      "nome": "Exames hematológicos e hemostasia"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0202",
+      "codigo": "020203",
+      "forma_codigo": "03",
+      "nome": "Exames sorológicos e imunológicos"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0202",
+      "codigo": "020204",
+      "forma_codigo": "04",
+      "nome": "Exames coprológicos"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0202",
+      "codigo": "020205",
+      "forma_codigo": "05",
+      "nome": "Exames de uroanálise"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0202",
+      "codigo": "020206",
+      "forma_codigo": "06",
+      "nome": "Exames hormonais"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0202",
+      "codigo": "020207",
+      "forma_codigo": "07",
+      "nome": "Exames toxicológicos ou de monitorização terapêutica"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0202",
+      "codigo": "020208",
+      "forma_codigo": "08",
+      "nome": "Exames microbiológicos"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0202",
+      "codigo": "020209",
+      "forma_codigo": "09",
+      "nome": "Exames em outros líquidos biológicos"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0202",
+      "codigo": "020210",
+      "forma_codigo": "10",
+      "nome": "Exames de genética"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0202",
+      "codigo": "020211",
+      "forma_codigo": "11",
+      "nome": "Exames para triagem neonatal"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0202",
+      "codigo": "020212",
+      "forma_codigo": "12",
+      "nome": "Exames imunohematológicos"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0203",
+      "codigo": "020301",
+      "forma_codigo": "01",
+      "nome": "Exames citopatológicos"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0203",
+      "codigo": "020302",
+      "forma_codigo": "02",
+      "nome": "Exames anatomopatológicos"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0204",
+      "codigo": "020401",
+      "forma_codigo": "01",
+      "nome": "Exames radiológicos da cabeça e pescoço"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0204",
+      "codigo": "020402",
+      "forma_codigo": "02",
+      "nome": "Exames radiológicos da coluna vertebral"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0204",
+      "codigo": "020403",
+      "forma_codigo": "03",
+      "nome": "Exames radiológicos do torax e mediastino"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0204",
+      "codigo": "020404",
+      "forma_codigo": "04",
+      "nome": "Exames radiológicos da cintura escapular e dos membros superiores"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0204",
+      "codigo": "020405",
+      "forma_codigo": "05",
+      "nome": "Exames radiológicos do abdomen e pelve"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0204",
+      "codigo": "020406",
+      "forma_codigo": "06",
+      "nome": "Exames radiológicos da cintura pélvica e dos membros inferiores"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0205",
+      "codigo": "020501",
+      "forma_codigo": "01",
+      "nome": "Ultra-sonografias do sistema circulatório (qualquer região anatômica)"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0205",
+      "codigo": "020502",
+      "forma_codigo": "02",
+      "nome": "Ultra-sonografias dos demais sistemas"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0206",
+      "codigo": "020601",
+      "forma_codigo": "01",
+      "nome": "Tomografia da cabeça, pescoço e coluna vertebral"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0206",
+      "codigo": "020602",
+      "forma_codigo": "02",
+      "nome": "Tomografia do torax e membros superiores"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0206",
+      "codigo": "020603",
+      "forma_codigo": "03",
+      "nome": "Tomografia do abdomen, pelve e membros inferiores"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0206",
+      "codigo": "020604",
+      "forma_codigo": "04",
+      "nome": "Tomografia Computadorizada de Corpo Inteiro"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0207",
+      "codigo": "020701",
+      "forma_codigo": "01",
+      "nome": "RM da cabeça, pescoço e coluna vertebral"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0207",
+      "codigo": "020702",
+      "forma_codigo": "02",
+      "nome": "RM do torax e membros superiores"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0207",
+      "codigo": "020703",
+      "forma_codigo": "03",
+      "nome": "RM do abdomen, pelve e membros inferiores"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0207",
+      "codigo": "020704",
+      "forma_codigo": "04",
+      "nome": "Ressonância Magnética de corpo inteiro"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0208",
+      "codigo": "020801",
+      "forma_codigo": "01",
+      "nome": "Aparelho cardiovascular"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0208",
+      "codigo": "020802",
+      "forma_codigo": "02",
+      "nome": "Aparelho digestivo"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0208",
+      "codigo": "020803",
+      "forma_codigo": "03",
+      "nome": "Aparelho endócrino"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0208",
+      "codigo": "020804",
+      "forma_codigo": "04",
+      "nome": "Aparelho geniturinário"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0208",
+      "codigo": "020805",
+      "forma_codigo": "05",
+      "nome": "Aparelho esquelético"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0208",
+      "codigo": "020806",
+      "forma_codigo": "06",
+      "nome": "Aparelho nervoso"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0208",
+      "codigo": "020807",
+      "forma_codigo": "07",
+      "nome": "Aparelho respiratório"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0208",
+      "codigo": "020808",
+      "forma_codigo": "08",
+      "nome": "Aparelho hematológico"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0208",
+      "codigo": "020809",
+      "forma_codigo": "09",
+      "nome": "Outros métodos de diagnóstico em medicina nuclear in vivo"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0209",
+      "codigo": "020901",
+      "forma_codigo": "01",
+      "nome": "Aparelho digestivo"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0209",
+      "codigo": "020902",
+      "forma_codigo": "02",
+      "nome": "Aparelho urinário"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0209",
+      "codigo": "020903",
+      "forma_codigo": "03",
+      "nome": "Aparelho ginecológico"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0209",
+      "codigo": "020904",
+      "forma_codigo": "04",
+      "nome": "Aparelho respiratório"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0210",
+      "codigo": "021001",
+      "forma_codigo": "01",
+      "nome": "Exames radiológicos de vasos sangüíneos e linfáticos"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0210",
+      "codigo": "021002",
+      "forma_codigo": "02",
+      "nome": "Vias biliares"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0211",
+      "codigo": "021101",
+      "forma_codigo": "01",
+      "nome": "Diagnóstico em angiologia"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0211",
+      "codigo": "021102",
+      "forma_codigo": "02",
+      "nome": "Diagnóstico em cardiologia"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0211",
+      "codigo": "021103",
+      "forma_codigo": "03",
+      "nome": "Diagnóstico cinético funcional"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0211",
+      "codigo": "021104",
+      "forma_codigo": "04",
+      "nome": "Diagnóstico em ginecologia-obstetrícia"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0211",
+      "codigo": "021105",
+      "forma_codigo": "05",
+      "nome": "Diagnóstico em neurologia"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0211",
+      "codigo": "021106",
+      "forma_codigo": "06",
+      "nome": "Diagnóstico em oftalmologia"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0211",
+      "codigo": "021107",
+      "forma_codigo": "07",
+      "nome": "Diagnóstico em otorrinolaringologia/fonoaudiologia"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0211",
+      "codigo": "021108",
+      "forma_codigo": "08",
+      "nome": "Diagnóstico em pneumologia"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0211",
+      "codigo": "021109",
+      "forma_codigo": "09",
+      "nome": "Diagnóstico em urologia"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0211",
+      "codigo": "021110",
+      "forma_codigo": "10",
+      "nome": "Diagnóstico em psicologia-psiquiatria"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0211",
+      "codigo": "021111",
+      "forma_codigo": "11",
+      "nome": "Diagnóstico em cardiologia intervencionista"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0211",
+      "codigo": "021112",
+      "forma_codigo": "12",
+      "nome": "Diagnóstico em traumato-ortopedia"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0212",
+      "codigo": "021201",
+      "forma_codigo": "01",
+      "nome": "Exames do doador/receptor"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0212",
+      "codigo": "021202",
+      "forma_codigo": "02",
+      "nome": "Procedimentos especiais em hemoterápica"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0213",
+      "codigo": "021301",
+      "forma_codigo": "01",
+      "nome": "Exames relacionados a doenças e agravos de notificação compulsória"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0213",
+      "codigo": "021302",
+      "forma_codigo": "02",
+      "nome": "Exames relacionados ao meio ambiente"
+    },
+    {
+      "grupo_cod": "02",
+      "subgrupo_cod": "0214",
+      "codigo": "021401",
+      "forma_codigo": "01",
+      "nome": "Teste realizado fora da estrutura de laboratório"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0301",
+      "codigo": "030101",
+      "forma_codigo": "01",
+      "nome": "Consultas médicas/outros profissionais  de nivel superior"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0301",
+      "codigo": "030102",
+      "forma_codigo": "02",
+      "nome": "Atendimento/Acompanhamento em saúde do trabalhador"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0301",
+      "codigo": "030103",
+      "forma_codigo": "03",
+      "nome": "Atendimento pré-hospitalar de urgência"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0301",
+      "codigo": "030104",
+      "forma_codigo": "04",
+      "nome": "Outros atendimentos realizados por profissionais de níveis superior"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0301",
+      "codigo": "030105",
+      "forma_codigo": "05",
+      "nome": "Atenção domiciliar"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0301",
+      "codigo": "030106",
+      "forma_codigo": "06",
+      "nome": "Consulta/Atendimento ás urgências (em geral)"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0301",
+      "codigo": "030107",
+      "forma_codigo": "07",
+      "nome": "Atendimento/acompanhamento em reabilitação física, mental, visual e múltiplas deficiências"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0301",
+      "codigo": "030108",
+      "forma_codigo": "08",
+      "nome": "Atendimento/Acompanhamento psicossocial"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0301",
+      "codigo": "030109",
+      "forma_codigo": "09",
+      "nome": "Atendimento/Acompanhamento em saúde do idoso"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0301",
+      "codigo": "030110",
+      "forma_codigo": "10",
+      "nome": "Atendimentos de enfermagem (em geral)"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0301",
+      "codigo": "030111",
+      "forma_codigo": "11",
+      "nome": "Atendimento/Acompanhamento queimados"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0301",
+      "codigo": "030112",
+      "forma_codigo": "12",
+      "nome": "Atendimento/acompanhamento de diagnóstico de doenças endocrinas/metabolicas e nutricionais"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0301",
+      "codigo": "030113",
+      "forma_codigo": "13",
+      "nome": "Acompanhamento em outras especialidades"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0301",
+      "codigo": "030114",
+      "forma_codigo": "14",
+      "nome": "Cuidados Paliativos"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0301",
+      "codigo": "030115",
+      "forma_codigo": "15",
+      "nome": "Atenção Especializada à Saúde da População Trans."
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0301",
+      "codigo": "030116",
+      "forma_codigo": "16",
+      "nome": "Atenção Especializada à Pessoa com Falência Intestinal"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0302",
+      "codigo": "030201",
+      "forma_codigo": "01",
+      "nome": "Assistência fisioterapêutica em alterações obstétricas, neonatais e uroginecológicas"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0302",
+      "codigo": "030202",
+      "forma_codigo": "02",
+      "nome": "Assistência fisioterapêutica em alterações oncológicas"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0302",
+      "codigo": "030203",
+      "forma_codigo": "03",
+      "nome": "Assistência fisioterapêutica em oftalmologia"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0302",
+      "codigo": "030204",
+      "forma_codigo": "04",
+      "nome": "Assistência fisioterapêutica cardiovasculares e pneumo-funcionais"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0302",
+      "codigo": "030205",
+      "forma_codigo": "05",
+      "nome": "Assistência fisioterapêutica nas disfunções musculo esqueleticas (todas as origens)"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0302",
+      "codigo": "030206",
+      "forma_codigo": "06",
+      "nome": "Assistência fisioterapêutica nas alterações em neurologia"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0302",
+      "codigo": "030207",
+      "forma_codigo": "07",
+      "nome": "Assistência fisioterapêutica em queimados"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0303",
+      "codigo": "030301",
+      "forma_codigo": "01",
+      "nome": "Tratamento de doenças infecciosas e parasitárias"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0303",
+      "codigo": "030302",
+      "forma_codigo": "02",
+      "nome": "Tratamento de doenças do sangue, orgãos hematopoéticos e alguns transtornos imunitários"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0303",
+      "codigo": "030303",
+      "forma_codigo": "03",
+      "nome": "Tratamento de doenças endocrinas, metabólicas e nutricionais"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0303",
+      "codigo": "030304",
+      "forma_codigo": "04",
+      "nome": "Tratamento de doenças do sistema nervoso central e periférico"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0303",
+      "codigo": "030305",
+      "forma_codigo": "05",
+      "nome": "Tratamento de doenças do aparelho da visão"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0303",
+      "codigo": "030306",
+      "forma_codigo": "06",
+      "nome": "Tratamento de doenças cardiovasculares"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0303",
+      "codigo": "030307",
+      "forma_codigo": "07",
+      "nome": "Tratamento de doenças do aparelho digestivo"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0303",
+      "codigo": "030308",
+      "forma_codigo": "08",
+      "nome": "Tratamento de doenças da pele e do tecido  subcutâneo"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0303",
+      "codigo": "030309",
+      "forma_codigo": "09",
+      "nome": "Tratamento de doenças do sistema osteomuscular e do tecido conjuntivo"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0303",
+      "codigo": "030310",
+      "forma_codigo": "10",
+      "nome": "Tratamento durante a gestação, parto e puerpério"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0303",
+      "codigo": "030311",
+      "forma_codigo": "11",
+      "nome": "Tratamento de malformações congênitas, deformidades e anomalias cromossômicas"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0303",
+      "codigo": "030312",
+      "forma_codigo": "12",
+      "nome": "Tratamentos por medicina nuclear in vivo"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0303",
+      "codigo": "030313",
+      "forma_codigo": "13",
+      "nome": "Tratamento de pacientes sob cuidados prolongados"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0303",
+      "codigo": "030314",
+      "forma_codigo": "14",
+      "nome": "Tratamento de doenças do ouvido/apófise mastóide e vias aéreas"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0303",
+      "codigo": "030315",
+      "forma_codigo": "15",
+      "nome": "Tratamento das doenças do aparelho geniturinário"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0303",
+      "codigo": "030316",
+      "forma_codigo": "16",
+      "nome": "Tratamento de algumas afecçõess originadas no período neonatal"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0303",
+      "codigo": "030317",
+      "forma_codigo": "17",
+      "nome": "Tratamento dos transtornos mentais e comportamentais"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0303",
+      "codigo": "030318",
+      "forma_codigo": "18",
+      "nome": "Tratamento HIV/Aids"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0303",
+      "codigo": "030319",
+      "forma_codigo": "19",
+      "nome": "Reabilitação"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0304",
+      "codigo": "030401",
+      "forma_codigo": "01",
+      "nome": "Radioterapia"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0304",
+      "codigo": "030402",
+      "forma_codigo": "02",
+      "nome": "Quimioterapia paliativa - adulto"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0304",
+      "codigo": "030403",
+      "forma_codigo": "03",
+      "nome": "Quimioterapia para controle temporário de doença - adulto"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0304",
+      "codigo": "030404",
+      "forma_codigo": "04",
+      "nome": "Quimioterapia prévia (neoadjuvante/citorredutora)- adulto"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0304",
+      "codigo": "030405",
+      "forma_codigo": "05",
+      "nome": "Quimioterapia adjuvante (profilática) - adulto"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0304",
+      "codigo": "030406",
+      "forma_codigo": "06",
+      "nome": "Quimioterapia curativa - adulto"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0304",
+      "codigo": "030407",
+      "forma_codigo": "07",
+      "nome": "Quimioterapia de tumores de crianca e adolescente"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0304",
+      "codigo": "030408",
+      "forma_codigo": "08",
+      "nome": "Quimioterapia - procedimentos especiais"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0304",
+      "codigo": "030409",
+      "forma_codigo": "09",
+      "nome": "Medicina nuclear - terapêutica oncológica"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0304",
+      "codigo": "030410",
+      "forma_codigo": "10",
+      "nome": "Gerais em oncologia"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0305",
+      "codigo": "030501",
+      "forma_codigo": "01",
+      "nome": "Tratamento dialítico"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0305",
+      "codigo": "030502",
+      "forma_codigo": "02",
+      "nome": "Tratamento em nefrologia em geral"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0306",
+      "codigo": "030601",
+      "forma_codigo": "01",
+      "nome": "Procedimentos destinados a obtenção do sangue para fins de assistência hemoterapica"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0306",
+      "codigo": "030602",
+      "forma_codigo": "02",
+      "nome": "Medicina transfusional"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0307",
+      "codigo": "030701",
+      "forma_codigo": "01",
+      "nome": "Dentística"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0307",
+      "codigo": "030702",
+      "forma_codigo": "02",
+      "nome": "Endodontia"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0307",
+      "codigo": "030703",
+      "forma_codigo": "03",
+      "nome": "Periodontia clínica"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0307",
+      "codigo": "030704",
+      "forma_codigo": "04",
+      "nome": "Moldagem/Manutenção"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0307",
+      "codigo": "030705",
+      "forma_codigo": "05",
+      "nome": "Estomatologia."
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0308",
+      "codigo": "030801",
+      "forma_codigo": "01",
+      "nome": "Traumatismos"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0308",
+      "codigo": "030802",
+      "forma_codigo": "02",
+      "nome": "Intoxicações e envenenamentos"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0308",
+      "codigo": "030803",
+      "forma_codigo": "03",
+      "nome": "Outras consequências de causas externas"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0308",
+      "codigo": "030804",
+      "forma_codigo": "04",
+      "nome": "Complicações consequentes a procedimentos em saúde"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0309",
+      "codigo": "030901",
+      "forma_codigo": "01",
+      "nome": "Terapia nutricional"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0309",
+      "codigo": "030902",
+      "forma_codigo": "02",
+      "nome": "Terapias em doenças alérgicas"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0309",
+      "codigo": "030903",
+      "forma_codigo": "03",
+      "nome": "Terapias do aparelho geniturinário"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0309",
+      "codigo": "030904",
+      "forma_codigo": "04",
+      "nome": "Terapias do aparelho cardiovascular"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0309",
+      "codigo": "030905",
+      "forma_codigo": "05",
+      "nome": "Práticas integrativas e complementares"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0309",
+      "codigo": "030906",
+      "forma_codigo": "06",
+      "nome": "Acessos venosos"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0309",
+      "codigo": "030907",
+      "forma_codigo": "07",
+      "nome": "Angiologia"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0309",
+      "codigo": "030908",
+      "forma_codigo": "08",
+      "nome": "Terapia Gênica"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0310",
+      "codigo": "031001",
+      "forma_codigo": "01",
+      "nome": "Parto e nascimento"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0311",
+      "codigo": "031101",
+      "forma_codigo": "01",
+      "nome": "Ações Assistenciais"
+    },
+    {
+      "grupo_cod": "03",
+      "subgrupo_cod": "0311",
+      "codigo": "031102",
+      "forma_codigo": "02",
+      "nome": "Ações Matriciais"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0401",
+      "codigo": "040101",
+      "forma_codigo": "01",
+      "nome": "Pequenas cirurgias"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0401",
+      "codigo": "040102",
+      "forma_codigo": "02",
+      "nome": "Cirurgias de pele, tecido subcutâneo e mucosa"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0402",
+      "codigo": "040201",
+      "forma_codigo": "01",
+      "nome": "Cirurgia de tireóide e paratireóide"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0402",
+      "codigo": "040202",
+      "forma_codigo": "02",
+      "nome": "Cirurgia da suprarrenal"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0403",
+      "codigo": "040301",
+      "forma_codigo": "01",
+      "nome": "Trauma e anomalias do desenvolvimento"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0403",
+      "codigo": "040302",
+      "forma_codigo": "02",
+      "nome": "Coluna e nervos periféricos"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0403",
+      "codigo": "040303",
+      "forma_codigo": "03",
+      "nome": "Tumores do sistema nervoso"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0403",
+      "codigo": "040304",
+      "forma_codigo": "04",
+      "nome": "Neurocirurgias vasculares"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0403",
+      "codigo": "040305",
+      "forma_codigo": "05",
+      "nome": "Tratamento neurocirúrgico da dor funcional"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0403",
+      "codigo": "040306",
+      "forma_codigo": "06",
+      "nome": "Investigação e cirurgia da epilepsia"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0403",
+      "codigo": "040307",
+      "forma_codigo": "07",
+      "nome": "Tratamento neuro-endovascular"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0403",
+      "codigo": "040308",
+      "forma_codigo": "08",
+      "nome": "Neurocirurgia funcional estereotáxica"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0404",
+      "codigo": "040401",
+      "forma_codigo": "01",
+      "nome": "Cirurgia das vias aéreas superiores e do pescoço"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0404",
+      "codigo": "040402",
+      "forma_codigo": "02",
+      "nome": "Cirurgia da face e do sistema estomatognático"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0404",
+      "codigo": "040403",
+      "forma_codigo": "03",
+      "nome": "Anomalia Crânio e bucomaxilo facial"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0405",
+      "codigo": "040501",
+      "forma_codigo": "01",
+      "nome": "Palpebras e vias lacrimais"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0405",
+      "codigo": "040502",
+      "forma_codigo": "02",
+      "nome": "Músculos oculomotores"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0405",
+      "codigo": "040503",
+      "forma_codigo": "03",
+      "nome": "Corpo vítreo, retina, coróide e esclera"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0405",
+      "codigo": "040504",
+      "forma_codigo": "04",
+      "nome": "Cavidade orbitária e globo ocular"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0405",
+      "codigo": "040505",
+      "forma_codigo": "05",
+      "nome": "Conjuntiva, córnea, câmara anterior, íris, corpo ciliar e cristalino"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0406",
+      "codigo": "040601",
+      "forma_codigo": "01",
+      "nome": "Cirurgia cardiovascular"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0406",
+      "codigo": "040602",
+      "forma_codigo": "02",
+      "nome": "Cirurgia vascular"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0406",
+      "codigo": "040603",
+      "forma_codigo": "03",
+      "nome": "Cardiologia intervencionista"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0406",
+      "codigo": "040604",
+      "forma_codigo": "04",
+      "nome": "Cirurgia endovascular"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0406",
+      "codigo": "040605",
+      "forma_codigo": "05",
+      "nome": "Eletrofisiologia"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0407",
+      "codigo": "040701",
+      "forma_codigo": "01",
+      "nome": "Esôfago, estômago e duodeno"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0407",
+      "codigo": "040702",
+      "forma_codigo": "02",
+      "nome": "Intestinos , reto e anus"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0407",
+      "codigo": "040703",
+      "forma_codigo": "03",
+      "nome": "Pancreas, baco, figado e vias biliares"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0407",
+      "codigo": "040704",
+      "forma_codigo": "04",
+      "nome": "Parede e cavidade abdominal"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0408",
+      "codigo": "040801",
+      "forma_codigo": "01",
+      "nome": "Cintura escapular"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0408",
+      "codigo": "040802",
+      "forma_codigo": "02",
+      "nome": "Membros superiores"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0408",
+      "codigo": "040803",
+      "forma_codigo": "03",
+      "nome": "Coluna vertebral e caixa torácica"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0408",
+      "codigo": "040804",
+      "forma_codigo": "04",
+      "nome": "Cintura pélvica"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0408",
+      "codigo": "040805",
+      "forma_codigo": "05",
+      "nome": "Membros inferiores"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0408",
+      "codigo": "040806",
+      "forma_codigo": "06",
+      "nome": "Gerais"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0409",
+      "codigo": "040901",
+      "forma_codigo": "01",
+      "nome": "Rim, ureter e bexiga"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0409",
+      "codigo": "040902",
+      "forma_codigo": "02",
+      "nome": "Uretra"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0409",
+      "codigo": "040903",
+      "forma_codigo": "03",
+      "nome": "Próstata e vesicula seminal"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0409",
+      "codigo": "040904",
+      "forma_codigo": "04",
+      "nome": "Bolsa escrotal, testículos e cordão espermático"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0409",
+      "codigo": "040905",
+      "forma_codigo": "05",
+      "nome": "Pênis"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0409",
+      "codigo": "040906",
+      "forma_codigo": "06",
+      "nome": "Útero e anexos"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0409",
+      "codigo": "040907",
+      "forma_codigo": "07",
+      "nome": "Vagina, vulva e períneo"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0409",
+      "codigo": "040908",
+      "forma_codigo": "08",
+      "nome": "Atenção Especializada à Saúde da População Trans."
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0410",
+      "codigo": "041001",
+      "forma_codigo": "01",
+      "nome": "Mama"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0411",
+      "codigo": "041101",
+      "forma_codigo": "01",
+      "nome": "Parto"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0411",
+      "codigo": "041102",
+      "forma_codigo": "02",
+      "nome": "Outras cirurgias relacionadas com o estado gestacional"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0412",
+      "codigo": "041201",
+      "forma_codigo": "01",
+      "nome": "Traqueia e brônquios"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0412",
+      "codigo": "041202",
+      "forma_codigo": "02",
+      "nome": "Mediastino"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0412",
+      "codigo": "041203",
+      "forma_codigo": "03",
+      "nome": "Pleura"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0412",
+      "codigo": "041204",
+      "forma_codigo": "04",
+      "nome": "Parede torácica"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0412",
+      "codigo": "041205",
+      "forma_codigo": "05",
+      "nome": "Pulmão"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0413",
+      "codigo": "041301",
+      "forma_codigo": "01",
+      "nome": "Tratamento de queimados"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0413",
+      "codigo": "041302",
+      "forma_codigo": "02",
+      "nome": "Reparadora em oncológica"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0413",
+      "codigo": "041303",
+      "forma_codigo": "03",
+      "nome": "Reparadora para lipodistrofia"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0413",
+      "codigo": "041304",
+      "forma_codigo": "04",
+      "nome": "Outras cirurgias plásticas/reparadoras"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0414",
+      "codigo": "041401",
+      "forma_codigo": "01",
+      "nome": "Buco-maxilo-facial"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0414",
+      "codigo": "041402",
+      "forma_codigo": "02",
+      "nome": "Cirurgia oral"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0415",
+      "codigo": "041501",
+      "forma_codigo": "01",
+      "nome": "Múltiplas"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0415",
+      "codigo": "041502",
+      "forma_codigo": "02",
+      "nome": "Sequenciais"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0415",
+      "codigo": "041503",
+      "forma_codigo": "03",
+      "nome": "Politraumatizados"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0415",
+      "codigo": "041504",
+      "forma_codigo": "04",
+      "nome": "Procedimentos cirúrgicos gerais"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0416",
+      "codigo": "041601",
+      "forma_codigo": "01",
+      "nome": "Urologia"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0416",
+      "codigo": "041602",
+      "forma_codigo": "02",
+      "nome": "Sistema linfático"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0416",
+      "codigo": "041603",
+      "forma_codigo": "03",
+      "nome": "Cabeça e pescoço"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0416",
+      "codigo": "041604",
+      "forma_codigo": "04",
+      "nome": "Esôfago-gastro duodenal e vísceras anexas e outros orgãos intra-abdominais"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0416",
+      "codigo": "041605",
+      "forma_codigo": "05",
+      "nome": "Colo-proctologia"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0416",
+      "codigo": "041606",
+      "forma_codigo": "06",
+      "nome": "Ginecologia"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0416",
+      "codigo": "041607",
+      "forma_codigo": "07",
+      "nome": "Oftalmologia"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0416",
+      "codigo": "041608",
+      "forma_codigo": "08",
+      "nome": "Pele e cirurgia plástica"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0416",
+      "codigo": "041609",
+      "forma_codigo": "09",
+      "nome": "Ossos e partes moles"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0416",
+      "codigo": "041610",
+      "forma_codigo": "10",
+      "nome": "Neurocirurgia"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0416",
+      "codigo": "041611",
+      "forma_codigo": "11",
+      "nome": "Cirurgia torácica"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0416",
+      "codigo": "041612",
+      "forma_codigo": "12",
+      "nome": "Mastologia"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0416",
+      "codigo": "041613",
+      "forma_codigo": "13",
+      "nome": "Otorrinolaringologia"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0417",
+      "codigo": "041701",
+      "forma_codigo": "01",
+      "nome": "Anestesias"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0418",
+      "codigo": "041801",
+      "forma_codigo": "01",
+      "nome": "Acessos para dialise"
+    },
+    {
+      "grupo_cod": "04",
+      "subgrupo_cod": "0418",
+      "codigo": "041802",
+      "forma_codigo": "02",
+      "nome": "Intervençõess cirúrgicas em acessos para diálise"
+    },
+    {
+      "grupo_cod": "05",
+      "subgrupo_cod": "0501",
+      "codigo": "050101",
+      "forma_codigo": "01",
+      "nome": "Coleta e exames para identificação de doador de células-tronco hematopoéticas (busca nacional)"
+    },
+    {
+      "grupo_cod": "05",
+      "subgrupo_cod": "0501",
+      "codigo": "050102",
+      "forma_codigo": "02",
+      "nome": "Exames de histocompatibilidade para identificação de receptor de células-tronco hematopoéticas"
+    },
+    {
+      "grupo_cod": "05",
+      "subgrupo_cod": "0501",
+      "codigo": "050103",
+      "forma_codigo": "03",
+      "nome": "Coleta e exames para ident. de doador de célula-tronco hematopoéticas (busca internacional/nacional)"
+    },
+    {
+      "grupo_cod": "05",
+      "subgrupo_cod": "0501",
+      "codigo": "050104",
+      "forma_codigo": "04",
+      "nome": "Exames imunogenéticos/histocompatibilidade para identificação de doador de orgãos"
+    },
+    {
+      "grupo_cod": "05",
+      "subgrupo_cod": "0501",
+      "codigo": "050105",
+      "forma_codigo": "05",
+      "nome": "Exames imunogenéticos/histocompatibilidade para identificação de receptor de orgãos"
+    },
+    {
+      "grupo_cod": "05",
+      "subgrupo_cod": "0501",
+      "codigo": "050106",
+      "forma_codigo": "06",
+      "nome": "Exames gráficos ou por imagem para diagnóstico de morte encefálica"
+    },
+    {
+      "grupo_cod": "05",
+      "subgrupo_cod": "0501",
+      "codigo": "050107",
+      "forma_codigo": "07",
+      "nome": "Outros exames complementares para doação de orgãos, tecidos e células"
+    },
+    {
+      "grupo_cod": "05",
+      "subgrupo_cod": "0501",
+      "codigo": "050108",
+      "forma_codigo": "08",
+      "nome": "Exames complementares para pacientes transplantados"
+    },
+    {
+      "grupo_cod": "05",
+      "subgrupo_cod": "0502",
+      "codigo": "050201",
+      "forma_codigo": "01",
+      "nome": "Avaliação clínica de morte encefálica"
+    },
+    {
+      "grupo_cod": "05",
+      "subgrupo_cod": "0503",
+      "codigo": "050301",
+      "forma_codigo": "01",
+      "nome": "Ações relacionadas a doação de orgãos e tecidos para transpalnte"
+    },
+    {
+      "grupo_cod": "05",
+      "subgrupo_cod": "0503",
+      "codigo": "050302",
+      "forma_codigo": "02",
+      "nome": "Cirurgias para transplante - doador vivo"
+    },
+    {
+      "grupo_cod": "05",
+      "subgrupo_cod": "0503",
+      "codigo": "050303",
+      "forma_codigo": "03",
+      "nome": "Manutenção e retirada de orgãos e tecidos para transplante"
+    },
+    {
+      "grupo_cod": "05",
+      "subgrupo_cod": "0503",
+      "codigo": "050304",
+      "forma_codigo": "04",
+      "nome": "Açõess complementares destinadas a doação de orgãos, tecidos e células."
+    },
+    {
+      "grupo_cod": "05",
+      "subgrupo_cod": "0504",
+      "codigo": "050401",
+      "forma_codigo": "01",
+      "nome": "Processamento de córnea/esclera"
+    },
+    {
+      "grupo_cod": "05",
+      "subgrupo_cod": "0504",
+      "codigo": "050402",
+      "forma_codigo": "02",
+      "nome": "Processamento de tecido ósteo-fascio-condro-ligamentoso humano"
+    },
+    {
+      "grupo_cod": "05",
+      "subgrupo_cod": "0504",
+      "codigo": "050403",
+      "forma_codigo": "03",
+      "nome": "Processamento de válvula/tubo valvado cardíaco humano"
+    },
+    {
+      "grupo_cod": "05",
+      "subgrupo_cod": "0504",
+      "codigo": "050404",
+      "forma_codigo": "04",
+      "nome": "Processamento de pele humana"
+    },
+    {
+      "grupo_cod": "05",
+      "subgrupo_cod": "0504",
+      "codigo": "050405",
+      "forma_codigo": "05",
+      "nome": "Processamento de Membrana Amniótica."
+    },
+    {
+      "grupo_cod": "05",
+      "subgrupo_cod": "0505",
+      "codigo": "050501",
+      "forma_codigo": "01",
+      "nome": "Transplante de tecidos e células"
+    },
+    {
+      "grupo_cod": "05",
+      "subgrupo_cod": "0505",
+      "codigo": "050502",
+      "forma_codigo": "02",
+      "nome": "Transplante de orgãos"
+    },
+    {
+      "grupo_cod": "05",
+      "subgrupo_cod": "0506",
+      "codigo": "050601",
+      "forma_codigo": "01",
+      "nome": "Acompanhamento de paciente no pré e pós-transplante"
+    },
+    {
+      "grupo_cod": "05",
+      "subgrupo_cod": "0506",
+      "codigo": "050602",
+      "forma_codigo": "02",
+      "nome": "Intercorrência pós transplante"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060101",
+      "forma_codigo": "01",
+      "nome": "Agentes anticitocinas"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060102",
+      "forma_codigo": "02",
+      "nome": "Antagonista do glutamato"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060103",
+      "forma_codigo": "03",
+      "nome": "Antianêmicos não hormonais"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060104",
+      "forma_codigo": "04",
+      "nome": "Antianêmicos hormonais"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060105",
+      "forma_codigo": "05",
+      "nome": "Antiasmáticos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060106",
+      "forma_codigo": "06",
+      "nome": "Antibióticos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060107",
+      "forma_codigo": "07",
+      "nome": "Antiepiléticos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060108",
+      "forma_codigo": "08",
+      "nome": "Antiinflamatórios"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060109",
+      "forma_codigo": "09",
+      "nome": "Antiinflamatórios intestinais"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060110",
+      "forma_codigo": "10",
+      "nome": "Antiparkinsonianos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060111",
+      "forma_codigo": "11",
+      "nome": "Antipsicóticos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060112",
+      "forma_codigo": "12",
+      "nome": "Antivirais"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060113",
+      "forma_codigo": "13",
+      "nome": "Bloqueadores neuromusculares"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060114",
+      "forma_codigo": "14",
+      "nome": "Ceratolíticos sistêmicos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060115",
+      "forma_codigo": "15",
+      "nome": "Complementos alimentares para fenilcetonúricos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060116",
+      "forma_codigo": "16",
+      "nome": "Fatores de crescimento mielóides"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060117",
+      "forma_codigo": "17",
+      "nome": "Hipnoanalgésicos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060118",
+      "forma_codigo": "18",
+      "nome": "Hipolipemiantes"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060119",
+      "forma_codigo": "19",
+      "nome": "Imunomoduladores"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060120",
+      "forma_codigo": "20",
+      "nome": "Imunossupressores"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060121",
+      "forma_codigo": "21",
+      "nome": "Imunoterapicos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060122",
+      "forma_codigo": "22",
+      "nome": "Inibidores da acetilcolinesterase"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060123",
+      "forma_codigo": "23",
+      "nome": "Mucolíticos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060124",
+      "forma_codigo": "24",
+      "nome": "Quelantes do ferro"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060125",
+      "forma_codigo": "25",
+      "nome": "Outros quelantes"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060126",
+      "forma_codigo": "26",
+      "nome": "Reguladores da atividade hormonal-agonistas da vasopressina"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060127",
+      "forma_codigo": "27",
+      "nome": "Reguladores da atividade hormonal-analogos do GNRH"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060128",
+      "forma_codigo": "28",
+      "nome": "Reguladores da atividade hormonal-antiandrogênicos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060129",
+      "forma_codigo": "29",
+      "nome": "Reguladores da atividade hormonal-inibidores das gonadotrofinas"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060130",
+      "forma_codigo": "30",
+      "nome": "Reguladores da atividade hormonal-inibidores do hormônio do crescimento"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060131",
+      "forma_codigo": "31",
+      "nome": "Reguladores da atividade hormonal-inibidores de prolactina"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060132",
+      "forma_codigo": "32",
+      "nome": "Reguladores da atividade hormonal-hormonios de crescimento"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060133",
+      "forma_codigo": "33",
+      "nome": "Reguladores da atividade hormonal-hormonios tireoidianos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060134",
+      "forma_codigo": "34",
+      "nome": "Reguladores da atividade hormonal-mineralocorticóides"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060135",
+      "forma_codigo": "35",
+      "nome": "Reguladores da homeostase do cálcio"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0601",
+      "codigo": "060136",
+      "forma_codigo": "36",
+      "nome": "Repositores enzimáticos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0602",
+      "codigo": "060201",
+      "forma_codigo": "01",
+      "nome": "Procoagulantes em coagulopatias hereditárias"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0603",
+      "codigo": "060301",
+      "forma_codigo": "01",
+      "nome": "Antiinflamatórios"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0603",
+      "codigo": "060302",
+      "forma_codigo": "02",
+      "nome": "Imunossupressores"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0603",
+      "codigo": "060303",
+      "forma_codigo": "03",
+      "nome": "Imunoterápicos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0603",
+      "codigo": "060304",
+      "forma_codigo": "04",
+      "nome": "Reguladores de atividade hormonal - inibidores da prolactina"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0603",
+      "codigo": "060305",
+      "forma_codigo": "05",
+      "nome": "Antitrombóticos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0603",
+      "codigo": "060306",
+      "forma_codigo": "06",
+      "nome": "Tensiolítico alveolar"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0603",
+      "codigo": "060307",
+      "forma_codigo": "07",
+      "nome": "Hemoderivados"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0603",
+      "codigo": "060308",
+      "forma_codigo": "08",
+      "nome": "Medicamentos para transplante"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0603",
+      "codigo": "060309",
+      "forma_codigo": "09",
+      "nome": "Terapia Gênica"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060401",
+      "forma_codigo": "01",
+      "nome": "Acido Aminosalicilico e Similares"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060402",
+      "forma_codigo": "02",
+      "nome": "Agentes Quelantes de Ferro"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060403",
+      "forma_codigo": "03",
+      "nome": "Agonistas da Dopamina/inibidor da prolactina"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060404",
+      "forma_codigo": "04",
+      "nome": "Agonistas seletivos dos receptores beta 2 adrenérgicos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060405",
+      "forma_codigo": "05",
+      "nome": "Alcalóides naturais do ópio"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060406",
+      "forma_codigo": "06",
+      "nome": "Alimentos dietéticos isentos de fenilalanina"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060407",
+      "forma_codigo": "07",
+      "nome": "Aminas Terciárias"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060408",
+      "forma_codigo": "08",
+      "nome": "Aminoquinolinas"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060409",
+      "forma_codigo": "09",
+      "nome": "Análogos da mostarda nitrogenada"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060410",
+      "forma_codigo": "10",
+      "nome": "Vasopressina e Análogos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060411",
+      "forma_codigo": "11",
+      "nome": "Análogos do hormônio liberador de gonadotrofina"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060412",
+      "forma_codigo": "12",
+      "nome": "Antiandrogênios"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060413",
+      "forma_codigo": "13",
+      "nome": "Anticolinesterases"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060414",
+      "forma_codigo": "14",
+      "nome": "Antigonadotrofinas e agentes similares"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060415",
+      "forma_codigo": "15",
+      "nome": "Barbitúricos e derivados"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060416",
+      "forma_codigo": "16",
+      "nome": "Bisfosfonados"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060417",
+      "forma_codigo": "17",
+      "nome": "Compostos de Alumínio"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060418",
+      "forma_codigo": "18",
+      "nome": "Derivados da benzodiazepina"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060419",
+      "forma_codigo": "19",
+      "nome": "Derivados de ácidos graxos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060420",
+      "forma_codigo": "20",
+      "nome": "Derivados do adamantano"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060421",
+      "forma_codigo": "21",
+      "nome": "Derivados do indol"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060422",
+      "forma_codigo": "22",
+      "nome": "Derivados da succinimida"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060423",
+      "forma_codigo": "23",
+      "nome": "Diazepinas, oxazepinas e tiazepinas"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060424",
+      "forma_codigo": "24",
+      "nome": "Enzimas"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060425",
+      "forma_codigo": "25",
+      "nome": "Fatores de estimulação de colônias"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060426",
+      "forma_codigo": "26",
+      "nome": "Ferro trivalente, preparações parenterais"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060427",
+      "forma_codigo": "27",
+      "nome": "Fibratos, Acido Nicotínico e seus derivados"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060428",
+      "forma_codigo": "28",
+      "nome": "Glicocorticóides"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060429",
+      "forma_codigo": "29",
+      "nome": "Somatostatina e Análogos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060430",
+      "forma_codigo": "30",
+      "nome": "Imunoglobulinas específicas"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060431",
+      "forma_codigo": "31",
+      "nome": "Imunoglobulinas, humana normal"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060432",
+      "forma_codigo": "32",
+      "nome": "Imunossupressores seletivos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060433",
+      "forma_codigo": "33",
+      "nome": "Inibidores da agregação plaquetária, excluindo heparina"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060434",
+      "forma_codigo": "34",
+      "nome": "Inibidores da calcineurina"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060435",
+      "forma_codigo": "35",
+      "nome": "Inibidores da fosfodiesterase"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060436",
+      "forma_codigo": "36",
+      "nome": "Inibidores da HMG-CoA redutase"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060437",
+      "forma_codigo": "37",
+      "nome": "Inibidores da monoamino oxidase tipo b"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060438",
+      "forma_codigo": "38",
+      "nome": "Inibidores do fator de necrose tumoral alfa (TNF-a)"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060439",
+      "forma_codigo": "39",
+      "nome": "Interferonas"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060440",
+      "forma_codigo": "40",
+      "nome": "Medicamentos para tratamento da hipercalemia e hiperfosfatemia"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060441",
+      "forma_codigo": "41",
+      "nome": "Medicamentos utilizados na dependência de opióides"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060442",
+      "forma_codigo": "42",
+      "nome": "Mineralocorticóides"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060443",
+      "forma_codigo": "43",
+      "nome": "Modulador seletivo de receptor de estrogênio"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060444",
+      "forma_codigo": "44",
+      "nome": "Mucolíticos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060445",
+      "forma_codigo": "45",
+      "nome": "Nucleosídeo e nucleotídeo (excl. inibidores da transcriptase reversa)"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060446",
+      "forma_codigo": "46",
+      "nome": "Nucleosídeo e nucleotídeo, Inibidor da transcriptase reversa"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060447",
+      "forma_codigo": "47",
+      "nome": "Outras preparações antianêmicas"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060448",
+      "forma_codigo": "48",
+      "nome": "Outros agentes citotóxicos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060449",
+      "forma_codigo": "49",
+      "nome": "Outros agentes dopaminérgicos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060450",
+      "forma_codigo": "50",
+      "nome": "Outros antiepilépticos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060451",
+      "forma_codigo": "51",
+      "nome": "Outros antipsicóticos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060452",
+      "forma_codigo": "52",
+      "nome": "Outros imunoestimulantes"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060453",
+      "forma_codigo": "53",
+      "nome": "Outros imunossupressores"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060454",
+      "forma_codigo": "54",
+      "nome": "Outros medicamentos do sistema nervoso"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060455",
+      "forma_codigo": "55",
+      "nome": "Outros relaxantes musculares de ação periférica"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060456",
+      "forma_codigo": "56",
+      "nome": "Penicilamina e agentes similares"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060457",
+      "forma_codigo": "57",
+      "nome": "Preparações de calcitonina"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060458",
+      "forma_codigo": "58",
+      "nome": "Preparações de enzimas"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060459",
+      "forma_codigo": "59",
+      "nome": "Retinóides para tratamento da acne"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060460",
+      "forma_codigo": "60",
+      "nome": "Retinóides para tratamento da psoríase"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060461",
+      "forma_codigo": "61",
+      "nome": "Somatropina e agonistas da somatropina"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060462",
+      "forma_codigo": "62",
+      "nome": "Vitamina D e análogos, incluido combinação dos dois"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060463",
+      "forma_codigo": "63",
+      "nome": "Produtos diversos para o trato alimentar ou metabolismo"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060464",
+      "forma_codigo": "64",
+      "nome": "Inibidores de Protease"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060465",
+      "forma_codigo": "65",
+      "nome": "Análogos das Prostaglandinas"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060466",
+      "forma_codigo": "66",
+      "nome": "Inibidores da Anidrase Carbonica"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060467",
+      "forma_codigo": "67",
+      "nome": "Simpatomiméticos na Terapia de Glaucoma"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060468",
+      "forma_codigo": "68",
+      "nome": "Anticorpos Monoclonais"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060469",
+      "forma_codigo": "69",
+      "nome": "Inibidores de Interleucinas"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060470",
+      "forma_codigo": "70",
+      "nome": "Outros Antipsoriaticos de Uso Tópico"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060471",
+      "forma_codigo": "71",
+      "nome": "Corticoesteróides de Potência Muito Alta (Grupo IV)"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060472",
+      "forma_codigo": "72",
+      "nome": "Derivados do Ácido Propriônico"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060473",
+      "forma_codigo": "73",
+      "nome": "Parassimpaticomiméticos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060474",
+      "forma_codigo": "74",
+      "nome": "Agentes Beta Bloqueadores"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060475",
+      "forma_codigo": "75",
+      "nome": "Outros Anti-hipertensivos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060476",
+      "forma_codigo": "76",
+      "nome": "Outros Antivirais"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060477",
+      "forma_codigo": "77",
+      "nome": "Outros Agentes Antiparatireoide"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060478",
+      "forma_codigo": "78",
+      "nome": "Insulinas  e análogas"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060479",
+      "forma_codigo": "79",
+      "nome": "Outras Drogas para Desordem do Sistema Músculo Esquelético"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060480",
+      "forma_codigo": "80",
+      "nome": "Agentes antitrombóticos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060481",
+      "forma_codigo": "81",
+      "nome": "Outros Aminoglicosídeos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060482",
+      "forma_codigo": "82",
+      "nome": "Inibidores do co-transportador 2 de sódio-glicose (SGLT2)"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060483",
+      "forma_codigo": "83",
+      "nome": "Agentes que atuam no sistema renina- angiotensina"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060484",
+      "forma_codigo": "84",
+      "nome": "Outras drogas sistêmicas para doenças respiratórias obstrutivas"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060485",
+      "forma_codigo": "85",
+      "nome": "Adrenérgicos em combinação com anticolinérgicos, incluídas combinações triplas com corticosteroides"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060486",
+      "forma_codigo": "86",
+      "nome": "Outros Produtos para o Sistema Respiratório."
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060487",
+      "forma_codigo": "87",
+      "nome": "Outros medicamentos afetando a estrutura e a mineralização óssea"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0604",
+      "codigo": "060488",
+      "forma_codigo": "88",
+      "nome": "Outros Hemostáticos Sistêmicos"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0605",
+      "codigo": "060501",
+      "forma_codigo": "01",
+      "nome": "Compra Centralizada"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0605",
+      "codigo": "060502",
+      "forma_codigo": "02",
+      "nome": "Negociação Nacional"
+    },
+    {
+      "grupo_cod": "06",
+      "subgrupo_cod": "0605",
+      "codigo": "060503",
+      "forma_codigo": "03",
+      "nome": "Compra Descentralizada"
+    },
+    {
+      "grupo_cod": "07",
+      "subgrupo_cod": "0701",
+      "codigo": "070101",
+      "forma_codigo": "01",
+      "nome": "OPM auxiliares da locomoção"
+    },
+    {
+      "grupo_cod": "07",
+      "subgrupo_cod": "0701",
+      "codigo": "070102",
+      "forma_codigo": "02",
+      "nome": "OPM ortopédicas"
+    },
+    {
+      "grupo_cod": "07",
+      "subgrupo_cod": "0701",
+      "codigo": "070103",
+      "forma_codigo": "03",
+      "nome": "OPM em Otorrinolaringologia."
+    },
+    {
+      "grupo_cod": "07",
+      "subgrupo_cod": "0701",
+      "codigo": "070104",
+      "forma_codigo": "04",
+      "nome": "OPM oftalmológicas"
+    },
+    {
+      "grupo_cod": "07",
+      "subgrupo_cod": "0701",
+      "codigo": "070105",
+      "forma_codigo": "05",
+      "nome": "OPM em gastroenterologia"
+    },
+    {
+      "grupo_cod": "07",
+      "subgrupo_cod": "0701",
+      "codigo": "070106",
+      "forma_codigo": "06",
+      "nome": "OPM em urologia"
+    },
+    {
+      "grupo_cod": "07",
+      "subgrupo_cod": "0701",
+      "codigo": "070107",
+      "forma_codigo": "07",
+      "nome": "OPM em odontologia"
+    },
+    {
+      "grupo_cod": "07",
+      "subgrupo_cod": "0701",
+      "codigo": "070108",
+      "forma_codigo": "08",
+      "nome": "OPM de anomalias buco-maxilo-facial"
+    },
+    {
+      "grupo_cod": "07",
+      "subgrupo_cod": "0701",
+      "codigo": "070109",
+      "forma_codigo": "09",
+      "nome": "Substituição/Troca em órteses/próteses"
+    },
+    {
+      "grupo_cod": "07",
+      "subgrupo_cod": "0701",
+      "codigo": "070110",
+      "forma_codigo": "10",
+      "nome": "OPM em queimados"
+    },
+    {
+      "grupo_cod": "07",
+      "subgrupo_cod": "0701",
+      "codigo": "070111",
+      "forma_codigo": "11",
+      "nome": "OPM em Oncologia"
+    },
+    {
+      "grupo_cod": "07",
+      "subgrupo_cod": "0702",
+      "codigo": "070201",
+      "forma_codigo": "01",
+      "nome": "OPM em neurocirurgia"
+    },
+    {
+      "grupo_cod": "07",
+      "subgrupo_cod": "0702",
+      "codigo": "070202",
+      "forma_codigo": "02",
+      "nome": "OPM em cirurgia buco-maxilo-facial"
+    },
+    {
+      "grupo_cod": "07",
+      "subgrupo_cod": "0702",
+      "codigo": "070203",
+      "forma_codigo": "03",
+      "nome": "OPM em ortopedia"
+    },
+    {
+      "grupo_cod": "07",
+      "subgrupo_cod": "0702",
+      "codigo": "070204",
+      "forma_codigo": "04",
+      "nome": "OPM em assistência cardiovascular"
+    },
+    {
+      "grupo_cod": "07",
+      "subgrupo_cod": "0702",
+      "codigo": "070205",
+      "forma_codigo": "05",
+      "nome": "OPM comuns"
+    },
+    {
+      "grupo_cod": "07",
+      "subgrupo_cod": "0702",
+      "codigo": "070206",
+      "forma_codigo": "06",
+      "nome": "OPM em urologia"
+    },
+    {
+      "grupo_cod": "07",
+      "subgrupo_cod": "0702",
+      "codigo": "070207",
+      "forma_codigo": "07",
+      "nome": "OPM em cirurgias oftálmicas"
+    },
+    {
+      "grupo_cod": "07",
+      "subgrupo_cod": "0702",
+      "codigo": "070208",
+      "forma_codigo": "08",
+      "nome": "OPM em cirurgia plástica/reparadora"
+    },
+    {
+      "grupo_cod": "07",
+      "subgrupo_cod": "0702",
+      "codigo": "070209",
+      "forma_codigo": "09",
+      "nome": "OPM em cirurgia de otorrinolaringologia"
+    },
+    {
+      "grupo_cod": "07",
+      "subgrupo_cod": "0702",
+      "codigo": "070210",
+      "forma_codigo": "10",
+      "nome": "OPM em nefrologia"
+    },
+    {
+      "grupo_cod": "07",
+      "subgrupo_cod": "0702",
+      "codigo": "070211",
+      "forma_codigo": "11",
+      "nome": "OPM em queimados"
+    },
+    {
+      "grupo_cod": "07",
+      "subgrupo_cod": "0702",
+      "codigo": "070212",
+      "forma_codigo": "12",
+      "nome": "OPM para transplantes"
+    },
+    {
+      "grupo_cod": "08",
+      "subgrupo_cod": "0801",
+      "codigo": "080101",
+      "forma_codigo": "01",
+      "nome": "Incentivos"
+    },
+    {
+      "grupo_cod": "08",
+      "subgrupo_cod": "0802",
+      "codigo": "080201",
+      "forma_codigo": "01",
+      "nome": "Diárias"
+    },
+    {
+      "grupo_cod": "08",
+      "subgrupo_cod": "0802",
+      "codigo": "080202",
+      "forma_codigo": "02",
+      "nome": "Outras ações"
+    },
+    {
+      "grupo_cod": "08",
+      "subgrupo_cod": "0803",
+      "codigo": "080301",
+      "forma_codigo": "01",
+      "nome": "Deslocamento/Ajuda de custo"
+    },
+    {
+      "grupo_cod": "08",
+      "subgrupo_cod": "0804",
+      "codigo": "080401",
+      "forma_codigo": "01",
+      "nome": "Ações de Telessaúde entre Profissionais de Saúde"
+    },
+    {
+      "grupo_cod": "08",
+      "subgrupo_cod": "0804",
+      "codigo": "080402",
+      "forma_codigo": "02",
+      "nome": "Atendimentos em Saúde Mediados por Tecnologias Digitais"
+    },
+    {
+      "grupo_cod": "08",
+      "subgrupo_cod": "0804",
+      "codigo": "080403",
+      "forma_codigo": "03",
+      "nome": "Ações de Vigilância em Saúde Mediadas por Tecnologias Digitais"
+    },
+    {
+      "grupo_cod": "08",
+      "subgrupo_cod": "0804",
+      "codigo": "080404",
+      "forma_codigo": "04",
+      "nome": "Transplante"
+    },
+    {
+      "grupo_cod": "09",
+      "subgrupo_cod": "0901",
+      "codigo": "090101",
+      "forma_codigo": "01",
+      "nome": "Ofertas de Cuidados Integrados em Oncologia"
+    },
+    {
+      "grupo_cod": "09",
+      "subgrupo_cod": "0902",
+      "codigo": "090201",
+      "forma_codigo": "01",
+      "nome": "Ofertas de Cuidados Integrados em Cardiologia"
+    },
+    {
+      "grupo_cod": "09",
+      "subgrupo_cod": "0903",
+      "codigo": "090301",
+      "forma_codigo": "01",
+      "nome": "Ofertas de Cuidados Integrados em Ortopedia"
+    },
+    {
+      "grupo_cod": "09",
+      "subgrupo_cod": "0904",
+      "codigo": "090401",
+      "forma_codigo": "01",
+      "nome": "Ofertas de Cuidados Integrados em Otorrinolaringologia."
+    },
+    {
+      "grupo_cod": "09",
+      "subgrupo_cod": "0905",
+      "codigo": "090501",
+      "forma_codigo": "01",
+      "nome": "Ofertas de Cuidados Integrados em Oftalmologia."
+    },
+    {
+      "grupo_cod": "09",
+      "subgrupo_cod": "0906",
+      "codigo": "090601",
+      "forma_codigo": "01",
+      "nome": "Ofertas de Cuidados Integrados em Saúde da Mulher - Ginecologia."
+    },
+    {
+      "grupo_cod": "09",
+      "subgrupo_cod": "0907",
+      "codigo": "090701",
+      "forma_codigo": "01",
+      "nome": "Oferta de Cuidado Integral em Saúde Bucal"
+    },
+    {
+      "grupo_cod": "09",
+      "subgrupo_cod": "0908",
+      "codigo": "090801",
+      "forma_codigo": "01",
+      "nome": "Ofertas de Cuidados Integrados em Infectologia"
+    },
+    {
+      "grupo_cod": "09",
+      "subgrupo_cod": "0909",
+      "codigo": "090901",
+      "forma_codigo": "01",
+      "nome": "Ofertas de Cuidados Integrados de Doença Renal Crônica"
     }
   ],
   "registros": [

@@ -366,6 +366,7 @@ def build_datasets(zip_path: Path, out_dir: Path) -> dict[str, object]:
                 "grupo": grupo_map.get(co_grupo, co_grupo),
                 "subgrupo_cod": f"{co_grupo}{co_sub}",
                 "subgrupo": subgrupo_map.get((co_grupo, co_sub), ""),
+                "forma_cod": f"{co_grupo}{co_sub}{co_forma}",
                 "forma": forma_map.get((co_grupo, co_sub, co_forma), ""),
                 "complexidade_cod": r["TP_COMPLEXIDADE"],
                 "complexidade": COMPLEXIDADE_MAP.get(
@@ -422,6 +423,16 @@ def build_datasets(zip_path: Path, out_dir: Path) -> dict[str, object]:
                 "nome": v,
             }
             for (g, s), v in sorted(subgrupo_map.items())
+        ],
+        "formas_organizacao": [
+            {
+                "grupo_cod": g,
+                "subgrupo_cod": f"{g}{s}",
+                "codigo": f"{g}{s}{f}",
+                "forma_codigo": f,
+                "nome": v,
+            }
+            for (g, s, f), v in sorted(forma_map.items())
         ],
         "registros": sorted(registro_map.values()),
     }
