@@ -40,6 +40,13 @@ CPF_DETALHES = {
     "034": ("nao_exige", "Não exige CPF/CNS"),
 }
 
+VALIDADE_APAC_DETALHES = {
+    "054": "2 competências",
+    "033": "3 competências",
+    "041": "12 competências",
+    "014": "Admite continuidade",
+}
+
 
 def parse_layout(layout_bytes: bytes) -> list[dict[str, int | str]]:
     """Lê um arquivo *_layout.txt do SIGTAP e retorna a lista de colunas."""
@@ -166,6 +173,14 @@ def resolve_cpf_status(detalhe_codes: list[str]) -> tuple[str, str]:
         if code in detalhe_codes:
             return CPF_DETALHES[code]
     return ("nao_especificado", "Sem regra específica")
+
+
+def resolve_validade_apac(detalhe_codes: list[str]) -> str | None:
+    """Determina a validade da APAC a partir dos códigos de detalhe do SIGTAP."""
+    for code in ("054", "033", "041", "014"):
+        if code in detalhe_codes:
+            return VALIDADE_APAC_DETALHES[code]
+    return None
 
 
 def build_datasets(zip_path: Path, out_dir: Path) -> dict[str, object]:
@@ -341,6 +356,7 @@ def build_datasets(zip_path: Path, out_dir: Path) -> dict[str, object]:
 
         det_codes = proc_detalhes.get(co, [])
         cpf_key, cpf_label = resolve_cpf_status(det_codes)
+        validade_apac = resolve_validade_apac(det_codes)
         det_labels = [detalhe_map.get(c, c) for c in det_codes]
         proc_compat = compatibilidades.get(co, [])
         qt_obrig = sum(1 for item in proc_compat if item["tipo"] == "5")
@@ -388,6 +404,7 @@ def build_datasets(zip_path: Path, out_dir: Path) -> dict[str, object]:
                 ),
                 "cpf_status": cpf_key,
                 "cpf_label": cpf_label,
+                "validade_apac": validade_apac,
                 "registros": proc_registros.get(co, []),
                 "modalidades": proc_modalidades.get(co, []),
                 "detalhes": det_labels,

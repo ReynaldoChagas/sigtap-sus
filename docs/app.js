@@ -335,6 +335,11 @@ function renderTable() {
           <td>
             ${getCpfBadge(p)}
             ${
+              p.validade_apac
+                ? `<div class="badges-row"><span class="badge badge-warn">Validade APAC: ${escapeHtml(p.validade_apac)}</span></div>`
+                : ""
+            }
+            ${
               p.detalhes.includes("Exige Autorização")
                 ? '<div class="badges-row"><span class="badge badge-neutral">Exige Autorização</span></div>'
                 : ""
@@ -703,6 +708,11 @@ async function openModal(codigo) {
         <div class="detail-box"><div class="lbl">Qtd. Máxima</div><div class="val">${proc.qt_max ?? "Não se aplica"}</div></div>
         <div class="detail-box"><div class="lbl">Dias Permanência</div><div class="val">${proc.qt_dias_perm ?? "Não se aplica"}</div></div>
         <div class="detail-box"><div class="lbl">Pontos</div><div class="val">${proc.qt_pontos ?? 0}</div></div>
+        <div class="detail-box"><div class="lbl">Validade APAC</div><div class="val">${
+          proc.validade_apac
+            ? `<span class="badge badge-warn">${escapeHtml(proc.validade_apac)}</span>`
+            : "Não especificada"
+        }</div></div>
       </div>
     </section>
 
