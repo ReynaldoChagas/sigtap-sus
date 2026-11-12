@@ -631,6 +631,57 @@ const COMPAT_GROUPS = [
   { tipo: "2", label: "Incompatíveis / Excludentes", cls: "badge-warn" },
 ];
 
+function formatProcValuesSummary(proc) {
+  if (!proc) return "";
+  const parts = [];
+  if (proc.vl_sa > 0) parts.push(`SA: ${formatCurrency(proc.vl_sa)}`);
+  if (proc.vl_sh > 0) parts.push(`SH: ${formatCurrency(proc.vl_sh)}`);
+  if (proc.vl_sp > 0) parts.push(`SP: ${formatCurrency(proc.vl_sp)}`);
+  if (parts.length === 0) {
+    if (proc.vl_hosp_total > 0) {
+      parts.push(`Hosp: ${formatCurrency(proc.vl_hosp_total)}`);
+    } else {
+      parts.push("Valor: R$ 0,00");
+    }
+  }
+
+  const tsp = proc.tsp;
+  if (tsp) {
+    if (tsp.sia) parts.push(`SIA/SP: ${formatCurrency(tsp.sia.total)}`);
+    if (tsp.aih) parts.push(`AIH/SP: ${formatCurrency(tsp.aih.total)}`);
+    if (tsp.opme) parts.push(`OPME/SP: ${formatCurrency(tsp.opme.total)}`);
+  }
+
+  return parts.join(" · ");
+}
+
+function renderCompatItemHtml(item) {
+  const refProc = procByCode.get(item.codigo);
+  const nome = refProc ? refProc.nome : "Procedimento";
+  const qtText = item.qt > 0 ? `Qtd. máx: ${item.qt}` : "";
+  const regText = `${item.reg_p} → ${item.reg_c}`;
+  const metaParts = [regText, qtText].filter(Boolean).join(" · ");
+  const valSummary = refProc ? formatProcValuesSummary(refProc) : "";
+
+  return `
+    <li class="compat-item">
+      <div style="flex:1;min-width:240px;">
+        <button type="button" class="compat-link" data-open-proc="${escapeHtml(item.codigo)}">
+          ${escapeHtml(formatCode(item.codigo))} — ${escapeHtml(nome)}
+        </button>
+        <div class="compat-meta">${escapeHtml(metaParts)}</div>
+      </div>
+      ${
+        valSummary
+          ? `<div class="compat-vals" style="font-size:0.78rem;font-weight:600;color:#334155;text-align:right;white-space:nowrap;align-self:center;">${escapeHtml(
+              valSummary
+            )}</div>`
+          : ""
+      }
+    </li>
+  `;
+}
+
 function renderCompatSection(items, proc) {
   if (!items || items.length === 0) {
     return '<span class="proc-sub">Nenhuma regra de compatibilidade vinculada a este procedimento como principal.</span>';
@@ -664,23 +715,7 @@ function renderCompatSection(items, proc) {
       `;
 
       const listHtml = consultaItems
-        .map((item) => {
-          const refProc = procByCode.get(item.codigo);
-          const nome = refProc ? refProc.nome : "Procedimento";
-          const qtText = item.qt > 0 ? `Qtd. máx: ${item.qt}` : "";
-          const regText = `${item.reg_p} → ${item.reg_c}`;
-          const metaParts = [regText, qtText].filter(Boolean).join(" · ");
-          return `
-            <li class="compat-item">
-              <div>
-                <button type="button" class="compat-link" data-open-proc="${escapeHtml(item.codigo)}">
-                  ${escapeHtml(formatCode(item.codigo))} — ${escapeHtml(nome)}
-                </button>
-                <div class="compat-meta">${escapeHtml(metaParts)}</div>
-              </div>
-            </li>
-          `;
-        })
+        .map(renderCompatItemHtml)
         .join("");
 
       ociConsultasHtml = `
@@ -699,23 +734,7 @@ function renderCompatSection(items, proc) {
     const groupItems = filteredItems.filter((i) => i.tipo === grp.tipo);
     if (groupItems.length === 0) return "";
     const listHtml = groupItems
-      .map((item) => {
-        const refProc = procByCode.get(item.codigo);
-        const nome = refProc ? refProc.nome : "Procedimento";
-        const qtText = item.qt > 0 ? `Qtd. máx: ${item.qt}` : "";
-        const regText = `${item.reg_p} → ${item.reg_c}`;
-        const metaParts = [regText, qtText].filter(Boolean).join(" · ");
-        return `
-          <li class="compat-item">
-            <div>
-              <button type="button" class="compat-link" data-open-proc="${escapeHtml(item.codigo)}">
-                ${escapeHtml(formatCode(item.codigo))} — ${escapeHtml(nome)}
-              </button>
-              <div class="compat-meta">${escapeHtml(metaParts)}</div>
-            </div>
-          </li>
-        `;
-      })
+      .map(renderCompatItemHtml)
       .join("");
 
     return `
