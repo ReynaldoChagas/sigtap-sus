@@ -631,12 +631,32 @@ const COMPAT_GROUPS = [
   { tipo: "2", label: "Incompatíveis / Excludentes", cls: "badge-warn" },
 ];
 
-function renderCompatSection(items) {
+function renderCompatSection(items, proc) {
   if (!items || items.length === 0) {
     return '<span class="proc-sub">Nenhuma regra de compatibilidade vinculada a este procedimento como principal.</span>';
   }
 
-  return COMPAT_GROUPS.map((grp) => {
+  let ociAlert = "";
+  if (proc?.grupo_cod === "09") {
+    const codes = new Set(items.map((i) => i.codigo));
+    const hasPresencial = codes.has("0301010072");
+    const hasTele = codes.has("0301010307");
+    if (hasPresencial || hasTele) {
+      ociAlert = `
+        <div class="alert-box" style="margin-bottom:0.75rem;">
+          <span style="font-size:1.1rem;line-height:1;">ℹ️</span>
+          <div>
+            <div><strong>Regra OCI (Programa Mais Acesso a Especialistas):</strong></div>
+            <div style="font-size:0.82rem;margin-top:0.2rem;">
+              Para faturamento da APAC de OCI, é <strong>obrigatório</strong> o registro de no mínimo dois procedimentos secundários, sendo <strong>pelo menos uma Consulta Médica (03.01.01.007-2) OU Teleconsulta (03.01.01.030-7)</strong>. No SIGTAP ambas constam tecnicamente com tipo opcional apenas para permitir a alternância entre a modalidade presencial e a distância no SIA.
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  const groupsHtml = COMPAT_GROUPS.map((grp) => {
     const groupItems = items.filter((i) => i.tipo === grp.tipo);
     if (groupItems.length === 0) return "";
     const listHtml = groupItems
@@ -669,6 +689,8 @@ function renderCompatSection(items) {
       </div>
     `;
   }).join("");
+
+  return ociAlert + groupsHtml;
 }
 
 function getTspDefasadoInfo(proc) {
@@ -924,7 +946,7 @@ async function openModal(codigo) {
     }
     const compatEl = document.getElementById("modal-compat");
     if (compatEl) {
-      compatEl.innerHTML = renderCompatSection(compats[codigo] || []);
+      compatEl.innerHTML = renderCompatSection(compats[codigo] || [], proc);
     }
     const descEl = document.getElementById("modal-desc");
     if (descEl) {
