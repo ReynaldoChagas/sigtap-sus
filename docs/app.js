@@ -18,6 +18,7 @@ let requisitosCache = null;
 
 const els = {
   competenciaPill: document.getElementById("competencia-pill"),
+  tspPill: document.getElementById("tsp-pill"),
   totalPill: document.getElementById("total-pill"),
   updatedPill: document.getElementById("updated-pill"),
   searchInput: document.getElementById("search-input"),
@@ -37,6 +38,7 @@ const els = {
   obrigOnly: document.getElementById("obrig-only"),
   servOnly: document.getElementById("serv-only"),
   habOnly: document.getElementById("hab-only"),
+  tspOnly: document.getElementById("tsp-only"),
   resultsCount: document.getElementById("results-count"),
   exportCsvBtn: document.getElementById("export-csv-btn"),
   tbody: document.getElementById("procedures-tbody"),
@@ -171,6 +173,7 @@ function applyFilters() {
   const onlyObrig = els.obrigOnly.checked;
   const onlyServ = els.servOnly.checked;
   const onlyHab = els.habOnly.checked;
+  const onlyTsp = els.tspOnly.checked;
 
   let matchingCboSet = null;
   if (rawCbo && cbosCache) {
@@ -225,6 +228,7 @@ function applyFilters() {
     if (onlyObrig && !(p.qt_obrig > 0)) return false;
     if (onlyServ && !(p.qt_servicos > 0)) return false;
     if (onlyHab && !(p.qt_habilitacoes > 0)) return false;
+    if (onlyTsp && !p.tsp) return false;
     if (matchingCboSet) {
       const procCbos = cbosCache.por_procedimento[p.codigo];
       if (!procCbos || !procCbos.some((c) => matchingCboSet.has(c))) {
@@ -270,7 +274,7 @@ function renderTable() {
   if (slice.length === 0) {
     els.tbody.innerHTML = `
       <tr>
-        <td colspan="5" class="empty-state">
+        <td colspan="6" class="empty-state">
           Nenhum procedimento encontrado com os filtros aplicados.
         </td>
       </tr>
@@ -350,6 +354,7 @@ function renderTable() {
             <div class="val-line"><span class="val-label">SH:</span><span class="val-num">${formatCurrency(p.vl_sh)}</span></div>
             <div class="val-line"><span class="val-label">SP:</span><span class="val-num">${formatCurrency(p.vl_sp)}</span></div>
           </td>
+          <td class="values-cell">${renderTspCell(p.tsp)}</td>
         </tr>
       `;
     })
@@ -666,6 +671,73 @@ function renderCompatSection(items) {
   }).join("");
 }
 
+function renderTspCell(tsp) {
+  if (!tsp) return '<span class="proc-sub">—</span>';
+  const lines = [];
+  if (tsp.sia) {
+    lines.push(
+      `<div class="val-line"><span class="val-label">SIA:</span><span class="val-num">${formatCurrency(tsp.sia.total)}</span></div>`
+    );
+  }
+  if (tsp.aih) {
+    lines.push(
+      `<div class="val-line"><span class="val-label">AIH:</span><span class="val-num">${formatCurrency(tsp.aih.total)}</span></div>`
+    );
+  }
+  if (tsp.opme) {
+    lines.push(
+      `<div class="val-line"><span class="val-label">OPME:</span><span class="val-num">${formatCurrency(tsp.opme.total)}</span></div>`
+    );
+  }
+  return lines.join("") || '<span class="proc-sub">—</span>';
+}
+
+function renderTspModalSection(tsp) {
+  if (!tsp) {
+    return '<span class="proc-sub">Este procedimento não possui complementação na Tabela SUS Paulista.</span>';
+  }
+  const blocks = [];
+  if (tsp.sia) {
+    blocks.push(`
+      <div style="margin-bottom:0.65rem;">
+        <div class="compat-meta" style="margin-bottom:0.35rem;font-weight:600;">SIA (Ambulatorial)</div>
+        <div class="detail-grid">
+          <div class="detail-box"><div class="lbl">Tabela SUS Paulista</div><div class="val">${formatCurrency(tsp.sia.total)}</div></div>
+          <div class="detail-box"><div class="lbl">Tab SUS MS</div><div class="val">${formatCurrency(tsp.sia.ms)}</div></div>
+          <div class="detail-box"><div class="lbl">Complementação TSP</div><div class="val">${formatCurrency(tsp.sia.compl)}</div></div>
+        </div>
+      </div>
+    `);
+  }
+  if (tsp.aih) {
+    blocks.push(`
+      <div style="margin-bottom:0.65rem;">
+        <div class="compat-meta" style="margin-bottom:0.35rem;font-weight:600;">AIH (Hospitalar)</div>
+        <div class="detail-grid">
+          <div class="detail-box"><div class="lbl">Tab Paulista (Total)</div><div class="val">${formatCurrency(tsp.aih.total)}</div></div>
+          <div class="detail-box"><div class="lbl">SH Paulista</div><div class="val">${formatCurrency(tsp.aih.sh)}</div></div>
+          <div class="detail-box"><div class="lbl">SP Paulista</div><div class="val">${formatCurrency(tsp.aih.sp)}</div></div>
+          <div class="detail-box"><div class="lbl">Tab SUS MS</div><div class="val">${formatCurrency(tsp.aih.ms)}</div></div>
+          <div class="detail-box"><div class="lbl">Complementação TSP</div><div class="val">${formatCurrency(tsp.aih.compl)}</div></div>
+        </div>
+      </div>
+    `);
+  }
+  if (tsp.opme) {
+    blocks.push(`
+      <div>
+        <div class="compat-meta" style="margin-bottom:0.35rem;font-weight:600;">OPME</div>
+        <div class="detail-grid">
+          <div class="detail-box"><div class="lbl">Tab Paulista</div><div class="val">${formatCurrency(tsp.opme.total)}</div></div>
+          <div class="detail-box"><div class="lbl">Tab MS</div><div class="val">${formatCurrency(tsp.opme.ms)}</div></div>
+          <div class="detail-box"><div class="lbl">Complementação TSP</div><div class="val">${formatCurrency(tsp.opme.compl)}</div></div>
+        </div>
+      </div>
+    `);
+  }
+  return blocks.join("");
+}
+
 async function openModal(codigo) {
   const proc = procByCode.get(codigo) || allProcedures.find((p) => p.codigo === codigo);
   if (!proc) return;
@@ -714,6 +786,11 @@ async function openModal(codigo) {
             : "Não especificada"
         }</div></div>
       </div>
+    </section>
+
+    <section class="modal-section">
+      <h3 class="modal-section-title">Tabela SUS Paulista</h3>
+      ${renderTspModalSection(proc.tsp)}
     </section>
 
     <section class="modal-section">
@@ -826,6 +903,9 @@ function exportCsv() {
     "Valor_SA",
     "Valor_SH",
     "Valor_SP",
+    "TSP_SIA",
+    "TSP_AIH",
+    "TSP_OPME",
     "Financiamento",
     "Registros",
   ];
@@ -850,6 +930,9 @@ function exportCsv() {
         p.vl_sa.toFixed(2).replace(".", ","),
         p.vl_sh.toFixed(2).replace(".", ","),
         p.vl_sp.toFixed(2).replace(".", ","),
+        p.tsp?.sia ? p.tsp.sia.total.toFixed(2).replace(".", ",") : "",
+        p.tsp?.aih ? p.tsp.aih.total.toFixed(2).replace(".", ",") : "",
+        p.tsp?.opme ? p.tsp.opme.total.toFixed(2).replace(".", ",") : "",
         p.financiamento,
         p.registros.join(" | "),
       ]
@@ -899,6 +982,7 @@ function setupEvents() {
     els.obrigOnly,
     els.servOnly,
     els.habOnly,
+    els.tspOnly,
   ]) {
     el.addEventListener("change", applyFilters);
   }
@@ -948,6 +1032,7 @@ function setupEvents() {
     els.obrigOnly.checked = false;
     els.servOnly.checked = false;
     els.habOnly.checked = false;
+    els.tspOnly.checked = false;
     applyFilters();
   });
 
@@ -1028,6 +1113,9 @@ async function init() {
     const procs = await procResp.json();
 
     els.competenciaPill.textContent = `Competência: ${meta.competencia_formatada}`;
+    els.tspPill.textContent = meta.tsp_referencia
+      ? `SUS Paulista: ${meta.tsp_referencia}`
+      : "SUS Paulista: —";
     els.totalPill.textContent = `${meta.total_procedimentos.toLocaleString("pt-BR")} procedimentos`;
     const dt = new Date(meta.atualizado_em);
     els.updatedPill.textContent = `Atualizado: ${dt.toLocaleDateString("pt-BR")}`;
@@ -1062,7 +1150,7 @@ async function init() {
   } catch (err) {
     els.tbody.innerHTML = `
       <tr>
-        <td colspan="5" class="empty-state">
+        <td colspan="6" class="empty-state">
           Falha ao carregar os dados: ${escapeHtml(err.message)}
         </td>
       </tr>

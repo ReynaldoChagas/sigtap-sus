@@ -16,6 +16,7 @@
       </div>
       <div class="meta-badges">
         <span id="competencia-pill" class="meta-pill">Competência: —</span>
+        <span id="tsp-pill" class="meta-pill">SUS Paulista: —</span>
         <span id="total-pill" class="meta-pill">Carregando...</span>
         <span id="updated-pill" class="meta-pill">Atualizado: —</span>
       </div>
@@ -140,6 +141,11 @@
           <input id="hab-only" type="checkbox">
           <span>Exige Habilitação</span>
         </label>
+
+        <label class="checkbox-field" for="tsp-only">
+          <input id="tsp-only" type="checkbox">
+          <span>Com SUS Paulista</span>
+        </label>
       </div>
     </section>
 
@@ -162,11 +168,12 @@
               <th>Idade / Sexo</th>
               <th>Regramento</th>
               <th>Valores SUS</th>
+              <th>SUS Paulista</th>
             </tr>
           </thead>
           <tbody id="procedures-tbody">
             <tr>
-              <td colspan="5" class="empty-state">Carregando dados da SIGTAP...</td>
+              <td colspan="6" class="empty-state">Carregando dados da SIGTAP...</td>
             </tr>
           </tbody>
         </table>

@@ -4,7 +4,9 @@
   "arquivo_origem": "TabelaUnificada_202611_v2611051737.zip",
   "versao": "1.1",
   "total_procedimentos": 5068,
-  "atualizado_em": "2026-11-12T11:26:30Z",
+  "tsp_referencia": "Junho/2026",
+  "total_com_tsp": 2296,
+  "atualizado_em": "2026-11-12T12:01:58Z",
   "grupos": [
     {
       "codigo": "01",

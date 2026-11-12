@@ -12,6 +12,7 @@ import os
 import re
 import tempfile
 import urllib.request
+import xml.etree.ElementTree as ET
 import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
@@ -19,6 +20,8 @@ from pathlib import Path
 FTP_HOST = "ftp2.datasus.gov.br"
 FTP_DIR = "/pub/sistemas/tup/downloads/"
 GITHUB_MIRROR_API = "https://api.github.com/repos/RenatoKR/SIGTAP/contents/tabelas"
+TSP_PAGE_URL = "https://www.saude.sp.gov.br/ses/perfil/cidadao/homepage/outros-destaques/tabela-sus-paulista"
+TSP_BASE_URL = "https://www.saude.sp.gov.br"
 
 COMPLEXIDADE_MAP = {
     "0": "Não se aplica",
@@ -183,9 +186,159 @@ def resolve_validade_apac(detalhe_codes: list[str]) -> str | None:
     return None
 
 
-def build_datasets(zip_path: Path, out_dir: Path) -> dict[str, object]:
+def _col_ref_to_index(ref: str) -> int:
+    """Converte referência de célula (ex: 'AB12') para índice de coluna base 0."""
+    letters = "".join(ch for ch in ref if ch.isalpha()).upper()
+    idx = 0
+    for ch in letters:
+        idx = idx * 26 + (ord(ch) - ord("A") + 1)
+    return max(0, idx - 1)
+
+
+def read_xlsx_rows(xlsx_path: Path) -> list[list[str]]:
+    """Lê todas as linhas da primeira aba de um arquivo .xlsx sem dependências externas."""
+    ns_uri = "http://schemas.openxmlformats.org/spreadsheetml/2006/main"
+    ns = {
+        "s": ns_uri,
+        "r": "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
+    }
+    with zipfile.ZipFile(xlsx_path) as zf:
+        shared: list[str] = []
+        if "xl/sharedStrings.xml" in zf.namelist():
+            sroot = ET.fromstring(zf.read("xl/sharedStrings.xml"))
+            for si in sroot.findall("s:si", ns):
+                shared.append("".join(t.text or "" for t in si.iter(f"{{{ns_uri}}}t")))
+
+        wb = ET.fromstring(zf.read("xl/workbook.xml"))
+        rels = ET.fromstring(zf.read("xl/_rels/workbook.xml.rels"))
+        rel_map = {r.attrib["Id"]: r.attrib["Target"] for r in rels}
+        first_sheet = wb.findall(".//s:sheet", ns)[0]
+        rid = first_sheet.attrib[
+            "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id"
+        ]
+        target = "xl/" + rel_map[rid].lstrip("/")
+        if target.startswith("xl/xl/"):
+            target = target[3:]
+
+        root = ET.fromstring(zf.read(target))
+        rows: list[list[str]] = []
+        for row_el in root.findall(".//s:sheetData/s:row", ns):
+            cells: dict[int, str] = {}
+            max_idx = -1
+            for c in row_el.findall("s:c", ns):
+                col_idx = _col_ref_to_index(c.attrib.get("r", "A1"))
+                ctype = c.attrib.get("t")
+                v_el = c.find("s:v", ns)
+                is_el = c.find("s:is", ns)
+                val = ""
+                if ctype == "s" and v_el is not None and v_el.text is not None:
+                    val = shared[int(v_el.text)]
+                elif ctype == "inlineStr" and is_el is not None:
+                    val = "".join(t.text or "" for t in is_el.iter(f"{{{ns_uri}}}t"))
+                elif v_el is not None and v_el.text is not None:
+                    val = v_el.text
+                cells[col_idx] = val.strip()
+                if col_idx > max_idx:
+                    max_idx = col_idx
+            if max_idx >= 0:
+                rows.append([cells.get(i, "") for i in range(max_idx + 1)])
+        return rows
+
+
+def to_float2(raw: str) -> float:
+    """Converte número textual (com ponto ou vírgula) para float arredondado em 2 casas."""
+    txt = str(raw or "").strip().replace(",", ".")
+    if not txt:
+        return 0.0
+    try:
+        return round(float(txt), 2)
+    except ValueError:
+        return 0.0
+
+
+def norm_tsp_code(raw: str) -> str:
+    """Normaliza código de procedimento da TSP preenchendo zero à esquerda (10 dígitos)."""
+    digits = "".join(ch for ch in str(raw or "") if ch.isdigit())
+    return digits.zfill(10) if digits else ""
+
+
+def infer_tsp_referencia(filenames: list[str]) -> str:
+    """Extrai a referência (ex: 'Junho/2026') dos nomes de arquivo da TSP."""
+    for name in filenames:
+        m = re.search(r"(20\d{2})[_-]+([a-zA-ZçÇ]+)", name)
+        if m:
+            return f"{m.group(2).capitalize()}/{m.group(1)}"
+    return ""
+
+
+def discover_and_download_tsp(dest_dir: Path) -> dict[str, Path]:
+    """Localiza e baixa as planilhas AIH, SIA e OPME da Tabela SUS Paulista."""
+    req = urllib.request.Request(TSP_PAGE_URL, headers={"User-Agent": "SIGTAP-Pages-Bot/1.0"})
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        html = resp.read().decode("utf-8", errors="replace")
+
+    links = sorted(set(re.findall(r'href=["\']([^"\']+\.xlsx)["\']', html, flags=re.I)))
+    found: dict[str, Path] = {}
+    for link in links:
+        low = link.lower()
+        if "alteracoes" in low or "beneficiarios" in low:
+            continue
+        kind = None
+        for k in ("aih", "sia", "opme"):
+            if f"_-_{k}.xlsx" in low or f"_{k}.xlsx" in low or f"-{k}.xlsx" in low:
+                kind = k
+                break
+        if not kind or kind in found:
+            continue
+        full_url = link if link.startswith("http") else f"{TSP_BASE_URL}{link}"
+        dest = dest_dir / Path(link).name
+        print(f"Baixando Tabela SUS Paulista ({kind.upper()}): {full_url}")
+        dl_req = urllib.request.Request(full_url, headers={"User-Agent": "SIGTAP-Pages-Bot/1.0"})
+        with urllib.request.urlopen(dl_req, timeout=60) as dl_resp, open(dest, "wb") as out:
+            out.write(dl_resp.read())
+        found[kind] = dest
+    return found
+
+
+def load_tsp_data(tsp_files: dict[str, Path] | None) -> tuple[dict[str, dict], str]:
+    """Carrega os valores da Tabela SUS Paulista (SIA, AIH, OPME) por código de procedimento."""
+    if not tsp_files:
+        return {}, ""
+    by_proc: dict[str, dict] = {}
+    referencia = infer_tsp_referencia([p.name for p in tsp_files.values()])
+
+    for kind in ("sia", "aih", "opme"):
+        fpath = tsp_files.get(kind)
+        if not fpath or not fpath.exists():
+            continue
+        rows = read_xlsx_rows(fpath)
+        if len(rows) < 2:
+            continue
+        for row in rows[1:]:
+            if not row:
+                continue
+            co = norm_tsp_code(row[0])
+            if not co:
+                continue
+            entry: dict[str, float] = {
+                "ms": to_float2(row[2] if len(row) > 2 else ""),
+                "compl": to_float2(row[3] if len(row) > 3 else ""),
+                "total": to_float2(row[4] if len(row) > 4 else ""),
+            }
+            if kind == "aih":
+                entry["sh"] = to_float2(row[5] if len(row) > 5 else "")
+                entry["sp"] = to_float2(row[6] if len(row) > 6 else "")
+            by_proc.setdefault(co, {})[kind] = entry
+
+    return by_proc, referencia
+
+
+def build_datasets(
+    zip_path: Path, out_dir: Path, tsp_files: dict[str, Path] | None = None
+) -> dict[str, object]:
     """Processa o arquivo ZIP do SIGTAP e gera os JSONs de saída."""
     out_dir.mkdir(parents=True, exist_ok=True)
+    tsp_by_proc, tsp_referencia = load_tsp_data(tsp_files)
 
     with zipfile.ZipFile(zip_path) as zf:
         proc_rows = read_fixed_table(zf, "tb_procedimento.txt")
@@ -374,49 +527,50 @@ def build_datasets(zip_path: Path, out_dir: Path) -> dict[str, object]:
         # enquanto SA representa o valor ambulatorial. Mantemos os três separados e o maior/total.
         vl_total_hosp = round(vl_sh + vl_sp, 2)
 
-        procedimentos.append(
-            {
-                "codigo": co,
-                "nome": r["NO_PROCEDIMENTO"],
-                "grupo_cod": co_grupo,
-                "grupo": grupo_map.get(co_grupo, co_grupo),
-                "subgrupo_cod": f"{co_grupo}{co_sub}",
-                "subgrupo": subgrupo_map.get((co_grupo, co_sub), ""),
-                "forma_cod": f"{co_grupo}{co_sub}{co_forma}",
-                "forma": forma_map.get((co_grupo, co_sub, co_forma), ""),
-                "complexidade_cod": r["TP_COMPLEXIDADE"],
-                "complexidade": COMPLEXIDADE_MAP.get(
-                    r["TP_COMPLEXIDADE"], r["TP_COMPLEXIDADE"]
-                ),
-                "sexo_cod": r["TP_SEXO"],
-                "sexo": SEXO_MAP.get(r["TP_SEXO"], r["TP_SEXO"]),
-                "idade_min": to_optional_int(r["VL_IDADE_MINIMA"]),
-                "idade_max": to_optional_int(r["VL_IDADE_MAXIMA"]),
-                "vl_sh": vl_sh,
-                "vl_sa": vl_sa,
-                "vl_sp": vl_sp,
-                "vl_hosp_total": vl_total_hosp,
-                "qt_max": to_optional_int(r["QT_MAXIMA_EXECUCAO"]),
-                "qt_dias_perm": to_optional_int(r["QT_DIAS_PERMANENCIA"]),
-                "qt_pontos": to_optional_int(r["QT_PONTOS"]),
-                "financiamento": fin_map.get(
-                    r["CO_FINANCIAMENTO"], r["CO_FINANCIAMENTO"]
-                ),
-                "cpf_status": cpf_key,
-                "cpf_label": cpf_label,
-                "validade_apac": validade_apac,
-                "registros": proc_registros.get(co, []),
-                "modalidades": proc_modalidades.get(co, []),
-                "detalhes": det_labels,
-                "qt_obrig": qt_obrig,
-                "qt_compat": qt_compat,
-                "qt_cbos": qt_cbos,
-                "nao_exige_cbo": nao_exige_cbo,
-                "qt_servicos": qt_servicos,
-                "qt_habilitacoes": qt_habilitacoes,
-                "qt_cids": qt_cids,
-            }
-        )
+        proc_obj = {
+            "codigo": co,
+            "nome": r["NO_PROCEDIMENTO"],
+            "grupo_cod": co_grupo,
+            "grupo": grupo_map.get(co_grupo, co_grupo),
+            "subgrupo_cod": f"{co_grupo}{co_sub}",
+            "subgrupo": subgrupo_map.get((co_grupo, co_sub), ""),
+            "forma_cod": f"{co_grupo}{co_sub}{co_forma}",
+            "forma": forma_map.get((co_grupo, co_sub, co_forma), ""),
+            "complexidade_cod": r["TP_COMPLEXIDADE"],
+            "complexidade": COMPLEXIDADE_MAP.get(
+                r["TP_COMPLEXIDADE"], r["TP_COMPLEXIDADE"]
+            ),
+            "sexo_cod": r["TP_SEXO"],
+            "sexo": SEXO_MAP.get(r["TP_SEXO"], r["TP_SEXO"]),
+            "idade_min": to_optional_int(r["VL_IDADE_MINIMA"]),
+            "idade_max": to_optional_int(r["VL_IDADE_MAXIMA"]),
+            "vl_sh": vl_sh,
+            "vl_sa": vl_sa,
+            "vl_sp": vl_sp,
+            "vl_hosp_total": vl_total_hosp,
+            "qt_max": to_optional_int(r["QT_MAXIMA_EXECUCAO"]),
+            "qt_dias_perm": to_optional_int(r["QT_DIAS_PERMANENCIA"]),
+            "qt_pontos": to_optional_int(r["QT_PONTOS"]),
+            "financiamento": fin_map.get(
+                r["CO_FINANCIAMENTO"], r["CO_FINANCIAMENTO"]
+            ),
+            "cpf_status": cpf_key,
+            "cpf_label": cpf_label,
+            "validade_apac": validade_apac,
+            "registros": proc_registros.get(co, []),
+            "modalidades": proc_modalidades.get(co, []),
+            "detalhes": det_labels,
+            "qt_obrig": qt_obrig,
+            "qt_compat": qt_compat,
+            "qt_cbos": qt_cbos,
+            "nao_exige_cbo": nao_exige_cbo,
+            "qt_servicos": qt_servicos,
+            "qt_habilitacoes": qt_habilitacoes,
+            "qt_cids": qt_cids,
+        }
+        if co in tsp_by_proc:
+            proc_obj["tsp"] = tsp_by_proc[co]
+        procedimentos.append(proc_obj)
 
     meta = {
         "competencia": competencia,
@@ -428,6 +582,8 @@ def build_datasets(zip_path: Path, out_dir: Path) -> dict[str, object]:
         "arquivo_origem": zip_path.name,
         "versao": versao_txt,
         "total_procedimentos": len(procedimentos),
+        "tsp_referencia": tsp_referencia,
+        "total_com_tsp": sum(1 for p in procedimentos if "tsp" in p),
         "atualizado_em": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "grupos": [
             {"codigo": k, "nome": v} for k, v in sorted(grupo_map.items())
@@ -523,26 +679,53 @@ def main() -> None:
         default="docs/data",
         help="Diretório de saída para os JSONs gerados (padrão: docs/data).",
     )
+    parser.add_argument(
+        "--tsp-dir",
+        dest="tsp_dir",
+        help="Diretório local com planilhas .xlsx da Tabela SUS Paulista (AIH/SIA/OPME).",
+    )
+    parser.add_argument(
+        "--skip-tsp",
+        action="store_true",
+        help="Pula o download/processamento da Tabela SUS Paulista.",
+    )
     args = parser.parse_args()
 
     out_dir = Path(args.out)
 
-    if args.zip_path:
-        zip_path = Path(args.zip_path)
-        meta = build_datasets(zip_path, out_dir)
-    else:
-        with tempfile.TemporaryDirectory() as tmpdir:
-            tmp_path = Path(tmpdir)
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_path = Path(tmpdir)
+
+        tsp_files: dict[str, Path] | None = None
+        if not args.skip_tsp:
+            if args.tsp_dir:
+                tsp_dir = Path(args.tsp_dir)
+                tsp_files = {}
+                for kind in ("aih", "sia", "opme"):
+                    matches = sorted(tsp_dir.glob(f"*{kind}*.xlsx"))
+                    if matches:
+                        tsp_files[kind] = matches[0]
+            else:
+                try:
+                    tsp_files = discover_and_download_tsp(tmp_path)
+                except Exception as tsp_err:
+                    print(f"Aviso: falha ao baixar Tabela SUS Paulista ({tsp_err}).")
+
+        if args.zip_path:
+            zip_path = Path(args.zip_path)
+        else:
             try:
                 zip_path = download_from_ftp(tmp_path)
             except Exception as ftp_err:
                 print(f"Falha no FTP oficial ({ftp_err}).")
                 zip_path = download_from_github_mirror(tmp_path)
-            meta = build_datasets(zip_path, out_dir)
+
+        meta = build_datasets(zip_path, out_dir, tsp_files=tsp_files)
 
     print(
         f"Concluído! Competência {meta['competencia_formatada']} "
-        f"({meta['total_procedimentos']} procedimentos) gerada em {out_dir}."
+        f"({meta['total_procedimentos']} procedimentos, "
+        f"{meta['total_com_tsp']} com Tabela SUS Paulista) gerada em {out_dir}."
     )
 
 
