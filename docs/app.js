@@ -636,28 +636,67 @@ function renderCompatSection(items, proc) {
     return '<span class="proc-sub">Nenhuma regra de compatibilidade vinculada a este procedimento como principal.</span>';
   }
 
+  const isOci = proc?.grupo_cod === "09";
   let ociAlert = "";
-  if (proc?.grupo_cod === "09") {
-    const codes = new Set(items.map((i) => i.codigo));
-    const hasPresencial = codes.has("0301010072");
-    const hasTele = codes.has("0301010307");
-    if (hasPresencial || hasTele) {
+  let ociConsultasHtml = "";
+  let filteredItems = items;
+
+  if (isOci) {
+    const consultaItems = items.filter(
+      (i) => i.codigo === "0301010072" || i.codigo === "0301010307"
+    );
+
+    if (consultaItems.length > 0) {
+      filteredItems = items.filter(
+        (i) => i.codigo !== "0301010072" && i.codigo !== "0301010307"
+      );
+
       ociAlert = `
         <div class="alert-box" style="margin-bottom:0.75rem;">
           <span style="font-size:1.1rem;line-height:1;">ℹ️</span>
           <div>
             <div><strong>Regra OCI (Programa Mais Acesso a Especialistas):</strong></div>
             <div style="font-size:0.82rem;margin-top:0.2rem;">
-              Para faturamento da APAC de OCI, é <strong>obrigatório</strong> o registro de no mínimo dois procedimentos secundários, sendo <strong>pelo menos uma Consulta Médica (03.01.01.007-2) OU Teleconsulta (03.01.01.030-7)</strong>. No SIGTAP ambas constam tecnicamente com tipo opcional apenas para permitir a alternância entre a modalidade presencial e a distância no SIA.
+              Para faturamento da APAC de OCI, é <strong>obrigatório</strong> o registro de no mínimo dois procedimentos secundários, sendo <strong>pelo menos uma Consulta Médica OU Teleconsulta</strong> (listadas no grupo de destaque abaixo). No SIGTAP ambas constam tecnicamente com tipo opcional apenas para permitir a alternância entre a modalidade presencial e a distância no SIA.
             </div>
           </div>
+        </div>
+      `;
+
+      const listHtml = consultaItems
+        .map((item) => {
+          const refProc = procByCode.get(item.codigo);
+          const nome = refProc ? refProc.nome : "Procedimento";
+          const qtText = item.qt > 0 ? `Qtd. máx: ${item.qt}` : "";
+          const regText = `${item.reg_p} → ${item.reg_c}`;
+          const metaParts = [regText, qtText].filter(Boolean).join(" · ");
+          return `
+            <li class="compat-item">
+              <div>
+                <button type="button" class="compat-link" data-open-proc="${escapeHtml(item.codigo)}">
+                  ${escapeHtml(formatCode(item.codigo))} — ${escapeHtml(nome)}
+                </button>
+                <div class="compat-meta">${escapeHtml(metaParts)}</div>
+              </div>
+            </li>
+          `;
+        })
+        .join("");
+
+      ociConsultasHtml = `
+        <div class="compat-group" style="border: 1px solid #93c5fd; background: #eff6ff; padding: 0.65rem; border-radius: 8px; margin-bottom: 0.85rem;">
+          <div class="compat-group-title" style="margin-bottom:0.45rem;">
+            <span class="badge badge-info" style="font-size:0.78rem;">⭐ Consulta / Teleconsulta (Obrigatório ao menos 1)</span>
+            <span class="compat-meta">(${consultaItems.length})</span>
+          </div>
+          <ul class="compat-list">${listHtml}</ul>
         </div>
       `;
     }
   }
 
   const groupsHtml = COMPAT_GROUPS.map((grp) => {
-    const groupItems = items.filter((i) => i.tipo === grp.tipo);
+    const groupItems = filteredItems.filter((i) => i.tipo === grp.tipo);
     if (groupItems.length === 0) return "";
     const listHtml = groupItems
       .map((item) => {
@@ -690,7 +729,7 @@ function renderCompatSection(items, proc) {
     `;
   }).join("");
 
-  return ociAlert + groupsHtml;
+  return ociAlert + ociConsultasHtml + groupsHtml;
 }
 
 function getTspDefasadoInfo(proc) {
