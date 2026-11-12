@@ -354,7 +354,7 @@ function renderTable() {
             <div class="val-line"><span class="val-label">SH:</span><span class="val-num">${formatCurrency(p.vl_sh)}</span></div>
             <div class="val-line"><span class="val-label">SP:</span><span class="val-num">${formatCurrency(p.vl_sp)}</span></div>
           </td>
-          <td class="values-cell">${renderTspCell(p.tsp)}</td>
+          <td class="values-cell">${renderTspCell(p)}</td>
         </tr>
       `;
     })
@@ -671,7 +671,31 @@ function renderCompatSection(items) {
   }).join("");
 }
 
-function renderTspCell(tsp) {
+function getTspDefasadoInfo(proc) {
+  const tsp = proc?.tsp;
+  if (!tsp) return null;
+  const defasagens = [];
+  if (tsp.sia && proc.vl_sa > 0 && tsp.sia.total < proc.vl_sa) {
+    defasagens.push({
+      tipo: "SIA",
+      tspTotal: tsp.sia.total,
+      sigtap: proc.vl_sa,
+      msPlanilha: tsp.sia.ms,
+    });
+  }
+  if (tsp.aih && proc.vl_hosp_total > 0 && tsp.aih.total < proc.vl_hosp_total) {
+    defasagens.push({
+      tipo: "AIH",
+      tspTotal: tsp.aih.total,
+      sigtap: proc.vl_hosp_total,
+      msPlanilha: tsp.aih.ms,
+    });
+  }
+  return defasagens.length > 0 ? defasagens : null;
+}
+
+function renderTspCell(proc) {
+  const tsp = proc?.tsp;
   if (!tsp) return '<span class="proc-sub">—</span>';
   const lines = [];
   if (tsp.sia) {
@@ -689,14 +713,43 @@ function renderTspCell(tsp) {
       `<div class="val-line"><span class="val-label">OPME:</span><span class="val-num">${formatCurrency(tsp.opme.total)}</span></div>`
     );
   }
+
+  const defasado = getTspDefasadoInfo(proc);
+  if (defasado) {
+    lines.push(
+      `<div class="badges-row"><span class="badge badge-warn" title="O valor atual na SIGTAP é maior do que o publicado na Tabela SUS Paulista.">⚠️ Defasado (MS &gt; SP)</span></div>`
+    );
+  }
+
   return lines.join("") || '<span class="proc-sub">—</span>';
 }
 
-function renderTspModalSection(tsp) {
+function renderTspModalSection(proc) {
+  const tsp = proc?.tsp;
   if (!tsp) {
     return '<span class="proc-sub">Este procedimento não possui complementação na Tabela SUS Paulista.</span>';
   }
   const blocks = [];
+
+  const defasado = getTspDefasadoInfo(proc);
+  if (defasado) {
+    const desc = defasado
+      .map(
+        (d) =>
+          `<strong>${d.tipo}:</strong> Valor atual SIGTAP = ${formatCurrency(d.sigtap)} vs. Tabela SUS Paulista = ${formatCurrency(d.tspTotal)} (calculado sobre base anterior do MS de ${formatCurrency(d.msPlanilha)}).`
+      )
+      .join("<br>");
+    blocks.push(`
+      <div class="alert-box">
+        <span style="font-size:1.1rem;line-height:1;">⚠️</span>
+        <div>
+          <div><strong>Atenção: Defasado (MS &gt; SP)</strong></div>
+          <div style="font-size:0.82rem;margin-top:0.2rem;">${desc} A planilha vigente da SES-SP ainda utiliza uma competência anterior do Ministério da Saúde.</div>
+        </div>
+      </div>
+    `);
+  }
+
   if (tsp.sia) {
     blocks.push(`
       <div style="margin-bottom:0.65rem;">
@@ -790,7 +843,7 @@ async function openModal(codigo) {
 
     <section class="modal-section">
       <h3 class="modal-section-title">Tabela SUS Paulista</h3>
-      ${renderTspModalSection(proc.tsp)}
+      ${renderTspModalSection(proc)}
     </section>
 
     <section class="modal-section">

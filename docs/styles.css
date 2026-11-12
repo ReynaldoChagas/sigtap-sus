@@ -318,6 +318,24 @@ tbody td {
   color: var(--primary);
 }
 
+.alert-box {
+  background: var(--warn-bg);
+  border: 1px solid #fcd34d;
+  color: var(--warn-text);
+  border-radius: 8px;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.alert-box strong {
+  color: #78350f;
+}
+
 .values-cell {
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
