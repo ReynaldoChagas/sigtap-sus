@@ -333,12 +333,45 @@ def load_tsp_data(tsp_files: dict[str, Path] | None) -> tuple[dict[str, dict], s
     return by_proc, referencia
 
 
+def load_existing_tsp_data(out_dir: Path) -> tuple[dict[str, dict], str]:
+    """Carrega dados anteriores da Tabela SUS Paulista para fallback em caso de falha no download."""
+    procs_path = out_dir / "procedimentos.json"
+    meta_path = out_dir / "meta.json"
+    if not procs_path.exists():
+        return {}, ""
+    try:
+        procs = json.loads(procs_path.read_text(encoding="utf-8"))
+        by_proc = {
+            p["codigo"]: p["tsp"]
+            for p in procs
+            if isinstance(p, dict) and p.get("codigo") and p.get("tsp")
+        }
+        referencia = ""
+        if meta_path.exists():
+            meta = json.loads(meta_path.read_text(encoding="utf-8"))
+            referencia = meta.get("tsp_referencia", "") or ""
+        return by_proc, referencia
+    except Exception as exc:
+        print(f"Aviso: não foi possível ler dados anteriores da Tabela SUS Paulista ({exc}).")
+        return {}, ""
+
+
 def build_datasets(
-    zip_path: Path, out_dir: Path, tsp_files: dict[str, Path] | None = None
+    zip_path: Path,
+    out_dir: Path,
+    tsp_files: dict[str, Path] | None = None,
+    preserve_tsp_on_empty: bool = True,
 ) -> dict[str, object]:
     """Processa o arquivo ZIP do SIGTAP e gera os JSONs de saída."""
     out_dir.mkdir(parents=True, exist_ok=True)
     tsp_by_proc, tsp_referencia = load_tsp_data(tsp_files)
+    if not tsp_by_proc and preserve_tsp_on_empty:
+        tsp_by_proc, tsp_referencia = load_existing_tsp_data(out_dir)
+        if tsp_by_proc:
+            print(
+                f"Preservando {len(tsp_by_proc)} procedimentos da Tabela SUS Paulista "
+                f"({tsp_referencia or 'referência anterior'}) já existentes."
+            )
 
     with zipfile.ZipFile(zip_path) as zf:
         proc_rows = read_fixed_table(zf, "tb_procedimento.txt")
@@ -720,7 +753,12 @@ def main() -> None:
                 print(f"Falha no FTP oficial ({ftp_err}).")
                 zip_path = download_from_github_mirror(tmp_path)
 
-        meta = build_datasets(zip_path, out_dir, tsp_files=tsp_files)
+        meta = build_datasets(
+            zip_path,
+            out_dir,
+            tsp_files=tsp_files,
+            preserve_tsp_on_empty=not args.skip_tsp,
+        )
 
     print(
         f"Concluído! Competência {meta['competencia_formatada']} "
