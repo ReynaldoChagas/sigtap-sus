@@ -48,6 +48,19 @@ body {
   gap: 1rem;
 }
 
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.header-logo {
+  width: 56px;
+  height: auto;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
+}
+
 .header h1 {
   margin: 0;
   font-size: 1.45rem;
@@ -592,8 +605,26 @@ tbody td {
   margin-right: 0.45rem;
 }
 
+.footer {
+  max-width: 1320px;
+  margin: 0 auto 2rem;
+  padding: 1rem 1.25rem 0;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.footer p {
+  margin: 0;
+}
+
 @media (max-width: 720px) {
   .search-row {
     grid-template-columns: 1fr;
+  }
+
+  .header-logo {
+    width: 44px;
   }
 }
