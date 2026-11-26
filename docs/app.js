@@ -44,6 +44,7 @@ const els = {
   servOnly: document.getElementById("serv-only"),
   habOnly: document.getElementById("hab-only"),
   tspOnly: document.getElementById("tsp-only"),
+  advancedFiltersBadge: document.getElementById("advanced-filters-badge"),
   resultsCount: document.getElementById("results-count"),
   exportCsvBtn: document.getElementById("export-csv-btn"),
   tbody: document.getElementById("procedures-tbody"),
@@ -179,6 +180,24 @@ function applyFilters() {
   const onlyServ = els.servOnly.checked;
   const onlyHab = els.habOnly.checked;
   const onlyTsp = els.tspOnly.checked;
+
+  const activeAdvancedCount = [
+    cpf,
+    complexidade,
+    sexo,
+    registro,
+    rawCbo,
+    rawCid,
+    onlyPaid,
+    onlyObrig,
+    onlyServ,
+    onlyHab,
+    onlyTsp,
+  ].filter(Boolean).length;
+  if (els.advancedFiltersBadge) {
+    els.advancedFiltersBadge.textContent = String(activeAdvancedCount);
+    els.advancedFiltersBadge.hidden = activeAdvancedCount === 0;
+  }
 
   let matchingCboSet = null;
   if (rawCbo && cbosCache) {

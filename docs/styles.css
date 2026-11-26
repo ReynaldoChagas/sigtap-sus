@@ -131,6 +131,52 @@ body {
   align-items: end;
 }
 
+.filters-grid-primary {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.advanced-filters {
+  margin-top: 0.85rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid #eef2f6;
+}
+
+.advanced-filters-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--primary);
+  list-style: none;
+  user-select: none;
+  padding: 0.25rem 0;
+}
+
+.advanced-filters-toggle::-webkit-details-marker {
+  display: none;
+}
+
+.advanced-filters-toggle:hover {
+  color: var(--primary-hover);
+}
+
+.advanced-chevron {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.18s ease;
+  flex-shrink: 0;
+}
+
+.advanced-filters[open] .advanced-chevron {
+  transform: rotate(180deg);
+}
+
+.advanced-filters-body {
+  margin-top: 0.75rem;
+}
+
 .field label {
   display: block;
   font-size: 0.78rem;
