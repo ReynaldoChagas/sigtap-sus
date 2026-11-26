@@ -1,5 +1,10 @@
 const PAGE_SIZE = 50;
 
+const COPY_ICON_SVG =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+const CHECK_ICON_SVG =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+
 let allProcedures = [];
 let procByCode = new Map();
 let allSubgrupos = [];
@@ -322,7 +327,7 @@ function renderTable() {
         <tr data-codigo="${escapeHtml(p.codigo)}">
           <td class="code-cell">
             <span>${escapeHtml(formatCode(p.codigo))}</span>
-            <button type="button" class="copy-btn" data-copy="${escapeHtml(p.codigo)}" title="Copiar código sem pontuação">Copiar</button>
+            <button type="button" class="copy-btn" data-copy="${escapeHtml(p.codigo)}" title="Copiar código sem pontuação" aria-label="Copiar código">${COPY_ICON_SVG}</button>
           </td>
           <td>
             <div class="proc-name">${escapeHtml(p.nome)}</div>
@@ -1192,9 +1197,14 @@ function setupEvents() {
       e.stopPropagation();
       const code = copyBtn.getAttribute("data-copy");
       navigator.clipboard?.writeText(code);
-      copyBtn.textContent = "Copiado!";
-      setTimeout(() => {
-        copyBtn.textContent = "Copiar";
+      copyBtn.innerHTML = CHECK_ICON_SVG;
+      copyBtn.classList.add("copied");
+      copyBtn.setAttribute("title", "Copiado!");
+      clearTimeout(copyBtn._copyTimer);
+      copyBtn._copyTimer = setTimeout(() => {
+        copyBtn.innerHTML = COPY_ICON_SVG;
+        copyBtn.classList.remove("copied");
+        copyBtn.setAttribute("title", "Copiar código sem pontuação");
       }, 1200);
       return;
     }

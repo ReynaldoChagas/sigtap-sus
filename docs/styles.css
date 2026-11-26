@@ -265,18 +265,35 @@ tbody td {
 }
 
 .copy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
   margin-left: 0.35rem;
   border: none;
   background: var(--primary-soft);
   color: var(--primary);
-  border-radius: 5px;
-  padding: 0.12rem 0.4rem;
-  font-size: 0.72rem;
+  border-radius: 6px;
+  width: 26px;
+  height: 26px;
+  padding: 0;
   cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.copy-btn svg {
+  width: 14px;
+  height: 14px;
+  display: block;
 }
 
 .copy-btn:hover {
   background: #dbeafe;
+}
+
+.copy-btn.copied {
+  background: var(--ok-bg);
+  color: var(--ok-text);
 }
 
 .proc-name {
@@ -626,5 +643,87 @@ tbody td {
 
   .header-logo {
     width: 44px;
+  }
+
+  .table-wrap {
+    overflow-x: visible;
+  }
+
+  table,
+  tbody {
+    display: block;
+    width: 100%;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tbody tr[data-codigo] {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.95rem 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  tbody tr[data-codigo]:last-child {
+    border-bottom: none;
+  }
+
+  tbody tr[data-codigo]:active {
+    background: #eff6ff;
+  }
+
+  tbody tr[data-codigo] td {
+    padding: 0;
+    border: none;
+  }
+
+  tbody tr[data-codigo] td:nth-child(n + 3) {
+    display: none;
+  }
+
+  tbody tr[data-codigo] .code-cell {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    font-size: 0.88rem;
+    letter-spacing: 0.02em;
+  }
+
+  tbody tr[data-codigo] .copy-btn {
+    margin-left: 0;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+  }
+
+  tbody tr[data-codigo] .copy-btn svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  tbody tr[data-codigo] td:nth-child(2) .proc-name {
+    font-size: 0.98rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--text);
+  }
+
+  tbody tr[data-codigo] td:nth-child(2) .proc-sub,
+  tbody tr[data-codigo] td:nth-child(2) .badges-row {
+    display: none;
+  }
+
+  tbody tr:not([data-codigo]) {
+    display: block;
+  }
+
+  tbody td.empty-state {
+    display: block;
+    width: 100%;
+    padding: 2rem 1rem;
   }
 }
