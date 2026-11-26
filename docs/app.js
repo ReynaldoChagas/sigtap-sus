@@ -90,10 +90,8 @@ function formatAgeMonths(months) {
   if (months === null || months === undefined) return null;
   if (months === 0) return "0 meses";
   const years = Math.floor(months / 12);
-  const remMonths = months % 12;
-  if (years === 0) return `${remMonths} ${remMonths === 1 ? "mês" : "meses"}`;
-  if (remMonths === 0) return `${years} ${years === 1 ? "ano" : "anos"}`;
-  return `${years}a ${remMonths}m`;
+  if (years === 0) return `${months} ${months === 1 ? "mês" : "meses"}`;
+  return `${years} ${years === 1 ? "ano" : "anos"}`;
 }
 
 function formatAgeRange(minM, maxM) {
