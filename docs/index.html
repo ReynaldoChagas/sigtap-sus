@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Consulta SIGTAP — Tabela Unificada SUS</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="stylesheet" href="styles.css?v=20261126">
+  <link rel="stylesheet" href="styles.css?v=20261126-2">
 </head>
 <body>
   <header class="header">
@@ -39,7 +39,7 @@
         <button id="clear-btn" class="btn" type="button">Limpar filtros</button>
       </div>
 
-      <div class="filters-grid">
+      <div class="filters-grid filters-grid-primary">
         <div class="field">
           <label for="group-filter">Grupo</label>
           <select id="group-filter">
@@ -60,96 +60,109 @@
             <option value="">Todas as formas de organização</option>
           </select>
         </div>
-
-        <div class="field">
-          <label for="cpf-filter">Exigência de CPF / CNS</label>
-          <select id="cpf-filter">
-            <option value="">Todos</option>
-            <option value="obrigatorio_cpf">Obrigatório CPF</option>
-            <option value="exige_cpf_cns">Exige CPF/CNS</option>
-            <option value="nao_exige">Não exige CPF/CNS</option>
-            <option value="nao_especificado">Sem regra específica</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="complexity-filter">Complexidade</label>
-          <select id="complexity-filter">
-            <option value="">Todas</option>
-            <option value="1">Atenção Básica</option>
-            <option value="2">Média Complexidade</option>
-            <option value="3">Alta Complexidade</option>
-            <option value="0">Não se aplica</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="sex-filter">Sexo</label>
-          <select id="sex-filter">
-            <option value="">Todos</option>
-            <option value="I">Indiferente/Ambos</option>
-            <option value="F">Feminino</option>
-            <option value="M">Masculino</option>
-            <option value="N">Não se aplica</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="registro-filter">Instrumento de Registro</label>
-          <select id="registro-filter">
-            <option value="">Todos</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="cbo-filter">CBO Executante</label>
-          <input
-            id="cbo-filter"
-            list="cbo-options"
-            type="search"
-            placeholder="Código ou nome do CBO..."
-            autocomplete="off"
-          >
-          <datalist id="cbo-options"></datalist>
-        </div>
-
-        <div class="field">
-          <label for="cid-filter">CID-10</label>
-          <input
-            id="cid-filter"
-            list="cid-options"
-            type="search"
-            placeholder="Código ou nome do CID..."
-            autocomplete="off"
-          >
-          <datalist id="cid-options"></datalist>
-        </div>
-
-        <label class="checkbox-field" for="paid-only">
-          <input id="paid-only" type="checkbox">
-          <span>Apenas com valor &gt; R$ 0,00</span>
-        </label>
-
-        <label class="checkbox-field" for="obrig-only">
-          <input id="obrig-only" type="checkbox">
-          <span>Com secundário obrigatório</span>
-        </label>
-
-        <label class="checkbox-field" for="serv-only">
-          <input id="serv-only" type="checkbox">
-          <span>Exige Serviço/Class.</span>
-        </label>
-
-        <label class="checkbox-field" for="hab-only">
-          <input id="hab-only" type="checkbox">
-          <span>Exige Habilitação</span>
-        </label>
-
-        <label class="checkbox-field" for="tsp-only">
-          <input id="tsp-only" type="checkbox">
-          <span>Com SUS Paulista</span>
-        </label>
       </div>
+
+      <details id="advanced-filters" class="advanced-filters">
+        <summary class="advanced-filters-toggle">
+          <svg class="advanced-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+          <span>Filtro avançado</span>
+          <span id="advanced-filters-badge" class="badge badge-info" hidden>0</span>
+        </summary>
+        <div class="advanced-filters-body">
+          <div class="filters-grid">
+            <div class="field">
+              <label for="cpf-filter">Exigência de CPF / CNS</label>
+              <select id="cpf-filter">
+                <option value="">Todos</option>
+                <option value="obrigatorio_cpf">Obrigatório CPF</option>
+                <option value="exige_cpf_cns">Exige CPF/CNS</option>
+                <option value="nao_exige">Não exige CPF/CNS</option>
+                <option value="nao_especificado">Sem regra específica</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="complexity-filter">Complexidade</label>
+              <select id="complexity-filter">
+                <option value="">Todas</option>
+                <option value="1">Atenção Básica</option>
+                <option value="2">Média Complexidade</option>
+                <option value="3">Alta Complexidade</option>
+                <option value="0">Não se aplica</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="sex-filter">Sexo</label>
+              <select id="sex-filter">
+                <option value="">Todos</option>
+                <option value="I">Indiferente/Ambos</option>
+                <option value="F">Feminino</option>
+                <option value="M">Masculino</option>
+                <option value="N">Não se aplica</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="registro-filter">Instrumento de Registro</label>
+              <select id="registro-filter">
+                <option value="">Todos</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="cbo-filter">CBO Executante</label>
+              <input
+                id="cbo-filter"
+                list="cbo-options"
+                type="search"
+                placeholder="Código ou nome do CBO..."
+                autocomplete="off"
+              >
+              <datalist id="cbo-options"></datalist>
+            </div>
+
+            <div class="field">
+              <label for="cid-filter">CID-10</label>
+              <input
+                id="cid-filter"
+                list="cid-options"
+                type="search"
+                placeholder="Código ou nome do CID..."
+                autocomplete="off"
+              >
+              <datalist id="cid-options"></datalist>
+            </div>
+
+            <label class="checkbox-field" for="paid-only">
+              <input id="paid-only" type="checkbox">
+              <span>Apenas com valor &gt; R$ 0,00</span>
+            </label>
+
+            <label class="checkbox-field" for="obrig-only">
+              <input id="obrig-only" type="checkbox">
+              <span>Com secundário obrigatório</span>
+            </label>
+
+            <label class="checkbox-field" for="serv-only">
+              <input id="serv-only" type="checkbox">
+              <span>Exige Serviço/Class.</span>
+            </label>
+
+            <label class="checkbox-field" for="hab-only">
+              <input id="hab-only" type="checkbox">
+              <span>Exige Habilitação</span>
+            </label>
+
+            <label class="checkbox-field" for="tsp-only">
+              <input id="tsp-only" type="checkbox">
+              <span>Com SUS Paulista</span>
+            </label>
+          </div>
+        </div>
+      </details>
     </section>
 
     <div class="toolbar">
@@ -208,6 +221,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=20261126"></script>
+  <script src="app.js?v=20261126-2"></script>
 </body>
 </html>
