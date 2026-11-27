@@ -2,8 +2,8 @@ name: Atualizar e Publicar SIGTAP
 
 on:
   schedule:
-    # Roda às 07:00 UTC (04:00 BRT) nos dias 1, 3, 5, 10 e 15 de cada mês
-    - cron: "0 7 1,3,5,10,15 * *"
+    # Roda diariamente às 07:00 UTC (04:00 BRT)
+    - cron: "0 7 * * *"
   workflow_dispatch:
   push:
     branches:
