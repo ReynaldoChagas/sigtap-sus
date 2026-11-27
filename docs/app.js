@@ -826,12 +826,41 @@ function renderTspCell(proc) {
   return lines.join("") || '<span class="proc-sub">—</span>';
 }
 
+function renderTspCard(title, item, extraHtml = "") {
+  return `
+    <div class="tsp-card">
+      <div class="tsp-card-header">
+        <span class="tsp-card-title">${escapeHtml(title)}</span>
+        <span class="tsp-card-total">${formatCurrency(item.total)}</span>
+      </div>
+      <div class="tsp-breakdown">
+        <div class="tsp-part">
+          <span class="tsp-part-lbl">Base SUS (MS)</span>
+          <span class="tsp-part-val">${formatCurrency(item.ms)}</span>
+        </div>
+        <span class="tsp-op" aria-hidden="true">+</span>
+        <div class="tsp-part">
+          <span class="tsp-part-lbl">Complemento SP</span>
+          <span class="tsp-part-val tsp-part-compl">${formatCurrency(item.compl)}</span>
+        </div>
+        <span class="tsp-op" aria-hidden="true">=</span>
+        <div class="tsp-part tsp-part-total">
+          <span class="tsp-part-lbl">Total SUS Paulista</span>
+          <span class="tsp-part-val">${formatCurrency(item.total)}</span>
+        </div>
+      </div>
+      ${extraHtml}
+    </div>
+  `;
+}
+
 function renderTspModalSection(proc) {
   const tsp = proc?.tsp;
   if (!tsp) {
     return '<span class="proc-sub">Este procedimento não possui complementação na Tabela SUS Paulista.</span>';
   }
-  const blocks = [];
+  const alerts = [];
+  const cards = [];
 
   const defasado = getTspDefasadoInfo(proc);
   if (defasado) {
@@ -841,7 +870,7 @@ function renderTspModalSection(proc) {
           `<strong>${d.tipo}:</strong> Valor atual SIGTAP = ${formatCurrency(d.sigtap)} vs. Tabela SUS Paulista = ${formatCurrency(d.tspTotal)} (calculado sobre base anterior do MS de ${formatCurrency(d.msPlanilha)}).`
       )
       .join("<br>");
-    blocks.push(`
+    alerts.push(`
       <div class="alert-box">
         <span style="font-size:1.1rem;line-height:1;">⚠️</span>
         <div>
@@ -853,44 +882,23 @@ function renderTspModalSection(proc) {
   }
 
   if (tsp.sia) {
-    blocks.push(`
-      <div style="margin-bottom:0.65rem;">
-        <div class="compat-meta" style="margin-bottom:0.35rem;font-weight:600;">SIA (Ambulatorial)</div>
-        <div class="detail-grid">
-          <div class="detail-box"><div class="lbl">Tabela SUS Paulista</div><div class="val">${formatCurrency(tsp.sia.total)}</div></div>
-          <div class="detail-box"><div class="lbl">Tab SUS MS</div><div class="val">${formatCurrency(tsp.sia.ms)}</div></div>
-          <div class="detail-box"><div class="lbl">Complementação TSP</div><div class="val">${formatCurrency(tsp.sia.compl)}</div></div>
-        </div>
-      </div>
-    `);
+    cards.push(renderTspCard("SIA — Ambulatorial", tsp.sia));
   }
   if (tsp.aih) {
-    blocks.push(`
-      <div style="margin-bottom:0.65rem;">
-        <div class="compat-meta" style="margin-bottom:0.35rem;font-weight:600;">AIH (Hospitalar)</div>
-        <div class="detail-grid">
-          <div class="detail-box"><div class="lbl">Tab Paulista (Total)</div><div class="val">${formatCurrency(tsp.aih.total)}</div></div>
-          <div class="detail-box"><div class="lbl">SH Paulista</div><div class="val">${formatCurrency(tsp.aih.sh)}</div></div>
-          <div class="detail-box"><div class="lbl">SP Paulista</div><div class="val">${formatCurrency(tsp.aih.sp)}</div></div>
-          <div class="detail-box"><div class="lbl">Tab SUS MS</div><div class="val">${formatCurrency(tsp.aih.ms)}</div></div>
-          <div class="detail-box"><div class="lbl">Complementação TSP</div><div class="val">${formatCurrency(tsp.aih.compl)}</div></div>
-        </div>
-      </div>
-    `);
+    cards.push(
+      renderTspCard(
+        "AIH — Hospitalar",
+        tsp.aih,
+        `<div class="tsp-subdetail">Composição AIH Paulista: <strong>SH ${formatCurrency(tsp.aih.sh)}</strong> · <strong>SP ${formatCurrency(tsp.aih.sp)}</strong></div>`
+      )
+    );
   }
   if (tsp.opme) {
-    blocks.push(`
-      <div>
-        <div class="compat-meta" style="margin-bottom:0.35rem;font-weight:600;">OPME</div>
-        <div class="detail-grid">
-          <div class="detail-box"><div class="lbl">Tab Paulista</div><div class="val">${formatCurrency(tsp.opme.total)}</div></div>
-          <div class="detail-box"><div class="lbl">Tab MS</div><div class="val">${formatCurrency(tsp.opme.ms)}</div></div>
-          <div class="detail-box"><div class="lbl">Complementação TSP</div><div class="val">${formatCurrency(tsp.opme.compl)}</div></div>
-        </div>
-      </div>
-    `);
+    cards.push(renderTspCard("OPME", tsp.opme));
   }
-  return blocks.join("");
+
+  const cardsHtml = cards.length ? `<div class="tsp-cards-stack">${cards.join("")}</div>` : "";
+  return alerts.join("") + cardsHtml;
 }
 
 async function openModal(codigo) {
@@ -921,12 +929,31 @@ async function openModal(codigo) {
 
   els.modalBody.innerHTML = `
     <section class="modal-section">
-      <h3 class="modal-section-title">Valores e Regras Gerais</h3>
+      <h3 class="modal-section-title">Valores (SUS MS e SUS Paulista)</h3>
+
+      <div class="values-group">
+        <div class="values-group-header">
+          <span class="badge badge-neutral">Tabela SUS · Ministério da Saúde (SIGTAP)</span>
+        </div>
+        <div class="detail-grid values-ms-grid">
+          <div class="detail-box"><div class="lbl">Ambulatorial (SA)</div><div class="val">${formatCurrency(proc.vl_sa)}</div></div>
+          <div class="detail-box"><div class="lbl">Hospitalar (SH)</div><div class="val">${formatCurrency(proc.vl_sh)}</div></div>
+          <div class="detail-box"><div class="lbl">Profissional (SP)</div><div class="val">${formatCurrency(proc.vl_sp)}</div></div>
+          <div class="detail-box detail-box-highlight"><div class="lbl">Total Hospitalar (SH + SP)</div><div class="val">${formatCurrency(proc.vl_hosp_total)}</div></div>
+        </div>
+      </div>
+
+      <div class="values-group values-group-tsp">
+        <div class="values-group-header">
+          <span class="badge badge-info">Tabela SUS Paulista · SES-SP</span>
+        </div>
+        ${renderTspModalSection(proc)}
+      </div>
+    </section>
+
+    <section class="modal-section">
+      <h3 class="modal-section-title">Regras Gerais</h3>
       <div class="detail-grid">
-        <div class="detail-box"><div class="lbl">Valor Ambulatorial (SA)</div><div class="val">${formatCurrency(proc.vl_sa)}</div></div>
-        <div class="detail-box"><div class="lbl">Valor Hospitalar (SH)</div><div class="val">${formatCurrency(proc.vl_sh)}</div></div>
-        <div class="detail-box"><div class="lbl">Valor Profissional (SP)</div><div class="val">${formatCurrency(proc.vl_sp)}</div></div>
-        <div class="detail-box"><div class="lbl">Total Hospitalar (SH+SP)</div><div class="val">${formatCurrency(proc.vl_hosp_total)}</div></div>
         <div class="detail-box"><div class="lbl">Faixa Etária</div><div class="val">${escapeHtml(formatAgeRange(proc.idade_min, proc.idade_max))}</div></div>
         <div class="detail-box"><div class="lbl">Sexo Permitido</div><div class="val">${escapeHtml(proc.sexo)}</div></div>
         <div class="detail-box"><div class="lbl">CPF / CNS</div><div class="val">${getCpfBadge(proc)}</div></div>
@@ -941,11 +968,6 @@ async function openModal(codigo) {
             : "Não especificada"
         }</div></div>
       </div>
-    </section>
-
-    <section class="modal-section">
-      <h3 class="modal-section-title">Tabela SUS Paulista</h3>
-      ${renderTspModalSection(proc)}
     </section>
 
     <section class="modal-section">
