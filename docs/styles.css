@@ -572,6 +572,125 @@ tbody td {
   font-weight: 600;
 }
 
+.detail-box-highlight {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.values-group + .values-group {
+  margin-top: 0.95rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid #eef2f6;
+}
+
+.values-group-header {
+  margin-bottom: 0.55rem;
+}
+
+.values-ms-grid {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.tsp-cards-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.tsp-card {
+  background: #f8fafc;
+  border: 1px solid #dbeafe;
+  border-radius: 9px;
+  padding: 0.75rem 0.85rem;
+}
+
+.tsp-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.55rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.tsp-card-title {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.tsp-card-total {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.tsp-breakdown {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.tsp-part {
+  flex: 1 1 115px;
+  min-width: 0;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 7px;
+  padding: 0.45rem 0.6rem;
+}
+
+.tsp-part-total {
+  background: var(--primary-soft);
+  border-color: #bfdbfe;
+}
+
+.tsp-part-lbl {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.tsp-part-val {
+  display: block;
+  margin-top: 0.12rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.tsp-part-compl {
+  color: var(--ok-text);
+}
+
+.tsp-part-total .tsp-part-val {
+  color: var(--primary);
+}
+
+.tsp-op {
+  font-weight: 700;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.tsp-subdetail {
+  margin-top: 0.55rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.tsp-subdetail strong {
+  color: #334155;
+}
+
 .cid-item {
   display: flex;
   justify-content: space-between;
@@ -818,5 +937,27 @@ tbody td {
   .compat-vals {
     white-space: normal !important;
     text-align: left !important;
+  }
+
+  .tsp-breakdown {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.4rem;
+  }
+
+  .tsp-part {
+    flex: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .tsp-part-val {
+    margin-top: 0;
+  }
+
+  .tsp-op {
+    display: none;
   }
 }
