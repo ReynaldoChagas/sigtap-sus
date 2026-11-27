@@ -13,6 +13,8 @@ let filteredProcedures = [];
 let currentPage = 1;
 let descriptionsCache = null;
 let compatCache = null;
+let compatPromise = null;
+let procsWithOpmeCompatSet = null;
 let cbosCache = null;
 let cbosPromise = null;
 let cboIndexList = null;
@@ -44,6 +46,8 @@ const els = {
   servOnly: document.getElementById("serv-only"),
   habOnly: document.getElementById("hab-only"),
   tspOnly: document.getElementById("tsp-only"),
+  opmeWith: document.getElementById("opme-with"),
+  opmeWithout: document.getElementById("opme-without"),
   advancedFiltersBadge: document.getElementById("advanced-filters-badge"),
   resultsCount: document.getElementById("results-count"),
   exportCsvBtn: document.getElementById("export-csv-btn"),
@@ -178,6 +182,8 @@ function applyFilters() {
   const onlyServ = els.servOnly.checked;
   const onlyHab = els.habOnly.checked;
   const onlyTsp = els.tspOnly.checked;
+  const onlyWithOpme = els.opmeWith.checked;
+  const onlyWithoutOpme = els.opmeWithout.checked;
 
   const activeAdvancedCount = [
     cpf,
@@ -191,6 +197,8 @@ function applyFilters() {
     onlyServ,
     onlyHab,
     onlyTsp,
+    onlyWithOpme,
+    onlyWithoutOpme,
   ].filter(Boolean).length;
   if (els.advancedFiltersBadge) {
     els.advancedFiltersBadge.textContent = String(activeAdvancedCount);
@@ -251,6 +259,12 @@ function applyFilters() {
     if (onlyServ && !(p.qt_servicos > 0)) return false;
     if (onlyHab && !(p.qt_habilitacoes > 0)) return false;
     if (onlyTsp && !p.tsp) return false;
+    if (onlyWithOpme && procsWithOpmeCompatSet && !procsWithOpmeCompatSet.has(p.codigo)) {
+      return false;
+    }
+    if (onlyWithoutOpme && procsWithOpmeCompatSet && procsWithOpmeCompatSet.has(p.codigo)) {
+      return false;
+    }
     if (matchingCboSet) {
       const procCbos = cbosCache.por_procedimento[p.codigo];
       if (!procCbos || !procCbos.some((c) => matchingCboSet.has(c))) {
@@ -393,10 +407,29 @@ async function loadDescriptions() {
 
 async function loadCompatibilidades() {
   if (compatCache) return compatCache;
-  const resp = await fetch("data/compatibilidades.json");
-  if (!resp.ok) throw new Error("Não foi possível carregar as compatibilidades.");
-  compatCache = await resp.json();
-  return compatCache;
+  if (!compatPromise) {
+    compatPromise = fetch("data/compatibilidades.json")
+      .then((resp) => {
+        if (!resp.ok) throw new Error("Não foi possível carregar as compatibilidades.");
+        return resp.json();
+      })
+      .then((data) => {
+        compatCache = data;
+        const opmeSet = new Set();
+        for (const [procCode, items] of Object.entries(data)) {
+          if (items.some((it) => it.codigo.startsWith("07") && it.tipo !== "2")) {
+            opmeSet.add(procCode);
+          }
+        }
+        procsWithOpmeCompatSet = opmeSet;
+        return compatCache;
+      })
+      .catch((err) => {
+        compatPromise = null;
+        throw err;
+      });
+  }
+  return compatPromise;
 }
 
 async function loadRequisitos() {
@@ -1164,6 +1197,22 @@ function setupEvents() {
     el.addEventListener("change", applyFilters);
   }
 
+  els.opmeWith.addEventListener("change", async () => {
+    if (els.opmeWith.checked) {
+      els.opmeWithout.checked = false;
+      await loadCompatibilidades();
+    }
+    applyFilters();
+  });
+
+  els.opmeWithout.addEventListener("change", async () => {
+    if (els.opmeWithout.checked) {
+      els.opmeWith.checked = false;
+      await loadCompatibilidades();
+    }
+    applyFilters();
+  });
+
   let cboDebounce;
   els.cboFilter.addEventListener("focus", () => {
     loadCbos().catch(() => {});
@@ -1210,6 +1259,8 @@ function setupEvents() {
     els.servOnly.checked = false;
     els.habOnly.checked = false;
     els.tspOnly.checked = false;
+    els.opmeWith.checked = false;
+    els.opmeWithout.checked = false;
     applyFilters();
   });
 
